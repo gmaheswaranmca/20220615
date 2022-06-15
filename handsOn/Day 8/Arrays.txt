@@ -1,0 +1,148 @@
+------------------------------------------------------------------------------
+1.	Arrays
+a.	Creating and using arrays
+b.	Character arrays
+i.	Null character
+ii.	Strings
+iii.	Functions in string.h
+c.	2 dimensional arrays
+d.	Passing arrays as arguments to functions"
+------------------------------------------------------------------------------
+Data Structures in C++	
+	1. Arrays 				Define, Use
+							matrix Define, Use 
+	2. Strings 				
+		C-String 			Define, Use
+						<cstring> 
+							strcpy, strcat, strlen, strcmp, strch, strstr, 
+							strtok
+							
+							array of strings 
+								two dimensional character array 
+		C++ "string" 
+------------------------------------------------------------------------------
+array : sequence of elements 
+	sequential data structure 
+	abstract data structure from which we can arrive other DS like stack, queue 
+	
+	elements may of any type but same type 
+	element may be of one of the type
+		1) int, short, char, float, double, long double, long int, long long int
+		2) char[], int[], short[], float[], double[], long double[], long int[], long long int[]
+			2-Dimensional array 
+		3) int*, short*, char*, float*, double*, long double*, long int*, long long int*
+		4) function pointer
+------------------------------------------------------------------------------
+C-string: sequence of characters 
+	If string constant (literal), sequence of characters enclosed with double quotes
+	If string variable, character array is the string variable
+	If we assign, a string literal into a string variable,
+	then the null-terminated character ('\0') will be appended.
+------------------------------------------------------------------------------
+array: 
+	5 salaries of the employees (use double) 
+		double salaries[5];
+	5 ages of the students (use short)
+		short ages[5];
+	4 house areas in square feets (use int) 
+		int areas[4];
+
+Intializations:
+	double salaries[5] = {2000.0,4000.0,3000.0,5000.0,8000.0};		
+	double salaries[5] = {};
+		//salaries are defined with default values -> default value for double 0.0 
+	double salaries[5] = {2000.0};	
+		// first element takes 2000.0 other elements will take type default value ie 0.0
+	double salaries[5] {[2]=2000.0};		
+		// third element takes 2000.0 other elements will take type default value ie 0.0
+		Aggregate initialization
+		Designated initialization
+------------------------------------------------------------------------------		
+		
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+int main() {
+	double salaries[5] = { 2000.0,8000.0,4000.0,3000.0,5000.0 };
+	int size = sizeof(salaries) / sizeof(double);
+
+	cout << "(range loop)Salaries are:" << endl;
+	for (auto sal : salaries) {
+		cout << sal << endl;
+	}
+
+	cout << "(c-like loop)Salaries are:" << endl;
+	for (int I = 0; I < size; I++) {
+		cout << salaries[I] << endl;
+	}
+
+	cout << "(C++ STL algorithm)Salaries are:" << endl;
+	for_each(salaries, salaries + size, [](int e) {cout << e << endl;});
+	//first element pointer "salaries", after last element pointer "salaries+size"
+	//anonymous function(lambda function) takes one argument and void return function
+
+
+	/*
+	//Sorting all the elements
+	//sort(salaries, salaries + size);//ASC
+	sort(salaries, salaries + size,greater<double>());//DESC
+	cout << "After Sort (C++ STL algorithm)Salaries are:" << endl;
+	for_each(salaries, salaries + size, [](int e) {cout << e << endl;});
+	*/
+
+	//Sorting the sub salaries array from index 2 till end of the array 
+	sort(salaries+2, salaries + size);
+	cout << "After Sort (C++ STL algorithm)Salaries are:" << endl;
+	for_each(salaries, salaries + size, [](int e) {cout << e << endl;});
+
+	return EXIT_SUCCESS;
+}		
+	
+	
+------------------------------------------------------------------------------
+Clean Code:
+------------------------------------------------------------------------------
+	
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+int main() {
+	double salaries[5] = { 2000.0,8000.0,4000.0,3000.0,5000.0 };
+	int size = sizeof(salaries) / sizeof(double);
+
+	cout << "(range loop)Salaries are:" << endl;
+	for (auto sal : salaries) {
+		cout << sal << endl;
+	}
+
+	cout << "(c-like loop)Salaries are:" << endl;
+	for (int I = 0; I < size; I++) {
+		cout << salaries[I] << endl;
+	}
+
+	cout << "(C++ STL algorithm)Salaries are:" << endl;
+	for_each(salaries, salaries + size, [](int e) {cout << e << endl;});
+
+	/*	
+	//sort(salaries, salaries + size);//ASC
+	sort(salaries, salaries + size,greater<double>());//DESC
+	cout << "After Sort (C++ STL algorithm)Salaries are:" << endl;
+	for_each(salaries, salaries + size, [](int e) {cout << e << endl;});
+	*/
+
+	
+	sort(salaries+2, salaries + size);
+	cout << "After Sort (C++ STL algorithm)Salaries are:" << endl;
+	for_each(salaries, salaries + size, [](int e) {cout << e << endl;});
+
+	return EXIT_SUCCESS;
+}		
+		
+------------------------------------------------------------------------------	
+	
+
+	
+
+	
