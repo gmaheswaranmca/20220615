@@ -60,4 +60,57 @@ what is namespace?
         names of data types, variables, or functions [Declarations] 
     
 ---------------------------------------------------------
+namespace, overloading example 
+    1 call by copy/value 
+    2 call by reference 
+    3 call by pointer 
+---------------------------------------------------------
+#include <iostream>
+using std::cout;
+using std::endl;
+
+namespace learn{
+	bool isOddNumber(int number); //call by copy/value
+	bool isOddNumber(int& number); //call by reference
+	bool isOddNumber(int* number); //call by pointer 
+}
+namespace learnv2 {
+	bool isOddNumber(int number); //call by copy/value
+	bool isOddNumber(int& number); //call by reference
+	bool isOddNumber(int* number); //call by pointer 
+}
+
+bool main()
+{
+	int firstNumber = 10;
+	int secondNumber = 13;
+
+	cout << learn::isOddNumber(10) << endl;
+	cout << learnv2::isOddNumber(10) << endl;
+}
+
+namespace learn {
+	bool isOddNumber(int number) {
+		return (number % 2 == 1);
+	}
+	bool isOddNumber(int& numberAlias) {
+		return (numberAlias % 2 == 1);
+	}
+	bool isOddNumber(int* numberAddr) {
+		return ((*numberAddr) % 2 == 1);
+	}
+}
+
+namespace learnv2 {
+	bool isOddNumber(int number) {
+		return (number % 2 != 0);
+	}
+	bool isOddNumber(int& numberAlias) {
+		return (numberAlias % 2 != 0);
+	}
+	bool isOddNumber(int* numberAddr) {
+		return ((*numberAddr) % 2 != 0);
+	}
+}
+
 
