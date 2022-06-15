@@ -1,0 +1,63 @@
+Learning Resources:
+    1. https://en.cppreference.com/w/
+
+
+    2. https://cplusplus.com/doc/tutorial/
+    
+       https://cplusplus.com/
+
+
+function overloading: two or many functions having same name but different signatures 
+		signatures -> return type, argument, qualifiers/modifiers
+		overloading is happening 
+			by arguments type, alignment, number
+			by modifiers like const 
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+bool isOddNumber(int number);		int 
+bool isOddNumber(int& number);		int& 
+bool isOddNumber(int* number);		int*
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+		===> Overloaded by argument type 
+
+
+The similar example but task inside the function will be varied
+bool isPrimeNumber(int number);
+bool isPrimeNumber(int& number);
+bool isPrimeNumber(int* number);
+
+
+---------------------------------------------------------
+what is the meaning of the below statement?
+using namespace std;
+
+
+We are telling the compiler I am going to use the names within the namespace "std" directly.
+
+
+Extracting the names of the namespace here directly to use.
+---------------------------------------------------------
+what is the meaning of the below statement?
+using std::cout;
+using std::endl;
+
+"std::cout" and "std::endl" are extracted as "cout" and "endl"
+---------------------------------------------------------
+what is usage of the namespace?
+    "
+    Namespaces provide a method(way) for 
+    *************preventing name conflicts***********
+    in large projects.
+    "
+    
+    
+what is namespace?
+    "
+    Namespaces provide a method(way) for preventing name conflicts in large projects.
+    "
+    
+    namespace is the container of names 
+        names of data types, variables, or functions [Declarations] 
+    
+---------------------------------------------------------
+
