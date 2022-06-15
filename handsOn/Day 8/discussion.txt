@@ -1,3 +1,10 @@
+Maheswaran Govindaraju
+Trainer
+
+Advanced C++ on Windows
+-------------------------------------------------------------
+
+
 Learning Resources:
     1. https://en.cppreference.com/w/
 
@@ -112,5 +119,67 @@ namespace learnv2 {
 		return ((*numberAddr) % 2 != 0);
 	}
 }
+---------------------------------------------------------
+NOTE::
+---------------------------------------------------------
+reference type 
+pointer type
+"indirection" operator          *
+"address of" opeartor           &
+---------------------------------------------------------
+int* numberAddr;
+Here the "*" is "int pointer type"
+---------------------------------------------------------
+int x = (*numberAddr) + 10;
+Here the "*" is the "indirection" opertor 
+---------------------------------------------------------
+int firstNumber = 10;
+int& numberAlias = firstNumber;
+Here the "&" is "int reference type"
+---------------------------------------------------------
+int firstNumber = 10;
+int *numberAddr = &firstNumber;
+Here the "&" is "address of" operator 
+---------------------------------------------------------
+NOTE::
+1. The reference type in the function argument 
+can receive only the variable name not the experession/data.
+---------------------------------------------------------
+bool isOddNumber(int number);
+Here the argument "number" is type int 
+Here we can pass expression / data and variable name during the function call 
 
+Example Function calls:
+ie. isOddNumber(10)
+    
+    int x = 12;
+    isOddNumber(10 + x)
+    
+    int y = 13;
+    isOddNumber(y)
+--------------------------------------------------------- 
+bool isOddNumber(int& numberAlias);
+Here the argument "numberAlias" is type "int reference"
+Here we can pass only "int" variable 
 
+Example Function calls:
+ie. int x = 12;
+    isOddNumber(10 + x) // Error 
+    
+    int y = 13;
+    isOddNumber(y)   // Valid Call 
+--------------------------------------------------------- 
+bool isOddNumber(int* numberAddr);
+Here the argument "numberAddr" is type "int pointer"
+Here we can pass only "address of" "int" variable 
+
+Example Function calls:
+ie. int x = 12;
+    isOddNumber(10 + x) // Error 
+    
+    int y = 13;
+    isOddNumber(y)   // Error
+
+    int y = 13;
+    isOddNumber(&y)   // Valid Call 
+---------------------------------------------------------

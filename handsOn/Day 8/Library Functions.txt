@@ -1,0 +1,16 @@
+Using Library Functions:
+---------------------------
+header<cmath>
+	pow		sqrt	abs 
+	ceil 	floor   round 
+	exp 	log 	log10 		log2 
+	sin		cos 	tan 		asin 	acos 	atan 
+	....
+---------------------------	
+header<cstdlib>	
+	EXIT_SUCCESS
+	EXIT_FAILURE
+	
+	atoi(cstr) -> cstr to int 
+	atof(cstr) -> cstr to double 
+---------------------------		
