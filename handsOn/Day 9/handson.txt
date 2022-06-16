@@ -1,0 +1,212 @@
+Data Structures in C++	
+	1. Arrays 				Define, Use
+							matrix Define, Use 
+	2. Strings 				
+		C-String 			Define, Use
+						<cstring> 
+							strcpy, strcat, strlen, strcmp, strch, strstr, 
+							strtok
+							
+							array of strings 
+								two dimensional character array 
+		C++ "string" 
+---------------------
+1. Read N (long long) numbers from the keyboard and find 
+	1) sum of the numbers 
+	2) sum of the odd numbers
+	3) sum of the even numbers 
+	4) sum of the prime numbers 
+	5) count number of the odd numbers 
+	6) count number of the even numbers 
+	7) count number of the prime numbers 
+---------------------	
+2. Read N (double) salaries and find the Kth maximum salary.
+For example, 3rd maximum salary. 
+---------------------	
+
+
+---------------------
+1.1
+---------------------
+//Read N (long long) numbers from the keyboard and print the numbers 
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+int main() {
+	long long numbers[MAX_SIZE];
+	int N;
+
+	//Read Number of Numbers
+	cout << "Enter number of numbers:";
+	cin >> N;
+
+	//read numbers
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter number at index " << I << ":";
+		cin >> numbers[I];
+	}
+
+	//print numbers forward
+	//Forward Traversal
+	cout << "Enter numbers are:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+
+	//print numbers backward
+	//Backward Traversal
+	cout << "Enter reverse of the numbers are:" << endl;
+	for (int I = N - 1; I >= 0; I--) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+
+	return EXIT_SUCCESS;
+}
+
+
+---------------------
+1.2
+---------------------
+//1) sum of the numbers 
+//Read N (long long) numbers from the keyboard and print the numbers 
+//Refactoring Technique -> Compose Methods -> Extract Method 
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+void readNumberOfNumbers(int& N) {
+	//Read Number of Numbers
+	cout << "Enter number of numbers:";
+	cin >> N;
+}
+//void readNumbers(int N, long long* numbers) 
+//long long numbers[] equivalent to long long* numbers only in the funtion argument
+
+void readNumbers(int N, long long numbers[]) {
+	//read numbers
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter number at index " << I << ":";
+		cin >> numbers[I];
+	}
+}
+
+void printNumbersForward(int N, long long numbers[]) {
+	//print numbers forward
+	//Forward Traversal
+	cout << "Given numbers are:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+void printNumbersBackward(int N, long long numbers[]) {
+	//print numbers backward
+	//Backward Traversal
+	cout << "Given reverse of the numbers are:" << endl;
+	for (int I = N - 1; I >= 0; I--) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+
+long long sumOfNumbers(int N, long long numbers[]) { //N=5, numbers{10, 7,12, 3, 4}
+	long long sum = 0LL;            //0
+	for (int I = 0; I < N; I++) {   //I:0T      1T          2T          3T          4T          5F
+		sum = sum + numbers[I];     //0+10=10   10+7=17     17+12=29    29+3=32     32+4=36
+	}
+	return sum; //36
+}
+
+int main() {
+	long long numbers[MAX_SIZE]{};  //10 7 12 3 4
+	int N;                          //5
+
+	readNumberOfNumbers(N);
+	readNumbers(N, numbers);
+	printNumbersForward(N, numbers);
+	printNumbersBackward(N, numbers);
+	long long sum = sumOfNumbers(N, numbers);
+	cout << "The sum of the numbers is " << sum << endl;
+
+	return EXIT_SUCCESS;
+}
+
+
+---------------------
+1.3
+---------------------
+//1) sum of the numbers 
+//Read N (long long) numbers from the keyboard and print the numbers 
+//Refactoring Technique -> Compose Methods -> Extract Method 
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+void readNumberOfNumbers(int& N) {
+	//Read Number of Numbers
+	cout << "Enter number of numbers:";
+	cin >> N;
+}
+//void readNumbers(int N, long long* numbers) 
+//long long numbers[] equivalent to long long* numbers only in the funtion argument
+
+void readNumbers(int N, long long numbers[]) {
+	//read numbers
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter number at index " << I << ":";
+		cin >> numbers[I];
+	}
+}
+
+void printNumbersForward(int N, long long numbers[]) {
+	//print numbers forward
+	//Forward Traversal
+	cout << "Given numbers are:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+void printNumbersBackward(int N, long long numbers[]) {
+	//print numbers backward
+	//Backward Traversal
+	cout << "Given reverse of the numbers are:" << endl;
+	for (int I = N - 1; I >= 0; I--) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+
+long long sumOfNumbers(int N, long long numbers[]) { //N=5, numbers{10, 7,12, 3, 4}
+	long long sum = 0LL;            //0
+	for (int I = 0; I < N; I++) {   //I:0T      1T          2T          3T          4T          5F
+		sum = sum + numbers[I];     //0+10=10   10+7=17     17+12=29    29+3=32     32+4=36
+	}
+	return sum; //36
+}
+
+int main() {
+	long long numbers[MAX_SIZE]{};  //10 7 12 3 4
+	int N;                          //5
+
+	readNumberOfNumbers(N);
+	readNumbers(N, numbers);
+	printNumbersForward(N, numbers);
+	printNumbersBackward(N, numbers);
+	long long sum = sumOfNumbers(N, numbers);
+	cout << "The sum of the numbers is " << sum << endl;
+
+	return EXIT_SUCCESS;
+}
