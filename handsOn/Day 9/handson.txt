@@ -210,3 +210,362 @@ int main() {
 
 	return EXIT_SUCCESS;
 }
+
+
+---------------------
+1.3 Clean Code(After Removing Comments)
+---------------------
+
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+void readNumberOfNumbers(int& N) {
+	cout << "Enter number of numbers:";
+	cin >> N;
+}
+
+void readNumbers(int N, long long numbers[]) {
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter number at index " << I << ":";
+		cin >> numbers[I];
+	}
+}
+
+void printNumbersForward(int N, long long numbers[]) {
+	cout << "Given numbers are:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+void printNumbersBackward(int N, long long numbers[]) {
+	cout << "Given reverse of the numbers are:" << endl;
+	for (int I = N - 1; I >= 0; I--) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+
+long long sumOfNumbers(int N, long long numbers[]) { 
+	long long sum = 0LL;           
+	for (int I = 0; I < N; I++) {  
+		sum = sum + numbers[I];   
+	}
+	return sum; 
+}
+
+int main() {
+	long long numbers[MAX_SIZE]{};  
+	int N;                         
+
+	readNumberOfNumbers(N);
+	readNumbers(N, numbers);
+	printNumbersForward(N, numbers);
+	printNumbersBackward(N, numbers);
+	long long sum = sumOfNumbers(N, numbers);
+	cout << "The sum of the numbers is " << sum << endl;
+
+	return EXIT_SUCCESS;
+}
+
+
+---------------------
+1.4
+---------------------
+//1) sum of the numbers 
+//2) sum of the odd numbers
+//3) sum of the even numbers 
+//5) count number of the odd numbers 
+//6) count number of the even numbers 
+//Read N (long long) numbers from the keyboard and print the numbers 
+//Refactoring Technique -> Compose Methods -> Extract Method 
+
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+void readNumberOfNumbers(int& N) {
+	cout << "Enter number of numbers:";
+	cin >> N;
+}
+
+void readNumbers(int N, long long numbers[]) {
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter number at index " << I << ":";
+		cin >> numbers[I];
+	}
+}
+
+void printNumbersForward(int N, long long numbers[]) {
+	cout << "Given numbers are:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+void printNumbersBackward(int N, long long numbers[]) {
+	cout << "Given reverse of the numbers are:" << endl;
+	for (int I = N - 1; I >= 0; I--) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+
+long long sumOfNumbers(int N, long long numbers[]) {
+	long long sum = 0LL;
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+	}
+	return sum;
+}
+
+bool isOddNumber(int number) {
+	return ((number % 2) == 1);
+}
+bool isEvenNumber(int number) {
+	return ((number % 2) == 0);
+}
+long long sumOfNumbersExt(int N, long long numbers[],
+	long long& sumOdd, long long& sumEven,
+	int& countOdd, int& countEven) {
+	long long sum = 0LL;
+	sumOdd = 0LL;
+	sumEven = 0LL;
+	countOdd = 0;
+	countEven = 0;
+
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+
+		if (isOddNumber(numbers[I])) {
+			sumOdd = sumOdd + numbers[I];
+			countOdd++;
+		}
+
+		if (isEvenNumber(numbers[I])) {
+			sumEven = sumEven + numbers[I];
+			countEven++;
+		}
+	}
+	return sum;
+}
+
+int main() {
+	long long numbers[MAX_SIZE]{};
+	int N;
+
+	readNumberOfNumbers(N);
+	readNumbers(N, numbers);
+	printNumbersForward(N, numbers);
+	printNumbersBackward(N, numbers);
+	//long long sum = sumOfNumbers(N, numbers);
+	long long sum = 0LL;
+	long long sumOdd = 0LL;
+	long long sumEven = 0LL;
+	int countOdd = 0;
+	int countEven = 0;
+
+	sum = sumOfNumbersExt(N, numbers, sumOdd, sumEven, countOdd, countEven);
+
+
+	cout << "The sum of the numbers is " << sum << endl;
+	cout << "The sum of the odd numbers is " << sumOdd << endl;
+	cout << "The sum of the even numbers is " << sumEven << endl;
+	cout << "The count of the odd numbers is " << countOdd << endl;
+	cout << "The count of the even numbers is " << countEven << endl;
+
+	return EXIT_SUCCESS;
+}
+
+Output
+Enter number of numbers:5
+Enter numbers one by one:
+Enter number at index 0:10
+Enter number at index 1:7
+Enter number at index 2:3
+Enter number at index 3:12
+Enter number at index 4:4
+Given numbers are:
+10 7 3 12 4
+Given reverse of the numbers are:
+4 12 3 7 10
+The sum of the numbers is 36
+The sum of the odd numbers is 10
+The sum of the even numbers is 26
+The count of the odd numbers is 2
+The count of the even numbers is 3
+
+
+---------------------
+1.5
+---------------------
+//1) sum of the numbers 
+
+
+//2) sum of the odd numbers
+//3) sum of the even numbers 
+//5) count number of the odd numbers 
+//6) count number of the even numbers 
+
+//Single Responsibiliy Principle is not there 
+//  SOLID principles for object/object function|method, component, or microservice 
+//  Either object/object function has to use only one responsibilty 
+//  function has to use only one responsibilty ie it should solve for only one task 
+//                                                it should not solve so many tasks 
+
+//Read N (long long) numbers from the keyboard and print the numbers 
+//Refactoring Technique -> Compose Methods -> Extract Method 
+
+
+
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+void readNumberOfNumbers(int& N) {
+	cout << "Enter number of numbers:";
+	cin >> N;
+}
+
+void readNumbers(int N, long long numbers[]) {
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter number at index " << I << ":";
+		cin >> numbers[I];
+	}
+}
+
+void printNumbersForward(int N, long long numbers[]) {
+	cout << "Given numbers are:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+void printNumbersBackward(int N, long long numbers[]) {
+	cout << "Given reverse of the numbers are:" << endl;
+	for (int I = N - 1; I >= 0; I--) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+
+
+
+bool isOddNumber(int number) {
+	return ((number % 2) == 1);
+}
+bool isEvenNumber(int number) {
+	return ((number % 2) == 0);
+}
+long long sumOfNumbers(int N, long long numbers[]) {
+	long long sum = 0LL;
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+	}
+	return sum;
+}
+long long sumOddNumbers(int N, long long numbers[]) {
+	long long sum = 0LL;
+	for (int I = 0; I < N; I++) {
+        if(isOdd(numbers[I]){
+            sum = sum + numbers[I];
+        }
+	}
+	return sum;
+}
+long long sumEvenNumbers(int N, long long numbers[]) {
+	long long sum = 0LL;
+	for (int I = 0; I < N; I++) {
+        if(isEven(numbers[I])){
+            sum = sum + numbers[I];
+        }
+	}
+	return sum;
+}
+int countOddNumbers(int N, long long numbers[]) {
+	int count = 0;
+	for (int I = 0; I < N; I++) {
+        if(isOddNumber(numbers[I]){
+            count++;
+        }
+	}
+	return count;
+}
+int countEvenNumbers(int N, long long numbers[]) {
+	int count = 0;
+	for (int I = 0; I < N; I++) {
+        if(isEvenNumber(numbers[I]){
+            count++;
+        }
+	}
+	return count;
+}
+
+long long sumOfNumbersExt(int N, long long numbers[],
+	long long& sumOdd, long long& sumEven,
+	int& countOdd, int& countEven) {
+	long long sum = 0LL;
+	sumOdd = 0LL;
+	sumEven = 0LL;
+	countOdd = 0;
+	countEven = 0;
+
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+
+		if (isOddNumber(numbers[I])) {
+			sumOdd = sumOdd + numbers[I];
+			countOdd++;
+		}
+
+		if (isEvenNumber(numbers[I])) {
+			sumEven = sumEven + numbers[I];
+			countEven++;
+		}
+	}
+	return sum;
+}
+
+int main() {
+	long long numbers[MAX_SIZE]{};
+	int N;
+
+	readNumberOfNumbers(N);
+	readNumbers(N, numbers);
+	printNumbersForward(N, numbers);
+	printNumbersBackward(N, numbers);
+	
+	long long sum = 0LL;
+	long long sumOdd = 0LL;
+	long long sumEven = 0LL;
+	int countOdd = 0;
+	int countEven = 0;
+
+	//sum = sumOfNumbersExt(N, numbers, sumOdd, sumEven, countOdd, countEven);
+    sum = sumOfNumbers(N, numbers);
+    sumOdd = sumOddNumbers(N, numbers);
+    sumEven = sumEvenNumbers(N, numbers);
+    countOdd = countOddNumbers(N, numbers);
+    countEven = countEvenNumbers(N, numbers);
+
+	cout << "The sum of the numbers is " << sum << endl;
+	cout << "The sum of the odd numbers is " << sumOdd << endl;
+	cout << "The sum of the even numbers is " << sumEven << endl;
+	cout << "The count of the odd numbers is " << countOdd << endl;
+	cout << "The count of the even numbers is " << countEven << endl;
+
+	return EXIT_SUCCESS;
+}
