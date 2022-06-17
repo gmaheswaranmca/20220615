@@ -1,0 +1,11 @@
+1. Implement stack 
+	1.1 Use STL stack 	
+		to define five salaries (double) 
+	1.2 Implement Stack Class / Structure [User Defined] 	
+		to define five salaries (double) 
+		
+2. Implement queue 
+3. sorting algorithms 
+4. search algorithms 
+5. Binary Tree -> Traversal 
+6. Binary Search Tree -> Add Node / Delete Node ie Addition/Deletion

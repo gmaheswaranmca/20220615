@@ -889,30 +889,30 @@ long long sumOfNumbers(int N, long long numbers[]) {
 	return sum;
 }
 
-long long sumPrimeNumbers(int N, long long numbers[]) {
-	long long sum = 0LL;
-		for (int I = 0; I < N; I++) {
-			if (isPrimeNumber(numbers[I])) {
-				sum = sum + numbers[I];
-			}
-		}
-	return sum;
-}
-
-long long sumOddNumbers(int N, long long numbers[]) {
-	long long sum = 0LL;
-	for (int I = 0; I < N; I++) {
-		if (isOddNumber(numbers[I])) {
-			sum = sum + numbers[I];
+long long sumPrimeNumbers(int N, long long numbers[]) {//N:5,numbers{6, 8, 13, 5, 1}
+	long long sum = 0LL;			
+	for (int I = 0; I < N; I++) {		//I:0T	1T	2T		3T		4T		5F
+		if (isPrimeNumber(numbers[I])) {//6F	8F	13T		5T		1T
+			sum = sum + numbers[I];		//---	---	0+13=13	13+5=18 18+1=19
 		}
 	}
-	return sum;
+	return sum;//19
 }
 
-void readMatrixSize(int& N, int &M) {
+long long sumOddNumbers(int N, long long numbers[]) {//N:5,numbers{11,25,14,12,9}
+	long long sum = 0LL;
+	for (int I = 0; I < N; I++) {		//I:0T		1T			2T		3T	4T		5F.	
+		if (isOddNumber(numbers[I])) {	//11T		25T			14F		12F	9T
+			sum = sum + numbers[I];		//0+11=11	11+25=36	---		---	36+9=45
+		}
+	}
+	return sum;//45
+}
+
+void readMatrixSize(int& N, int& M) {
 	cout << "Enter number of rows:";
 	cin >> N;
-    cout << "Enter number of columns:";
+	cout << "Enter number of columns:";
 	cin >> M;
 }
 void readRowNumbers(int M, long long numbers[]) {
@@ -921,39 +921,163 @@ void readRowNumbers(int M, long long numbers[]) {
 		cin >> numbers[L];
 	}
 }
-void readMatrix(int N, int M, long long numbersMatrix[][MAX_COLUMNS]){
-    cout << "Enter the numbers for matrix:" << endl;
-    for (int K = 0; K < N; K++) {
-        cout << "Enter numbers at row" << K << ":" << endl;
-        readRowNumbers(M,numbersMatrix[K]);
-    }
+void readMatrix(int N, int M, long long numbersMatrix[][MAX_COLUMNS]) {
+	cout << "Enter the numbers for matrix:" << endl;
+	for (int K = 0; K < N; K++) {
+		cout << "Enter numbers at row" << K << ":" << endl;
+		readRowNumbers(M, numbersMatrix[K]);
+	}
 }
 void printRowNumbers(int M, long long numbers[]) {
 	for (int L = 0; L < M; L++) {
 		cout << numbers[L] << " ";
 	}
 }
-void printMatrix(int N, int M, long long numbersMatrix[][MAX_COLUMNS]){
-    cout << "The matrix of size " << N << "x" << M << ":" << endl;
-    for (int K = 0; K < N; K++) {
-        printRowNumbers(M,numbersMatrix[K]);
-        cout << endl;
-    }
-    cout << endl;
+void printMatrix(int N, int M, long long numbersMatrix[][MAX_COLUMNS]) {
+	cout << "The matrix of size " << N << "x" << M << ":" << endl;
+	for (int K = 0; K < N; K++) {
+		printRowNumbers(M, numbersMatrix[K]);
+		cout << endl;
+	}
+	cout << endl;
 }
 
 
 int main() {
-	long long numbersMatrix[MAX_ROWS][MAX_COLUMNS] {};
-    int N; // No of rows 
-    int M; // No of columns 
-    
-    readMatrixSize(N,M);
-    readMatrix(N,M,numbersMatrix);
-    printMatrix(N,M,numbersMatrix);
-    
+	long long numbersMatrix[MAX_ROWS][MAX_COLUMNS]{};
+	int N; // No of rows 
+	int M; // No of columns 
+
+	readMatrixSize(N, M);
+	readMatrix(N, M, numbersMatrix);
+	printMatrix(N, M, numbersMatrix);
+
+	long long sumFirstRow = 0LL;
+	long long sumPrimeSecondRow = 0LL;
+	long long sumOddThirdRow = 0LL;
+
+	sumFirstRow = sumOfNumbers(M, numbersMatrix[0]);
+	sumPrimeSecondRow = sumPrimeNumbers(M, numbersMatrix[1]);
+	sumOddThirdRow = sumOddNumbers(M, numbersMatrix[2]);
+
+	cout << "The sum of the numbers of the first row is " << sumFirstRow << endl;
+	cout << "The sum of the prime numbers of the second row is " << sumPrimeSecondRow << endl;
+	cout << "The sum of the odd numbers of the third row is " << sumOddThirdRow << endl;
+
 	return EXIT_SUCCESS;
-}    
+}
+
+
+------------------------------
+AFTER REMOVED THE COMMENTS
+------------------------------
+#define MAX_ROWS 10
+#define MAX_COLUMNS 1000
+#include<iostream>
+#include<cstdlib>
+#include<cmath>
+using namespace std;
+
+bool isOddNumber(int number) {
+	return ((number % 2) == 1);
+}
+
+bool isPrimeNumber(int number) {
+	int sqrtNumber = (int)sqrt((double)number);
+	for (int middleNumber = 2; middleNumber <= sqrtNumber; middleNumber++) {
+		if (number % middleNumber == 0) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+long long sumOfNumbers(int N, long long numbers[]) {
+	long long sum = 0LL;
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+	}
+	return sum;
+}
+
+long long sumPrimeNumbers(int N, long long numbers[]) {
+	long long sum = 0LL;			
+	for (int I = 0; I < N; I++) {		
+		if (isPrimeNumber(numbers[I])) {
+			sum = sum + numbers[I];		
+		}
+	}
+	return sum;
+}
+
+long long sumOddNumbers(int N, long long numbers[]) {
+	long long sum = 0LL;
+	for (int I = 0; I < N; I++) {		
+		if (isOddNumber(numbers[I])) {	
+			sum = sum + numbers[I];	
+		}
+	}
+	return sum;
+}
+
+void readMatrixSize(int& N, int& M) {
+	cout << "Enter number of rows:";
+	cin >> N;
+	cout << "Enter number of columns:";
+	cin >> M;
+}
+void readRowNumbers(int M, long long numbers[]) {
+	for (int L = 0; L < M; L++) {
+		cout << "Enter number at column " << L << ":";
+		cin >> numbers[L];
+	}
+}
+void readMatrix(int N, int M, long long numbersMatrix[][MAX_COLUMNS]) {
+	cout << "Enter the numbers for matrix:" << endl;
+	for (int K = 0; K < N; K++) {
+		cout << "Enter numbers at row" << K << ":" << endl;
+		readRowNumbers(M, numbersMatrix[K]);
+	}
+}
+void printRowNumbers(int M, long long numbers[]) {
+	for (int L = 0; L < M; L++) {
+		cout << numbers[L] << " ";
+	}
+}
+void printMatrix(int N, int M, long long numbersMatrix[][MAX_COLUMNS]) {
+	cout << "The matrix of size " << N << "x" << M << ":" << endl;
+	for (int K = 0; K < N; K++) {
+		printRowNumbers(M, numbersMatrix[K]);
+		cout << endl;
+	}
+	cout << endl;
+}
+
+
+int main() {
+	long long numbersMatrix[MAX_ROWS][MAX_COLUMNS]{};
+	int N; // No of rows 
+	int M; // No of columns 
+
+	readMatrixSize(N, M);
+	readMatrix(N, M, numbersMatrix);
+	printMatrix(N, M, numbersMatrix);
+
+	long long sumFirstRow = 0LL;
+	long long sumPrimeSecondRow = 0LL;
+	long long sumOddThirdRow = 0LL;
+
+	sumFirstRow = sumOfNumbers(M, numbersMatrix[0]);
+	sumPrimeSecondRow = sumPrimeNumbers(M, numbersMatrix[1]);
+	sumOddThirdRow = sumOddNumbers(M, numbersMatrix[2]);
+
+	cout << "The sum of the numbers of the first row is " << sumFirstRow << endl;
+	cout << "The sum of the prime numbers of the second row is " << sumPrimeSecondRow << endl;
+	cout << "The sum of the odd numbers of the third row is " << sumOddThirdRow << endl;
+
+	return EXIT_SUCCESS;
+}
 
 Enter numbers at row1:
 Enter number at column 0:6

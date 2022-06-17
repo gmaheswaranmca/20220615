@@ -1,0 +1,2 @@
+1. Implement stack as queue
+2. Implement queue as stack 

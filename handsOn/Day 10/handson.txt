@@ -1,0 +1,154 @@
+
+class : 
+	user defined data type				!!! Maria Benny
+		contains member variables
+				 member functions
+	a blue print of objects 			!!! MUHAMED AJNAS
+		"data type / blue print / template to construct objects" 
+				 
+	access of class members are : private, public, protected
+		private: "Data Hiding", members are accessed within the class instance/object member functions
+		public: members are accessed throughout the program 
+		protected: within the class and derived class 
+		
+	derived class: inherited from base class 		!!! Inheritance
+		child class, sub class  
+	base class: 									!!! Inheritance
+		parent class, super class 
+		
+	constructor	: 
+		special member function has same name as class name 
+		it is called at the time object is created 
+			-> Initialization Job we can do here such as "dynamic memory allocation for attributes",
+				"resource opening such as file/network/database"
+				"member attribute/field value initialization"
+		there should not be return type in the constructor 
+		the constructor can have arguments 
+			types:
+				default constructor 
+				parameterized(argument) constructor 
+				copy constructor 
+				move constructor 
+	destructor :
+		special member function has same name as class name prefixed with "~"
+		there should not be return type in the destructor 
+		destructor will not have arguments 			
+		it is called at the time object is destructed 
+			-> Cleaning Up Job we can do here such as "dynamic memory deallocation for attributes",
+				"resource closing such as file/network/database"
+				
+---------------------------------------------------------------------
+1. Implement stack 
+---------------------------------------------------------------------
+	stack: data container follows the principle of "LIFO"
+		LIFO -> Last In First Out
+	queue: data container follows the principle of "FIFO"
+		FIFO -> First In First Out 
+---------------------------------------------------------------------
+
+
+---------------------------------------------------------------------
+1.1 Use STL stack 	
+	to define five salaries (double) 
+---------------------------------------------------------------------
+#include<iostream>
+#include<cstdlib>
+#include<stack>
+using namespace std;
+
+int main() {
+	stack<double> salaries;
+	salaries.push(6000.00);
+	salaries.push(3000.00);
+	salaries.push(5000.00);
+	salaries.push(2500.00);
+	salaries.push(1500.00);
+
+	cout << "The stack of size " << salaries.size() << " is processed as " << endl;
+	while (!salaries.empty()) {
+		cout << "Pay salary of worth Rs." << salaries.top() << endl; // PROCESS
+		salaries.pop();
+	}
+
+	return EXIT_SUCCESS;
+}
+---------------------------------------------------------------------
+
+			
+
+---------------------------------------------------------------------
+1.2 Implement Stack Class / Structure [User Defined] 	
+	to define five salaries (double) 
+---------------------------------------------------------------------
+#define STACK_SIZE 5
+#include<iostream>
+#include<cstdlib>
+
+using namespace std;
+
+class GGStack {
+	private:
+		double salaries[STACK_SIZE];
+		int topIndex;
+		int count;
+	public:
+		GGStack();
+		void push(double val);
+		int size();
+		bool empty();
+		void pop();
+		double top();
+};
+
+GGStack::GGStack() {
+	this->topIndex = -1;
+	this->count = 0;
+}
+
+int GGStack::size() {
+	return this->count;
+}
+bool GGStack::empty() {
+	return (this->count == 0);
+}
+
+double GGStack::top() {
+	return salaries[this->topIndex];
+}
+
+void GGStack::push(double val) {
+	if (this->count >= STACK_SIZE) {
+		throw "Stack is full";
+	}
+
+	this->topIndex++;
+	this->count++;
+
+	salaries[this->topIndex] = val;
+}
+
+void GGStack::pop() {
+	if (this->count <= 0) {
+		throw "Stack is empty";
+	}
+	this->topIndex--;
+	this->count--;
+}
+
+int main() {
+	GGStack salaries;
+	salaries.push(6000.00);
+	salaries.push(3000.00);
+	salaries.push(5000.00);
+	salaries.push(2500.00);
+	salaries.push(1500.00);
+
+	cout << "The stack of size " << salaries.size() << " is processed as " << endl;
+	while (!salaries.empty()) {
+		cout << "Pay salary of worth Rs." << salaries.top() << endl; // PROCESS
+		salaries.pop();
+	}
+
+	return EXIT_SUCCESS;
+}
+---------------------------------------------------------------------

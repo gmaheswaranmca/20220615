@@ -1,0 +1,95 @@
+struct, class, union 
+	in C++ all are for class definition 
+	they are called "class-keys"
+
+struct: by default, members are public
+		default inheritance access is public
+		for all attributes/fields the memory will be allocated
+		
+class: by default, members are private
+       default inheritance access is private 
+	   for all attributes/fields the memory will be allocated
+	   
+union: by default, members are public
+	   default inheritance access is public
+	   for highest sized member attribute/field the memory will be allocated
+			-> at a time, we can use only one attribute eventhough there are so many attributes
+
+--------------------------------------------------------------
+In the below class definitions,
+"class Scheme" and 	"struct Scheme" are same.
+"union Schme" is little different.
+	
+class Scheme{
+	public:
+		int schemeId;
+		char schmeName[1000];
+		double maxLoanAmount;
+		float rateOfIterest;
+		int durationInMonths;
+	public:
+		Scheme(){
+			
+		}
+		void addNewSchemeIntoDb(){
+		}
+		void updateSchemeIntoDb(){
+		}	
+		void readSchemeById(){
+		}	
+		static void readAllSchemeById(){
+		}
+		~Scheme(){
+			
+		}		
+};	
+--------------------------------------------------------------
+
+struct Scheme{
+	public:
+		int schemeId;
+		char schmeName[1000];
+		double maxLoanAmount;
+		float rateOfIterest;
+		int durationInMonths;
+	public:
+		Scheme(){
+			
+		}
+		void addNewSchemeIntoDb(){
+		}
+		void updateSchemeIntoDb(){
+		}	
+		void readSchemeById(){
+		}	
+		static void readAllSchemeById(){
+		}	
+		~Scheme(){
+			
+		}	
+};
+--------------------------------------------------------------
+union Scheme{
+	public:
+		int schemeId;
+		char schmeName[1000];
+		double maxLoanAmount;
+		float rateOfIterest;
+		int durationInMonths;
+	public:
+		Scheme(){
+			
+		}
+		void addNewSchemeIntoDb(){
+		}
+		void updateSchemeIntoDb(){
+		}	
+		void readSchemeById(){
+		}	
+		static void readAllSchemeById(){
+		}	
+		~Scheme(){
+			
+		}	
+};
+--------------------------------------------------------------
