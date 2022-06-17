@@ -152,3 +152,812 @@ int main() {
 	return EXIT_SUCCESS;
 }
 ---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+1.3 Use STL stack 	
+	to define five salaries (double) 
+    Use menu-driven based Add and Delete
+    Without Exception Handling
+---------------------------------------------------------------------
+#include<iostream>
+#include<cstdlib>
+#include<stack>
+using namespace std;
+
+int main() {
+	stack<double> salaries;
+
+	int menu;
+	do {
+		cout << "Choice(1-Add, 2-Delete, 3-Exit):";
+		cin >> menu;
+
+		if (1 == menu) {
+			double sal;
+			cout << "Enter the salary:";
+			cin >> sal;
+			salaries.push(sal);
+		}
+		else if (2 == menu) {
+			if (salaries.empty()) {
+				cout << "Stack is empty." << endl;
+
+			}
+			else {
+				cout << "Pay salary of worth Rs." << salaries.top() << endl; // PROCESS
+				salaries.pop();
+			}
+		}
+		else {
+			cout << "Shutting Down App!!!" << endl;
+		}
+	}while(1==menu || 2==menu);
+
+	return EXIT_SUCCESS;
+}
+
+
+
+
+---------------------------------------------------------------------
+1.4 Use STL stack 	
+	to define five salaries (double) 
+    Use menu-driven based Add and Delete
+    With Exception Handling
+    
+    -> pop is throwing any exception 
+        <-- from the C++ standard 
+---------------------------------------------------------------------
+#include<iostream>
+#include<cstdlib>
+#include<stack>
+#include<exception>
+using namespace std;
+
+int main() {
+	stack<double> salaries;
+
+	int menu;
+	do {
+		cout << "Choice(1-Add, 2-Delete, 3-Exit):";
+		cin >> menu;
+
+		if (1 == menu) {
+			double sal;
+			cout << "Enter the salary:";
+			cin >> sal;
+			salaries.push(sal);
+		}
+		else if (2 == menu) {
+			try{
+				cout << "Pay salary of worth Rs." << salaries.top() << endl; // PROCESS
+				salaries.pop();
+			}
+			catch (exception& ex) {
+				cout << "(handler of object exception&)Stack is Empty";
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Empty";
+			}
+		}
+		else {
+			cout << "Shutting Down App!!!" << endl;
+		}
+	} while (1 == menu || 2 == menu);
+
+	return EXIT_SUCCESS;
+}
+
+
+
+---------------------------------------------------------------------
+1.5 Implement Stack Class / Structure [User Defined] 	
+	to define five salaries (double) 
+    Use menu-driven based Add and Delete
+    Without Exception Handling
+---------------------------------------------------------------------
+#define STACK_SIZE 5
+#include<iostream>
+#include<cstdlib>
+
+using namespace std;
+
+class GGStack {
+	private:
+		double salaries[STACK_SIZE];
+		int topIndex;
+		int count;
+	public:
+		GGStack();
+		void push(double val);
+		int size();
+		bool empty();
+		void pop();
+		double top();
+};
+
+GGStack::GGStack() {
+	this->topIndex = -1;
+	this->count = 0;
+}
+
+int GGStack::size() {
+	return this->count;
+}
+bool GGStack::empty() {
+	return (this->count == 0);
+}
+
+double GGStack::top() {
+	return salaries[this->topIndex];
+}
+
+void GGStack::push(double val) {
+	if (this->count >= STACK_SIZE) {
+		throw "Stack is full";
+	}
+
+	this->topIndex++;
+	this->count++;
+
+	salaries[this->topIndex] = val;
+}
+
+void GGStack::pop() {
+	if (this->count <= 0) {
+		throw "Stack is empty";
+	}
+	this->topIndex--;
+	this->count--;
+}
+
+int main() {
+	GGStack salaries;
+
+	int menu;
+	do {
+		cout << "Choice(1-Add, 2-Delete, 3-Exit):";
+		cin >> menu;
+
+		if (1 == menu) {
+			double sal;
+			cout << "Enter the salary:";
+			cin >> sal;
+			salaries.push(sal);
+		}
+		else if (2 == menu) {
+			if (salaries.empty()) {
+				cout << "Stack is empty." << endl;
+
+			}
+			else {
+				cout << "Pay salary of worth Rs." << salaries.top() << endl; // PROCESS
+				salaries.pop();
+			}
+		}
+		else {
+			cout << "Shutting Down App!!!" << endl;
+		}
+	}while(1==menu || 2==menu);
+
+	return EXIT_SUCCESS;
+}
+
+
+---------------------------------------------------------------------
+1.6 Implement Stack Class / Structure [User Defined] 	
+	to define five salaries (double) 
+    Use menu-driven based Add and Delete
+    With Exception Handling
+---------------------------------------------------------------------
+#define STACK_SIZE 5
+#include<iostream>
+#include<cstdlib>
+
+using namespace std;
+
+class GGStack {
+	private:
+		double salaries[STACK_SIZE];
+		int topIndex;
+		int count;
+	public:
+		GGStack();
+		void push(double val);
+		int size();
+		bool empty();
+		void pop();
+		double top();
+};
+
+GGStack::GGStack() {
+	this->topIndex = -1;
+	this->count = 0;
+}
+
+int GGStack::size() {
+	return this->count;
+}
+bool GGStack::empty() {
+	return (this->count == 0);
+}
+
+double GGStack::top() {
+	return salaries[this->topIndex];
+}
+
+void GGStack::push(double val) {
+	if (this->count >= STACK_SIZE) {
+		throw "Stack is full";
+	}
+
+	this->topIndex++;
+	this->count++;
+
+	salaries[this->topIndex] = val;
+}
+
+void GGStack::pop() {
+	if (this->count <= 0) {
+		throw "Stack is empty";
+	}
+	this->topIndex--;
+	this->count--;
+}
+
+int main() {
+	GGStack salaries;
+
+	int menu;
+	do {
+		cout << "Choice(1-Add, 2-Delete, 3-Exit):";
+		cin >> menu;
+
+		if (1 == menu) {
+			double sal;
+			cout << "Enter the salary:";
+			cin >> sal;
+            try{
+				salaries.push(sal);
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Stack is Full"<< endl;
+                cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Full"<< endl;
+			}
+			
+		}
+		else if (2 == menu) {
+			try{
+				cout << "Pay salary of worth Rs." << salaries.top() << endl; // PROCESS
+				salaries.pop();
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Stack is Empty"<< endl;
+                cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Empty"<< endl;
+			}
+		}
+		else {
+			cout << "Shutting Down App!!!" << endl;
+		}
+	}while(1==menu || 2==menu);
+
+	return EXIT_SUCCESS;
+}
+
+**********************************************************************************
+2. Implement queue 
+**********************************************************************************
+
+---------------------------------------------------------------------
+2.1 Use STL queue 	
+	to define five salaries (double) 
+    Use menu-driven based Add and Delete
+    Without Exception Handling
+---------------------------------------------------------------------
+#include<iostream>
+#include<cstdlib>
+#include<queue>
+using namespace std;
+
+int main() {
+	queue<double> salaries;
+
+	int menu;
+	do {
+		cout << "Choice(1-Add, 2-Delete, 3-Exit):";
+		cin >> menu;
+
+		if (1 == menu) {
+			double sal;
+			cout << "Enter the salary:";
+			cin >> sal;
+			salaries.push(sal);
+			cout << "Now the queue size is " << salaries.size() << endl;
+		}
+		else if (2 == menu) {
+			if (salaries.empty()) {
+				cout << "Queue is empty." << endl;
+			}
+			else {
+				cout << "Pay salary of worth Rs." << salaries.front() << endl; // PROCESS
+				salaries.pop();
+				cout << "Now the queue size is " << salaries.size() << endl;
+			}
+		}
+		else {
+			cout << "Shutting Down App!!!" << endl;
+		}
+	} while (1 == menu || 2 == menu);
+
+	return EXIT_SUCCESS;
+}
+
+---------------------------------------------------------------------
+Before implementing the queue 
+We explain how the operations wrt queue are happening
+---------------------------------------------------------------------
+	//10 20 30 40 50
+
+	//			F(-1)B(-1)	
+	// add 10	F(0) 10 B(0)					
+	// add 20	F(0) 10 20 B(1)				
+	// add 30	F(0) 10 20 30 B(2)			
+	// add 40	F(0) 10 20 30 40 B(3)		
+	// add 50	F(0) 10 20 30 40 50 B(4)		
+	// add 60	F(0) 10 20 30 40 50 B(4)		Queue is full
+	// Delete	F(1) 20 30 40 50 B(4)			10 is deleted
+	// Delete	F(2) 30 40 50 B(4)				20 is deleted
+	// Delete	F(3) 40 50 B(4)				30 is deleted
+	// Delete	F(4) 50 B(4)				40 is deleted
+	// Delete	F(-1) B(-1)					50 is deleted
+	// Delete	F(-1) B(-1)					Queue is empty
+    
+    
+---------------------------------------------------------------------
+2.2 Implement queue [user-defined]
+	to define five salaries (double) 
+    Use menu-driven based Add and Delete
+    Without Exception Handling
+---------------------------------------------------------------------    
+#define QUEUE_SIZE 5
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+
+class GGQueue {
+private:
+	double salaries[QUEUE_SIZE];
+	int frontIndex;
+	int backIndex;
+	int count;
+public:
+	GGQueue();
+	void push(double val);
+	int size();
+	bool empty();
+	void pop();
+	double front();
+};
+
+GGQueue::GGQueue() {
+	this->frontIndex = -1;
+	this->backIndex = -1;
+	this->count = 0;
+}
+
+int GGQueue::size() {
+	return this->count;
+}
+bool GGQueue::empty() {
+	return (this->backIndex == -1);
+}
+
+double GGQueue::front() {
+	return salaries[this->frontIndex];
+}
+
+void GGQueue::push(double val) {
+	if (this->backIndex == (QUEUE_SIZE-1)) {
+		throw "Queue is full";
+	}
+
+	this->backIndex++;
+	this->count++;
+
+	salaries[this->backIndex] = val;
+
+	if (this->frontIndex == -1) { //ADD ON -> ADJUST
+		this->frontIndex = 0;
+	}
+}
+void GGQueue::pop() {
+	if (this->empty()) {
+		throw "Queue is empty";
+	}
+	this->frontIndex++;
+	this->count--;
+
+	if (this->frontIndex == QUEUE_SIZE) {//ADD ON -> ADJUST
+		this->frontIndex = -1;
+		this->backIndex = -1;
+	}
+}
+int main() {
+	GGQueue salaries;
+
+	int menu;
+	do {
+		cout << "Choice(1-Add, 2-Delete, 3-Exit):";
+		cin >> menu;
+
+		if (1 == menu) {
+			double sal;
+			cout << "Enter the salary:";
+			cin >> sal;
+			salaries.push(sal);
+			cout << "Now the queue size is " << salaries.size() << endl;
+		}
+		else if (2 == menu) {
+			if (salaries.empty()) {
+				cout << "Queue is empty." << endl;
+			}
+			else {
+				cout << "Pay salary of worth Rs." << salaries.front() << endl; // PROCESS
+				salaries.pop();
+				cout << "Now the queue size is " << salaries.size() << endl;
+			}
+		}
+		else {
+			cout << "Shutting Down App!!!" << endl;
+		}
+	} while (1 == menu || 2 == menu);
+
+	return EXIT_SUCCESS;
+}
+
+---------------------------------------------------------------------
+2.3 Implement queue [user-defined]
+	to define five salaries (double) 
+    Use menu-driven based Add and Delete
+    With Exception Handling
+---------------------------------------------------------------------    
+#define QUEUE_SIZE 5
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+
+class GGQueue {
+private:
+	double salaries[QUEUE_SIZE];
+	int frontIndex;
+	int backIndex;
+	int count;
+public:
+	GGQueue();
+	void push(double val);
+	int size();
+	bool empty();
+	void pop();
+	double front();
+};
+
+GGQueue::GGQueue() {
+	this->frontIndex = -1;
+	this->backIndex = -1;
+	this->count = 0;
+}
+
+int GGQueue::size() {
+	return this->count;
+}
+bool GGQueue::empty() {
+	return (this->backIndex == -1);
+}
+
+double GGQueue::front() {
+	return salaries[this->frontIndex];
+}
+
+void GGQueue::push(double val) {
+	if (this->backIndex == (QUEUE_SIZE - 1)) {
+		throw "Queue is full";
+	}
+
+	this->backIndex++;
+	this->count++;
+
+	salaries[this->backIndex] = val;
+
+	if (this->frontIndex == -1) { //ADD ON -> ADJUST
+		this->frontIndex = 0;
+	}
+}
+void GGQueue::pop() {
+	if (this->empty()) {
+		throw "Queue is empty";
+	}
+	this->frontIndex++;
+	this->count--;
+
+	if (this->frontIndex == QUEUE_SIZE) {//ADD ON -> ADJUST
+		this->frontIndex = -1;
+		this->backIndex = -1;
+	}
+}
+int main() {
+	GGQueue salaries;
+
+	int menu;
+	do {
+		cout << "Choice(1-Add, 2-Delete, 3-Exit):";
+		cin >> menu;
+
+		if (1 == menu) {
+			double sal;
+			cout << "Enter the salary:";
+			cin >> sal;
+			try {
+				salaries.push(sal);
+				cout << "Now the queue size is " << salaries.size() << endl;
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Queue is Full" << endl;
+				cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Queue is Full" << endl;
+			}
+		}
+		else if (2 == menu) {
+
+			try {
+				cout << "Pay salary of worth Rs." << salaries.front() << endl; // PROCESS
+				salaries.pop();
+				cout << "Now the queue size is " << salaries.size() << endl;
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Queue is Empty" << endl;
+				cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Queue is Empty" << endl;
+			}
+
+
+		}
+		else {
+			cout << "Shutting Down App!!!" << endl;
+		}
+	} while (1 == menu || 2 == menu);
+
+	return EXIT_SUCCESS;
+}
+
+---------------------------------------------
+3. sorting algorithms         
+    From the lab-listing 
+    "3. Use selection sort for asc order to arrange N salaries"
+---------------------------------------------
+Initial Code
+---------------------------------------------
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void readSalaries(int N, double numbers[]) {
+	cout << "Enter salaries one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter salary at index " << I << ":";
+		cin >> numbers[I];
+	}
+}
+
+void printSalaries(int N, long long numbers[]) {
+	cout << "Given salaries are:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+void sortSelectionAsc(int size, double salaries[]){
+    
+}
+int main(){
+    double salaries[MAX_SIZE] {10,15,12,13,11,14};
+    int size = 6;
+    
+    
+    
+	return EXIT_SUCCESS;
+}
+
+---------------------------------------------
+Complete Functional Code
+---------------------------------------------
+
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void readSalaries(int N, double salaries[]) {
+	cout << "Enter salaries one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter salary at index " << I << ":";
+		cin >> salaries[I];
+	}
+}
+
+void printSalaries(int N, double salaries[]) {
+	
+	for (int I = 0; I < N; I++) {
+		cout << salaries[I] << " ";
+	}
+	cout << endl;
+}
+void swapSalaries(double& first, double& second) {
+	double t = first;
+	first = second;
+	second = t;
+}
+void sortSelectionAsc(int size, double salaries[]) {
+	for (int I = 0; I < (size - 1); I++) {
+		int sortableIndex = I;
+		for (int J = I + 1; J < size; J++) {
+			if(salaries[J] < salaries[sortableIndex]){
+				sortableIndex = J;
+			}
+		}
+		
+		if (sortableIndex != I){
+			swapSalaries(salaries[I], salaries[sortableIndex]);
+		}
+	}
+}
+void sortSelectionDesc(int size, double salaries[]) {
+	for (int I = 0; I < (size - 1); I++) {
+		int sortableIndex = I;
+		for (int J = I + 1; J < size; J++) {			
+				if (salaries[J] > salaries[sortableIndex]) {
+					sortableIndex = J;
+				}
+		}
+
+		if (sortableIndex != I) {
+			swapSalaries(salaries[I], salaries[sortableIndex]);
+		}
+	}
+}
+int main() {
+	double salaries[MAX_SIZE]{ 10,15,12,13,11,14 };
+	int size = 6;
+
+	cout << "(Before Sort) salaries are:" << endl;
+	printSalaries(size, salaries);
+
+	sortSelectionAsc(size, salaries);
+	//sortSelectionDesc(size, salaries);
+
+	cout << "(After Sort) salaries are:" << endl;
+	printSalaries(size, salaries);
+
+	return EXIT_SUCCESS;
+}
+---------------------------------------------
+
+
+-----------------------------------------------------
+How selection sort is working?
+Ascending order 
+-----------------------------------------------------
+	//10,15,12,13,11,14		size=6		select pos from left to right
+	//--
+	//	--  
+	//     --
+	//		   --
+	//		      --
+    
+	//10,		15,12,13,11,14		position=1		sortableDataPos=4
+	//		    --       **		
+	//10,       11,12,13,15,14
+    
+	//10,11,       12,13,15,14
+	//			   --
+	//			   **
+	//10,11,12		 13,15,14
+	//				 --
+	//               **
+	//10,11,12,13		15,14
+	//					--
+	//					   **
+
+	//10,11,12,13,14		15
+-----------------------------------------------------
+        											  max				desc
+-----------------------------------------------------
+	for (int I = 0; I < (size - 1); I++) {
+        //I is position we are fixing where we will bring sortable element
+		//												  minium element if asc order
+		//	        
+		int sortableIndex = I;
+		for (int J = I + 1; J < size; J++) {
+			if(J th element is minimum than the sortableIndex element)	
+				change sortableIndex as J
+		}
+		if(sortableIndex and I are not same)
+			do swap element at I and element at sortableIndex 
+	}
+-----------------------------------------------------
+void sortSelectionAsc(int size, double salaries[]) {
+	for (int I = 0; I < (size - 1); I++) {
+		int sortableIndex = I;
+		for (int J = I + 1; J < size; J++) {
+			//if(J th element is minimum than the sortableIndex element)	
+			if(salaries[J] < salaries[sortableIndex]){
+				//change sortableIndex as J
+				sortableIndex = J;
+			}
+		}
+		//if(sortableIndex and I are not same)
+		if (sortableIndex != I){
+			//do swap element at I and element at sortableIndex 
+			//swap salaries[I] and salaries[sortableIndex]
+			swapSalaries(salaries[I], salaries[sortableIndex]);
+		}
+	}
+}
+-----------------------------------------------------
+void sortSelectionAsc(int size, double salaries[]) {
+	//size=6;salaries={ 10,15,12,13,11,14 }
+	for (int I = 0; I < (size - 1); I++) {//I:0T 1T 2T 3T 4T 5F
+		int sortableIndex = I;
+		for (int J = I + 1; J < size; J++) {
+			//I=0 -> J=1T 2T 3T 4T 5T 6F | I=1 -> J=2T 3T 4T 5T 6F |
+			//I=2 -> J=3T 4T 5T 6F | I=3 -> J=4T 5T 6F |
+			//I=4 -> J=5T 6F 
+			if(salaries[J] < salaries[sortableIndex]){
+				sortableIndex = J;
+			}
+		}
+		
+		if (sortableIndex != I){
+			swapSalaries(salaries[I], salaries[sortableIndex]);
+		}
+	}
+}
+-----------------------------------------------------
+
+
+void sortSelectionAsc(int size, double salaries[]) {
+	//size=6;salaries={ 10,15,12,13,11,14 }
+	//					   I
+	//					            sI
+	//						               J
+	//size=6;salaries={ 10,11,12,13,15,14 }
+	//						   I
+	//						   sI
+	//							  J	
+	for (int I = 0; I < (size - 1); I++) {//I:0T 1T
+		int sortableIndex = I;//1
+		for (int J = I + 1; J < size; J++) {			//2T  3T  4T  5T 6F
+			if(salaries[J] < salaries[sortableIndex]){  //12T 13F 11T 14F
+				sortableIndex = J;						//2   --  4    --
+			}
+		}
+		
+		if (sortableIndex != I){//4!=1
+			swapSalaries(salaries[I], salaries[sortableIndex]);
+		}
+	}
+}
+-----------------------------------------------------

@@ -3,9 +3,42 @@
 		to define five salaries (double) 
 	1.2 Implement Stack Class / Structure [User Defined] 	
 		to define five salaries (double) 
+	1.3 Use STL stack 	
+		to define five salaries (double) 
+		Use menu-driven based Add and Delete
+		Without Exception Handling		
+	1.4 Use STL stack 	
+		to define five salaries (double) 
+		Use menu-driven based Add and Delete
+		With Exception Handling
+    
+		-> pop is throwing any exception 
+			<-- from the C++ standard 	
+	1.5 Implement Stack Class / Structure [User Defined] 	
+		to define five salaries (double) 
+		Use menu-driven based Add and Delete
+		Without Exception Handling	
+	1.6 Implement Stack Class / Structure [User Defined] 	
+		to define five salaries (double) 
+		Use menu-driven based Add and Delete
+		With Exception Handling	
 		
 2. Implement queue 
+	2.1 Use STL queue 	
+		to define five salaries (double) 
+		Use menu-driven based Add and Delete
+		Without Exception Handling
+	2.2 Implement queue [user-defined]
+		to define five salaries (double) 
+		Use menu-driven based Add and Delete
+		Without Exception Handling	
+	2.3 Implement queue [user-defined]
+		to define five salaries (double) 
+		Use menu-driven based Add and Delete
+		With Exception Handling	
+		
 3. sorting algorithms 
+	
 4. search algorithms 
 5. Binary Tree -> Traversal 
 6. Binary Search Tree -> Add Node / Delete Node ie Addition/Deletion
