@@ -1,0 +1,98 @@
+1.
+C++ STL "vector"
+	-> dynamic array 
+		size will be grown automatically 
+	-> container for dyanmic array 
+
+
+===========================================================================================
+8. Solution for 
+Input  : 30 10 40 20 15 35 12 38 43 18
+Output : 10 43 12 40 15 38 18 35 20 30
+
+using STL vector 
+===========================================================================================
+
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+
+int main() {
+	vector<short> numbers { 30, 10, 40, 20, 15, 35, 12, 38, 43, 18 };
+	vector<short> result(numbers.size());
+	cout << "Numbers are:" << endl;
+	for (auto e : numbers) {
+		cout << e << " ";
+	}
+	cout << endl;
+
+	sort(numbers.begin(), numbers.end());
+	cout << "(Sorted)Numbers are:" << endl;
+	for (auto e : numbers) {
+		cout << e << " ";
+	}
+	cout << endl;
+
+	int evenIndex = 0;
+	int oddIndex = result.size() - 1;
+	for (int I = 0; I < result.size(); I++) {
+		if (I % 2 == 0) {
+			result[I] = numbers[evenIndex];
+			evenIndex++;
+		}
+		else {
+			result[I] = numbers[oddIndex];
+			oddIndex--;
+		}
+	}
+	cout << "(Arranged)Numbers are:" << endl;
+	for (auto e : result) {
+		cout << e << " ";
+	}
+	cout << endl;
+	return EXIT_SUCCESS;
+}	
+
+===========================================================================================
+
+
+
+
+1. STL vector is "better array"
+2. size, capacity
+3. size is the number of elements in the vector 
+4. capacity is the reserved data for growing the vector 
+   for example,
+   size=10, capacity=15
+   when we added 15 elements, then size will be 15 
+   then we try to add 16 th element,
+   caacity will be changed for fastest growing the vector
+   
+   
+===========================================================================================
+9. Implement the vector (user-defined)
+	Note: similar to STL vector 
+===========================================================================================   
+Example: //Note you will implement your own way.
+class myvector{
+	public:
+		int count;
+		int capacityValue;
+		short* numbers;
+	public:
+		myvector(int initialSize); // allocate memory 
+		~myvector(); // deallocate numbers
+		void push_back(short val); // reallocation 
+		void pop_back();
+		short back();
+		int size();
+		int capacity();
+};
+===========================================================================================
+
+
+   
