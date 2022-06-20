@@ -1,0 +1,270 @@
+Pointer
+	special variable used to hold address of value/data variable 
+	pointer can hold address of 
+			static variable[memory] 		stack 
+			dynamic memory 					heap 
+	
+	type*
+		type pointer 
+		pointer to variable of type "type"
+	for example,
+		int* 
+			- data type for "pointer to integer" or "integer pointer"
+			- "*" is pointer definition -> this is not indirection
+		int* p;
+		int x=10;
+		p = &x;	// "p" holds address of "x"
+		
+		The operator "&" 
+			- "address of" operator 
+		int y;
+		//y = x*x + 2*x + 5;
+		y = (*p)*(*p) + 2*(*p) + 5;
+		
+		"*" before the pointer variable 
+			- "indirection" opertor 
+			- deferencing 
+			- value at 
+---------------------------------------------------------
+Illustration of pointer 
+	usage of "address of" 		&
+			 "indirection" 		*		
+	operators.
+---------------------------------------------------------
+int x = 10;   // &x = 4032
+int *p = &x;  // &p = 6088
+int **q = &p; // &q = 3064		
+			
+value of x via p
+    p     -> 4032
+   (*p)   -> value at 4032/deref
+             10
+value of x via q
+    q       -> 6088
+   (*q)     -> 4032
+   (*(*q))  -> 10			
+---------------------------------------------------------   
+	
+int x = 10;   // &x = 4032
+int *p = NULL;  // &p = 6088		//WILD POINTER 
+int **q = NULL; // &q = 3064		
+
+p = &x; 
+q = &p;
+---------------------------------------------------------
+
+
+
+
+
+---------------------
+1.4 v2 pointer version 
+---------------------
+//Read N (long long) numbers from the keyboard and print the numbers 
+//1) sum of the numbers 
+//2) sum of the odd numbers
+//3) sum of the even numbers 
+//5) count number of the odd numbers 
+//6) count number of the even numbers 
+Use: Pointer 
+	"sumOfNumbersExt" 
+	replace the references as pointers 
+
+
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+void readNumberOfNumbers(int& N) {
+	cout << "Enter number of numbers:";
+	cin >> N;
+}
+
+void readNumbers(int N, long long numbers[]) {
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter number at index " << I << ":";
+		cin >> numbers[I];
+	}
+}
+
+void printNumbersForward(int N, long long numbers[]) {
+	cout << "Given numbers are:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+void printNumbersBackward(int N, long long numbers[]) {
+	cout << "Given reverse of the numbers are:" << endl;
+	for (int I = N - 1; I >= 0; I--) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+
+long long sumOfNumbers(int N, long long numbers[]) {
+	long long sum = 0LL;
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+	}
+	return sum;
+}
+
+bool isOddNumber(int number) {
+	return ((number % 2) == 1);
+}
+bool isEvenNumber(int number) {
+	return ((number % 2) == 0);
+}
+long long sumOfNumbersExt(int N, long long numbers[],
+	long long* sumOddAddr, long long* sumEvenAddr,
+	int* countOddAddr, int* countEvenAddr) {
+        
+	long long sum = 0LL;
+	long long sumOdd = 0LL;
+	long long sumEven = 0LL;
+	int countOdd = 0;
+	int countEven = 0;
+
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+
+		if (isOddNumber(numbers[I])) {
+			sumOdd = sumOdd + numbers[I];
+			countOdd++;
+		}
+
+		if (isEvenNumber(numbers[I])) {
+			sumEven = sumEven + numbers[I];
+			countEven++;
+		}
+	}
+    
+    
+    (*sumOddAddr) = sumOdd;
+    (*sumEvenAddr) = sumEven;
+    (*countOddAddr) = countOdd;
+    (*countEvenAddr) = countEven;
+    
+	return sum;
+}
+
+int main() {
+	long long numbers[MAX_SIZE]{};
+	int N;
+
+	readNumberOfNumbers(N);
+	readNumbers(N, numbers);
+	printNumbersForward(N, numbers);
+	printNumbersBackward(N, numbers);
+	//long long sum = sumOfNumbers(N, numbers);
+	long long sum = 0LL;
+	long long sumOdd = 0LL;
+	long long sumEven = 0LL;
+	int countOdd = 0;
+	int countEven = 0;
+
+	sum = sumOfNumbersExt(N, numbers, &sumOdd, &sumEven, &countOdd, &countEven);
+
+
+	cout << "The sum of the numbers is " << sum << endl;
+	cout << "The sum of the odd numbers is " << sumOdd << endl;
+	cout << "The sum of the even numbers is " << sumEven << endl;
+	cout << "The count of the odd numbers is " << countOdd << endl;
+	cout << "The count of the even numbers is " << countEven << endl;
+
+	return EXIT_SUCCESS;
+}
+
+
+
+---------------------
+1.4 v2 pointer version 
+---------------------
+
+
+long long sumOfNumbersExt(int N, long long numbers[],
+	long long* sumOddAddr, long long* sumEvenAddr,
+	int* countOddAddr, int* countEvenAddr) {
+        
+	long long sum = 0LL;
+	long long sumOdd = 0LL;
+	long long sumEven = 0LL;
+	int countOdd = 0;
+	int countEven = 0;
+
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+
+		if (isOddNumber(numbers[I])) {
+			sumOdd = sumOdd + numbers[I];
+			countOdd++;
+		}
+
+		if (isEvenNumber(numbers[I])) {
+			sumEven = sumEven + numbers[I];
+			countEven++;
+		}
+	}
+    
+    
+    (*sumOddAddr) = sumOdd;
+    (*sumEvenAddr) = sumEven;
+    (*countOddAddr) = countOdd;
+    (*countEvenAddr) = countEven;
+    
+	return sum;
+}
+
+
+===>
+
+
+long long sumOfNumbersExt(int N, long long numbers[],
+	long long* sumOddAddr, long long* sumEvenAddr,
+	int* countOddAddr, int* countEvenAddr) {
+        
+	long long sum = 0LL;
+	(*sumOddAddr) = 0LL;
+	(*sumEvenAddr) = 0LL;
+	(*countOddAddr) = 0;
+	(*countEvenAddr) = 0;
+
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+
+		if (isOddNumber(numbers[I])) {
+			(*sumOddAddr) = (*sumOddAddr) + numbers[I];
+			(*countOddAddr)++;
+		}
+
+		if (isEvenNumber(numbers[I])) {
+			(*sumEvenAddr) = (*sumEvenAddr) + numbers[I];
+			(*countEvenAddr)++;
+		}
+	}
+    
+	return sum;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
