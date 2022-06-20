@@ -1,0 +1,517 @@
+Listings Today:
+
+---------------------------------------------------------------------
+1.
+Read N (long long) numbers from the keyboard and print the numbers 
+	a) sum of the numbers 
+	b) sum of the odd numbers
+	c) sum of the even numbers 
+	d) count number of the odd numbers 
+	e) count number of the even numbers 
+	Use: Pointer 
+		"sumOfNumbersExt" 
+		to replace the references as pointers 
+	
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Initial Code:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^	
+
+
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+void readNumberOfNumbers(int& N) {
+	cout << "Enter number of numbers:";
+	cin >> N;
+}
+
+void readNumbers(int N, long long numbers[]) {
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter number at index " << I << ":";
+		cin >> numbers[I];
+	}
+}
+
+void printNumbersForward(int N, long long numbers[]) {
+	cout << "Given numbers are:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+void printNumbersBackward(int N, long long numbers[]) {
+	cout << "Given reverse of the numbers are:" << endl;
+	for (int I = N - 1; I >= 0; I--) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+
+long long sumOfNumbers(int N, long long numbers[]) {
+	long long sum = 0LL;
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+	}
+	return sum;
+}
+
+bool isOddNumber(int number) {
+	return ((number % 2) == 1);
+}
+bool isEvenNumber(int number) {
+	return ((number % 2) == 0);
+}
+long long sumOfNumbersExt(int N, long long numbers[],
+	long long& sumOdd, long long& sumEven,
+	int& countOdd, int& countEven) {
+	long long sum = 0LL;
+	sumOdd = 0LL;
+	sumEven = 0LL;
+	countOdd = 0;
+	countEven = 0;
+
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+
+		if (isOddNumber(numbers[I])) {
+			sumOdd = sumOdd + numbers[I];
+			countOdd++;
+		}
+
+		if (isEvenNumber(numbers[I])) {
+			sumEven = sumEven + numbers[I];
+			countEven++;
+		}
+	}
+	return sum;
+}
+
+int main() {
+	long long numbers[MAX_SIZE]{};
+	int N;
+
+	readNumberOfNumbers(N);
+	readNumbers(N, numbers);
+	printNumbersForward(N, numbers);
+	printNumbersBackward(N, numbers);
+	//long long sum = sumOfNumbers(N, numbers);
+	long long sum = 0LL;
+	long long sumOdd = 0LL;
+	long long sumEven = 0LL;
+	int countOdd = 0;
+	int countEven = 0;
+
+	sum = sumOfNumbersExt(N, numbers, sumOdd, sumEven, countOdd, countEven);
+
+
+	cout << "The sum of the numbers is " << sum << endl;
+	cout << "The sum of the odd numbers is " << sumOdd << endl;
+	cout << "The sum of the even numbers is " << sumEven << endl;
+	cout << "The count of the odd numbers is " << countOdd << endl;
+	cout << "The count of the even numbers is " << countEven << endl;
+
+	return EXIT_SUCCESS;
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Completed Code:
+	Migration from reference into pointer 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+void readNumberOfNumbers(int& N) {
+	cout << "Enter number of numbers:";
+	cin >> N;
+}
+
+void readNumbers(int N, long long numbers[]) {
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter number at index " << I << ":";
+		cin >> numbers[I];
+	}
+}
+
+void printNumbersForward(int N, long long numbers[]) {
+	cout << "Given numbers are:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+void printNumbersBackward(int N, long long numbers[]) {
+	cout << "Given reverse of the numbers are:" << endl;
+	for (int I = N - 1; I >= 0; I--) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+
+
+long long sumOfNumbers(int N, long long numbers[]) {
+	long long sum = 0LL;
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+	}
+	return sum;
+}
+
+bool isOddNumber(int number) {
+	return ((number % 2) == 1);
+}
+bool isEvenNumber(int number) {
+	return ((number % 2) == 0);
+}
+long long sumOfNumbersExt(int N, long long numbers[],
+	long long* sumOddAddr, long long* sumEvenAddr,
+	int* countOddAddr, int* countEvenAddr) {
+        
+	long long sum = 0LL;
+	long long sumOdd = 0LL;
+	long long sumEven = 0LL;
+	int countOdd = 0;
+	int countEven = 0;
+
+	for (int I = 0; I < N; I++) {
+		sum = sum + numbers[I];
+
+		if (isOddNumber(numbers[I])) {
+			sumOdd = sumOdd + numbers[I];
+			countOdd++;
+		}
+
+		if (isEvenNumber(numbers[I])) {
+			sumEven = sumEven + numbers[I];
+			countEven++;
+		}
+	}
+    
+    
+    (*sumOddAddr) = sumOdd;
+    (*sumEvenAddr) = sumEven;
+    (*countOddAddr) = countOdd;
+    (*countEvenAddr) = countEven;
+    
+	return sum;
+}
+
+int main() {
+	long long numbers[MAX_SIZE]{};
+	int N;
+
+	readNumberOfNumbers(N);
+	readNumbers(N, numbers);
+	printNumbersForward(N, numbers);
+	printNumbersBackward(N, numbers);
+	//long long sum = sumOfNumbers(N, numbers);
+	long long sum = 0LL;
+	long long sumOdd = 0LL;
+	long long sumEven = 0LL;
+	int countOdd = 0;
+	int countEven = 0;
+
+	sum = sumOfNumbersExt(N, numbers, &sumOdd, &sumEven, &countOdd, &countEven);
+
+
+	cout << "The sum of the numbers is " << sum << endl;
+	cout << "The sum of the odd numbers is " << sumOdd << endl;
+	cout << "The sum of the even numbers is " << sumEven << endl;
+	cout << "The count of the odd numbers is " << countOdd << endl;
+	cout << "The count of the even numbers is " << countEven << endl;
+
+	return EXIT_SUCCESS;
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------------------------------------	
+
+
+---------------------------------------------------------------------
+2
+---------------------------------------------------------------------
+For given two numbers (short)
+    find sum, difference, product, quotient(division),remainder(division)
+    of addition, subtraction, multiplication, division, division operations 
+    respectively
+    
+Write a function    
+    void doArithmeticOperations(short first, short second, 
+        short* sumAddr, short* differenceAddr,
+        short* productAddr, short* quotientAddr,
+        short* remainderAddr){
+    }
+---------------------------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Intial Code:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void doArithmeticOperations(short first, short second, 
+        short* sumAddr, short* differenceAddr,
+        short* productAddr, short* quotientAddr,
+        short* remainderAddr){
+        //CODE HERE
+}
+int main() {
+    short firstNumber = 0;
+    short secondNumber = 0;
+    cout << "Enter first number:"; cin >> firstNumber;
+    cout << "Enter second number:"; cin >> secondNumber;
+    
+    short sum=0;
+    short difference=0;
+    short product=0;
+    short quotient=0;
+    short remainder;
+    
+    doArithmeticOperations(firstNumber,secondNumber,&sum,&difference,&product,&quotient,&remainder);
+    
+	cout << "The First Number is " << firstNumber << endl;
+    cout << "The Second Number is " << secondNumber << endl;
+    cout << "The sum is " << sum << endl;
+    cout << "The difference is " << difference << endl;
+    cout << "The product is " << product << endl;
+    cout << "The quotient is " << quotient << endl;
+    cout << "The remainder is " << remainder << endl;
+    
+	return EXIT_SUCCESS;
+}
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Completed Code:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void doArithmeticOperations(short first, short second, 
+        short* sumAddr, short* differenceAddr,
+        short* productAddr, short* quotientAddr,
+        short* remainderAddr){
+    short sum=0;
+    short difference=0;
+    short product=0;
+    short quotient=0;
+    short remainder=0;
+    sum = first + second;
+    difference = first - second;
+    product = first * second;
+    quotient = first / second;
+    remainder = first % second;
+    
+    (*sumAddr) = sum;
+    (*differenceAddr) = difference;
+    (*productAddr) = product;
+    (*quotientAddr) = quotient;
+    (*remainderAddr) = remainder;
+}
+int main() {
+    short firstNumber = 0;
+    short secondNumber = 0;
+    cout << "Enter first number:"; cin >> firstNumber;
+    cout << "Enter second number:"; cin >> secondNumber;
+    
+    short sum=0;
+    short difference=0;
+    short product=0;
+    short quotient=0;
+    short remainder=0;
+    
+    doArithmeticOperations(firstNumber,secondNumber,&sum,&difference,&product,&quotient,&remainder);
+    
+	cout << "The First Number is " << firstNumber << endl;
+    cout << "The Second Number is " << secondNumber << endl;
+    cout << "The sum is " << sum << endl;
+    cout << "The difference is " << difference << endl;
+    cout << "The product is " << product << endl;
+    cout << "The quotient is " << quotient << endl;
+    cout << "The remainder is " << remainder << endl;
+    
+	return EXIT_SUCCESS;
+}
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+TRY THIS
+---------------------------------------------------------------------
+	short firstNumber = 0;
+
+	cout << &firstNumber << endl;
+	cout << *&firstNumber << endl;
+	cout << &*&firstNumber << endl;
+	cout << *&*&firstNumber << endl;
+	cout << &*&*&firstNumber << endl;
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+3
+---------------------------------------------------------------------
+For given two numbers (short)
+    find sum, difference, product, quotient(division),remainder(division)
+    of addition, subtraction, multiplication, division, division operations 
+    respectively
+    
+    Use dynamic memory for reading and processing 
+ 
+This is the listing (2) 
+where we replaced dynamic memory for static memory 
+---------------------------------------------------------------------
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Completed Code:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void doArithmeticOperations(short* firstAddr, short* secondAddr,
+	short* sumAddr, short* differenceAddr,
+	short* productAddr, short* quotientAddr,
+	short* remainderAddr) {
+	short first = *firstAddr;
+	short second = *secondAddr;
+	short sum = 0;
+	short difference = 0;
+	short product = 0;
+	short quotient = 0;
+	short remainder = 0;
+	sum = first + second;
+	difference = first - second;
+	product = first * second;
+	quotient = first / second;
+	remainder = first % second;
+
+	(*sumAddr) = sum;
+	(*differenceAddr) = difference;
+	(*productAddr) = product;
+	(*quotientAddr) = quotient;
+	(*remainderAddr) = remainder;
+}
+int main() {
+	short* firstNumberAddr = new short{ 0 };
+	short* secondNumberAddr = new short{ 0 };
+	cout << "Enter first number:"; cin >> (*firstNumberAddr);
+	cout << "Enter second number:"; cin >> (*secondNumberAddr);
+
+	short* sumAddr = new short{ 0 };
+	short* differenceAddr = new short{ 0 };
+	short* productAddr = new short{ 0 };
+	short* quotientAddr = new short{ 0 };
+	short* remainderAddr = new short{ 0 };
+
+	doArithmeticOperations(firstNumberAddr, secondNumberAddr,
+		sumAddr, differenceAddr,
+		productAddr, quotientAddr, remainderAddr);
+
+	cout << "The First Number is " << (*firstNumberAddr) << endl;
+	cout << "The Second Number is " << (*secondNumberAddr) << endl;
+	cout << "The sum is " << (*sumAddr) << endl;
+	cout << "The difference is " << (*differenceAddr) << endl;
+	cout << "The product is " << (*productAddr) << endl;
+	cout << "The quotient is " << (*quotientAddr) << endl;
+	cout << "The remainder is " << (*remainderAddr) << endl;
+
+	delete firstNumberAddr; //DANGLING PTR -> PTR after Deallocation points to address -> LEADS TO -> ILLEGAL access
+	delete secondNumberAddr;
+	delete sumAddr;
+	delete differenceAddr;
+	delete productAddr;
+	delete quotientAddr;
+	delete remainderAddr;
+
+	firstNumberAddr = nullptr; //
+	secondNumberAddr = nullptr;
+	sumAddr = nullptr;
+	differenceAddr = nullptr;
+	productAddr = nullptr;
+	quotientAddr = nullptr;
+	remainderAddr = nullptr;
+
+	return EXIT_SUCCESS;
+}
+---------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------
+Pass pointers as references 
+---------------------------------------------------------------------
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Given Code 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+void doArithmeticOperations(short* firstAddr, short* secondAddr,
+	short* sumAddr, short* differenceAddr,
+	short* productAddr, short* quotientAddr,
+	short* remainderAddr) {
+	short first = *firstAddr;
+	short second = *secondAddr;
+	short sum = 0;
+	short difference = 0;
+	short product = 0;
+	short quotient = 0;
+	short remainder = 0;
+	sum = first + second;
+	difference = first - second;
+	product = first * second;
+	quotient = first / second;
+	remainder = first % second;
+
+	(*sumAddr) = sum;
+	(*differenceAddr) = difference;
+	(*productAddr) = product;
+	(*quotientAddr) = quotient;
+	(*remainderAddr) = remainder;
+}
+
+//Function call is 
+doArithmeticOperations(firstNumberAddr, secondNumberAddr,
+		sumAddr, differenceAddr,
+		productAddr, quotientAddr, remainderAddr);
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Migrated Code 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+void doArithmeticOperations(short& first, short& second,
+	short& sum, short& difference,
+	short& product, short& quotient,
+	short& remainder) {
+	
+	sum = 0;
+	difference = 0;
+	product = 0;
+	quotient = 0;
+	remainder = 0;
+	sum = first + second;
+	difference = first - second;
+	product = first * second;
+	quotient = first / second;
+	remainder = first % second;
+}
+	
+//Function call is 
+doArithmeticOperations((*firstNumberAddr), (*secondNumberAddr),
+		(*sumAddr), (*differenceAddr),
+		(*productAddr), (*quotientAddr), (*remainderAddr));
+    
