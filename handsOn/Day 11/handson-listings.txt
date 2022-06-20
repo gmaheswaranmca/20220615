@@ -517,4 +517,479 @@ doArithmeticOperations((*firstNumberAddr), (*secondNumberAddr),
 ---------------------------------------------------------------------
 
 
+---------------------------------------------------------------------
+4
+---------------------------------------------------------------------
+For given two numbers (short)
+    find sum, difference, product, quotient(division),remainder(division)
+    of addition, subtraction, multiplication, division, division operations 
+    respectively
+    
+    Use dynamic memory for reading and processing 
+ 
+This is the listing (3) 
+where we replaced C dynamic memory for C++ dynamic memory 
+---------------------------------------------------------------------
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Completed Code:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void doArithmeticOperations(short* firstAddr, short* secondAddr,
+	short* sumAddr, short* differenceAddr,
+	short* productAddr, short* quotientAddr,
+	short* remainderAddr) {
+	short first = *firstAddr;
+	short second = *secondAddr;
+	short sum = 0;
+	short difference = 0;
+	short product = 0;
+	short quotient = 0;
+	short remainder = 0;
+	sum = first + second;
+	difference = first - second;
+	product = first * second;
+	quotient = first / second;
+	remainder = first % second;
+
+	(*sumAddr) = sum;
+	(*differenceAddr) = difference;
+	(*productAddr) = product;
+	(*quotientAddr) = quotient;
+	(*remainderAddr) = remainder;
+}
+int main() {
+	short* firstNumberAddr = (short*)malloc(1 * sizeof(short));
+	short* secondNumberAddr = (short*)malloc(1 * sizeof(short));
+	cout << "Enter first number:"; cin >> (*firstNumberAddr);
+	cout << "Enter second number:"; cin >> (*secondNumberAddr);
+
+	short* sumAddr = (short*)malloc(1 * sizeof(short));
+	short* differenceAddr = (short*)malloc(1 * sizeof(short));
+	short* productAddr = (short*)malloc(1 * sizeof(short));
+	short* quotientAddr = (short*)malloc(1 * sizeof(short));
+	short* remainderAddr = (short*)malloc(1 * sizeof(short));
+
+	doArithmeticOperations(firstNumberAddr, secondNumberAddr,
+		sumAddr, differenceAddr,
+		productAddr, quotientAddr, remainderAddr);
+
+	cout << "The First Number is " << (*firstNumberAddr) << endl;
+	cout << "The Second Number is " << (*secondNumberAddr) << endl;
+	cout << "The sum is " << (*sumAddr) << endl;
+	cout << "The difference is " << (*differenceAddr) << endl;
+	cout << "The product is " << (*productAddr) << endl;
+	cout << "The quotient is " << (*quotientAddr) << endl;
+	cout << "The remainder is " << (*remainderAddr) << endl;
+
+	free(firstNumberAddr); //DANGLING PTR -> PTR after Deallocation points to address -> LEADS TO -> ILLEGAL access
+	free(secondNumberAddr);
+	free(sumAddr);
+	free(differenceAddr);
+	free(productAddr);
+	free(quotientAddr);
+	free(remainderAddr);
+
+	firstNumberAddr = nullptr; //
+	secondNumberAddr = nullptr;
+	sumAddr = nullptr;
+	differenceAddr = nullptr;
+	productAddr = nullptr;
+	quotientAddr = nullptr;
+	remainderAddr = nullptr;
+
+	return EXIT_SUCCESS;
+}
+---------------------------------------------------------------------
+
+
+
+---------------------------------------------------------------------
+Dynamic memory in C++ 
+---------------------------------------------------------------------
+    Dynamic memory allocation/creation 
+    syntax:
+        new datatype {intialize}
+        !!! dynamic memory for one block of datatype given 
+        !!!{intialize} is optional 
+
+        new datatype [size] {initialize}    
+        !!! dynamic memory for multiple blocks of datatype given 
+            dynamic array 
+            
+            
+        Examples:
+        double* firstSalaryAddr = new double;
+        or
+        double* firstSalaryAddr = new double {0.0};
+        
+        
+        int N = 1000;
+        double* salaries = new double[N];
+        
+        
+        or 
+        
+        int N = 1000;
+        double* salaries = new double[N] {};
+        //Initialzed all the elements to default value of datatype 
+        //Here, default value of double 
+        //ie. all the elements will take intial value "0.0"
+            
+   
+   Dynamic memory deallocation/destruction 
+        delete pointerVariableName;
+        !!! deallocation for single block 
+        
+        delete[] pointerVariableName;
+        !!! deallocation for multiple block ie dynamic array 
+        
+        
+        Example:
+            delete firstSalaryAddr;
+            delete[] salaries;
+            
+            firstSalaryAddr = nullptr;
+            salaries = nullptr;
+---------------------------------------------------------------------
+
+
+---------------------------------------------------------------------
+Dynamic memory in C
+we use <cstdlib>
+---------------------------------------------------------------------
+    Dynamic memory allocation/creation 
+    syntax:
+        //non-contiguous memory 
+        (type*)malloc(1*sizeof(type))
+        !!! dynamic memory for one block of datatype given 
+        !!!{intialize} is optional 
+
+        (type*)malloc(size*sizeof(type))
+        !!! dynamic memory for multiple blocks of datatype given 
+            dynamic array 
+            
+        //contiguous memory     
+        (type*)calloc(1,sizeof(type))
+        !!! dynamic memory for one block of datatype given 
+        !!!{intialize} is optional 
+
+        (type*)calloc(size,sizeof(type))
+        !!! dynamic memory for multiple blocks of datatype given 
+            dynamic array 
+            
+        //reallocation
+        (type*)ralloc(ptr,newSize*sizeof(type))
+        
+        
+            
+        Examples:
+        //non-contiguous
+        double* firstSalaryAddr = (double*)malloc(1*sizeof(double));
+        //contiguos 
+        double* firstSalaryAddr = (double*)calloc(1,sizeof(double));
+        
+        //non-contiguous
+        int N = 1000;
+        double* salaries = (double*)malloc(N*sizeof(double));
+        //contiguos 
+        int N = 1000;
+        double* salaries = (double*)calloc(N,sizeof(double));
+        salaries[3] = 4000.0;
+        
+        //reallocation 
+        N += 100; //1100
+        salaries = (double*)ralloc(salaries,N*sizeof(double));        
+        //!!! 1.salaries data is copied temporarily 
+        //!!! 2.free(salaries)  !!! 1000 blocks freed 
+        //!!! 3.malloc/calloc to allocate salaries for N //1100 blocks created newly 
+        //!!! 4.copy data temp buffer to salaries 
+        //!!! if newSize > oldSize 
+        //          for our case 1000 old data is copied and 100 extra blocks will be initialzied to default value 
+        //!!! if newSize < oldSize 
+        //          assume oldSize=1000, newSize=900
+        //          900 old data is copied 
+   
+   Dynamic memory deallocation/destruction 
+        free(pointerVariableName);
+        !!! deallocation for single block 
+        
+        free(pointerVariableName);
+        !!! deallocation for multiple block ie dynamic array 
+        
+        
+        Example:
+            free(firstSalaryAddr);
+            free(salaries);
+            
+            firstSalaryAddr = NULL;
+            salaries = NULL;
+---------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------
+Difference between C++ dynamic memory and C dynamic memory 
+
+---------------------------------------------------------------------
+C++ dynamic memory                          C dynamic memory 
+---------------------------------------------------------------------
+1. 
+We use here keywords                        <cstdlib> header functions 
+new, delete for                             such as malloc, calloc, realloc, free 
+dyanamic memory                             for dyanamic memory 
+2.                                          
+to delete multiple blocks                   same free(ptr) is used for both 
+delete[]                                    single and multiple blocks 
+3. 
+in the "new"                                with malloc, calloc we cannot initialze
+we can initialize                           but realloca will do default initialization for excess blocks 
+4. 
+new,delete are                              malloc, free are not connected 
+connected with                              constructor, destructor 
+constructor, destructor 
+respectively 
+for objects 
+==>
+In C++,
+we have to use 
+only C++ dynamic memory 
+ie new and delete 
+---------------------------------------------------------------------
+
+
+-------------------------------------------------
+5. C++ dynamic memory version example
+-------------------------------------------------
+//C++ dynamic memory version 
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+class Emp {
+public:
+	static int counter;
+public:
+	int empId;
+	double* salaryAddr;
+public:
+	Emp();
+	~Emp();
+};
+int Emp::counter = 0;
+Emp::Emp() {
+	counter++;
+	empId = counter;
+	cout << "I am in constructor " << empId << "." << endl;
+	salaryAddr = new double{ 0.0 };
+}
+Emp::~Emp() {
+	cout << "I am in destructor " << empId << "." << endl;
+	delete salaryAddr;
+}
+
+
+int main() {
+	
+	cout << "First. " << endl;
+	Emp empOne;
+	cout << "Second. " << endl;
+	Emp empTwo;
+	
+	cout << "Third. " << endl;
+	Emp* empAddr = new Emp();
+	cout << empAddr->empId << " "
+		<< (*(empAddr->salaryAddr)) << endl;
+	delete empAddr;
+	cout << "End of the program" << endl;
+
+
+	return EXIT_SUCCESS;
+}
+
+
+-------------------------------------------------
+1. For static objects creation, 
+the constructors of the objects will be called in the object definition order 
+2. For static objects destructor, 
+the constructors of the objects will be called in the reverse order of the constructors 
+3. For dynamic objects creation,
+the constructors will be called along new operator 
+4.  For dynamic objects destruction,
+the destructors will be called along delete operator 
+-------------------------------------------------
+
+
+
+
+
+
+-------------------------------------------------
+6. C dynamic memory version example
+-------------------------------------------------
+//C dynamic memory version 
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+class Emp {
+public:
+	static int counter;
+public:
+	int empId;
+	double* salaryAddr;
+public:
+	Emp();
+	~Emp();
+};
+int Emp::counter = 0;
+Emp::Emp() {
+	counter++;
+	empId = counter;
+	cout << "I am in constructor " << empId << "." << endl;
+	salaryAddr = (double*)malloc(1*sizeof(double));
+}
+Emp::~Emp() {
+	cout << "I am in destructor " << empId << "." << endl;
+	free(salaryAddr);
+}
+
+
+int main() {
+	
+	cout << "First. " << endl;
+	Emp empOne;
+	cout << "Second. " << endl;
+	Emp empTwo;
+	
+	cout << "Third. " << endl;
+	Emp* empAddr = (Emp*)malloc(1*sizeof(Emp));
+	/*cout << empAddr->empId << " "
+		<< (*(empAddr->salaryAddr)) << endl;*/
+	free(empAddr);
+	cout << "End of the program" << endl;
+
+
+	return EXIT_SUCCESS;
+}
+-------------------------------------------------
+1. Using malloc,
+constructor is not called 
+    => as constructor is not called, 
+    so, one of the attribute "salaryAddr" is not memory alloacted 
+2. Using malloc,
+destructor is not called 
+-------------------------------------------------
+
+
+Coding/Login/Algorithm Question 
+===========================================================================================
+Input  : 30 10 40 20 15 35 12 38 43 18
+Output : 10 43 12 40 15 38 18 35 20 30
+===========================================================================================
+
+Sort  : 10 12 15 18 20 30 35 38 40 43
+Output: even-index: first half, odd-index:reverse of the second half 
+
+void arrange(int size, short data[], short output[]){
+    sortSelectionAsc(size,data);//Note sortSelectionAsc has double array -> migrate the code to short 
+    int evenIndexInData = 0;
+    int oddIndexInData = size-1;
+    for(int I=0; I<size; I++){
+        if(I % 2 == 0){
+            output[I] = data[evenIndexInData];
+            evenIndexInData++;
+        }else{
+            output[I] = data[oddIndexInData];
+            oddIndexInData--;
+        }
+    }
+}
+
+
+===========================================================================================
+7. Solution for 
+Input  : 30 10 40 20 15 35 12 38 43 18
+Output : 10 43 12 40 15 38 18 35 20 30
+===========================================================================================
+
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void readNumbers(int N, short numbers[]) {
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter salary at index " << I << ":";
+		cin >> numbers[I];
+	}
+}
+
+void printNumbers(int N, short numbers[]) {
+
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+void swapNumbers(short& first, short& second) {
+	short t = first;
+	first = second;
+	second = t;
+}
+void sortSelectionAsc(int size, short numbers[]) {
+	for (int I = 0; I < (size - 1); I++) {
+		int sortableIndex = I;
+		for (int J = I + 1; J < size; J++) {
+			if (numbers[J] < numbers[sortableIndex]) {
+				sortableIndex = J;
+			}
+		}
+
+		if (sortableIndex != I) {
+			swapNumbers(numbers[I], numbers[sortableIndex]);
+		}
+	}
+}
+void arrange(int size, short data[], short output[]) {
+	sortSelectionAsc(size, data);//Note sortSelectionAsc has double array -> migrate the code to short 
+	int evenIndexInData = 0;
+	int oddIndexInData = size - 1;
+	for (int I = 0; I < size; I++) {
+		if (I % 2 == 0) {
+			output[I] = data[evenIndexInData];
+			evenIndexInData++;
+		}
+		else {
+			output[I] = data[oddIndexInData];
+			oddIndexInData--;
+		}
+	}
+}
+
+int main() {
+	short numbers[MAX_SIZE]{ 30, 10, 40, 20, 15, 35, 12, 38, 43, 18 };
+	short result[MAX_SIZE]{};
+	int size = 10;
+
+	cout << "(Before Arrangement) numbers are:" << endl;
+	printNumbers(size, numbers);
+
+	arrange(size, numbers, result);
+
+	cout << "(After Arrangement) numbers are:" << endl;
+	printNumbers(size, result);
+
+	return EXIT_SUCCESS;
+}
+    
+===========================================================================================   
+    
+    
+    
     
