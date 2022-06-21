@@ -316,7 +316,7 @@ void f(int N, double* arrayData) {
 }
 int main() {
 	int N;
-	cout << "Enter number of salaries"; cin >> N;
+	cout << "Enter number of salaries:"; cin >> N;
 
 	double salaries[MAX_SIZE];
 	readData(N, salaries);

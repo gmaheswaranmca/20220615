@@ -57,8 +57,8 @@ void sortInsertionAsc(int N, long double* arrayData) {
 	for (int I = 1; I < N; I++) {
 		long double takeOutElement = arrayData[I];
 		int position = I;
-		//seek the position for takeOutElement from the prevous list 
-		for (int J = I - 1; J >= 0; J--) {//Decrement loop for previous list from "takeOutElement"
+		//seek the position for takeOutElement from the prevous list before takeOutElement
+		for (int J = I - 1; J >= 0; J--) {//Decrement loop for previous list before "takeOutElement"
 			if (takeOutElement < arrayData[J]) {
 				arrayData[J + 1] = arrayData[J];//Shifting Right
 				position = J;
@@ -74,7 +74,7 @@ void sortInsertionAsc(int N, long double* arrayData) {
 }
 int main() {
 	int N;
-	cout << "Enter number of salaries"; cin >> N;
+	cout << "Enter number of numbers:"; cin >> N;
 
 	long double numberArray[MAX_SIZE];
 	readData(N, numberArray);
