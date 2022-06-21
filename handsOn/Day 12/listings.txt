@@ -64,7 +64,7 @@ void sortInsertionAsc(int N, long double* arrayData) {
 				position = J;
 			}
 			else {
-				break;
+				break;//Here we cannot find the further position for "takeOutElement" element 
 			}
 		}
 		if (position != I) {
@@ -196,3 +196,342 @@ Enter numbers:
 Output: 
 100 100 100 500 500 500 200 200 400 300  
 ------------------------------------------------------
+
+
+------------------------------------------------------
+c-string in the c-string variable(character array) is 
+    sequence of characters terminated by '\0'
+    
+    
+'\0' is null terminated character in the c-string 
+------------------------------------------------------
+    
+
+------------------------------------------------------
+Question 
+find length of the string, fibonacii
+without strlen function 	
+------------------------------------------------------
+Test Case:
+Input 
+fibonacii
+Output 
+9
+------------------------------------------------------
+#define MAX_SIZE 2000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+
+int findStrLen(char* text) {
+	int len = 0;
+	for (int I = 0; text[I] != '\0' ;I++) {
+		len++;
+	}
+	return len;
+}
+
+int main() {
+	char text[1000];
+	cout << "Enter the string:"; cin >> text;
+	int len = findStrLen(text);
+	cout << "The length of the " << text << " is " << len << endl;
+
+	return EXIT_SUCCESS;
+}
+------------------------------------------------------
+
+
+
+------------------------------------------------------
+Question 
+reverse string, fibonacii	
+------------------------------------------------------
+Test Case:
+Input 
+fibonacii
+Output 
+iicanobif
+------------------------------------------------------
+void doStrReverse(char* text) {
+	int len = strlen(text);
+	//0   1    2    3    4    5    6    7    8(len-1)    
+	//f   i    b    o    n    a    c    c    i
+	//L										 R
+	//i										 f
+	//    L						        R
+	//    c                             i
+	//		   L                   R
+	//		   c                   b
+	//              L          R
+	//			    a          o
+	//					 L			L < R
+	//					 R
+	int L = 0, R = 0;
+
+	for (L = 0, R=len-1; L < R;  L++, R--) {
+		swap(text[L], text[R]);
+	}
+}
+------------------------------------------------------
+Full Code
+------------------------------------------------------
+#define MAX_SIZE 2000
+#include<iostream>
+#include<cstdlib>
+#include<cstring>
+using namespace std;
+void swapChar(char& first, char& second) {
+	char t = first;
+	first = second;
+	second = t;
+}
+
+void doStrReverse(char* text) {
+	int len = strlen(text);
+	int L = 0, R = 0;
+
+	for (L = 0, R=len-1; L < R;  L++, R--) {
+		swap(text[L], text[R]);
+	}
+}
+
+int main() {
+	char text[1000];
+	cout << "Enter the string:"; cin >> text;
+
+	cout << "The given string is " << text << endl;
+	doStrReverse(text);
+	cout << "The reversed string is " << text << endl;
+
+	return EXIT_SUCCESS;
+}
+------------------------------------------------------
+
+
+1. strlen(s)        ->      length of the string 
+2. strcpy(s1,s2)    ->      s1 = s2     ; char  by char from s1 to s2 
+   strncpy(s1,s2,n)           s1= n chars of s2
+3. strcat(s1,s2)    ->      s1 = s1 + s2;  chars of s1 followed by chars of s2 into s1
+   strncat(s1,s2,n)         s1 =n chars of s1 + n chars of s2 
+4. strcmp(s1,s2)    ->      s1<s2 -ve ; s1>s2  +ve ; s1==s2 zero 
+   strncmp(s1,s2,n)         nCharsOfs1 < nCharsOfs2 -ve; nCharsOfs1 > nCharsOfs2 +ve; nCharsOfs1 == nCharsOfs2 zero
+5. strchr(s,ch)     ->      returns the pointer of "ch" within "s" by forward traversal 
+    Example s="maheswaran" strchr(s,'a') -> "aheswaran"     ie pointer from second char 
+   strrchr(s,ch)     ->      returns the pointer of "ch" within "s" by backward traversal 
+    Example s="maheswaran" strrchr(s,'a') -> "an"     ie pointer of char from the reverse direction 
+6. strstr(s1,s2)    -> similar to "strchr" but for substring instead of char 
+                       finds substring "s2" in the mainstring "s1"
+                       returns pointer of "s1" in "s2"                         
+    Example s="maheswaran" strstr(s,"war") -> "waran"                             
+7. strtok           -> Tokenizing           !!!! LATER 
+        one for intializaing the token 
+        another for reading continuous tokens 
+        Example:
+        //string of employees details each employee is sepeated by \n 
+        //within employee, each attibute is sepeated by comma 
+        1001,Mani,300000\n1002,Nithin,400000\n
+        we can split using '\n' as the delimer the above sting 
+            1001,Mani,300000
+            
+            1002,Nithin,400000
+        we want to split further 
+            for example, 1001,Mani,300000
+            to split using delimeter ","
+------------------------------------------------------    
+    
+    
+
+
+
+------------------------------------------------------
+Question 
+check a string is palindrome
+    malayalam
+    madam 
+    racecar
+    radar
+    
+Test Case 1:
+Input
+palindrome 
+Output
+Not Palindrome String 
+Test Case 2:    
+Input
+malayalam
+Output
+Palindrome String 
+
+------------------------------------------------------
+#define MAX_SIZE 2000
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<cstring>
+using namespace std;
+void swapChar(char& first, char& second) {
+	char t = first;
+	first = second;
+	second = t;
+}
+
+void doStrReverse(char* text) {
+	int len = strlen(text);
+	int L = 0, R = 0;
+
+	for (L = 0, R = len - 1; L < R; L++, R--) {
+		swap(text[L], text[R]);
+	}
+}
+
+int main() {
+	char text[1000];
+	char reversed[1000];
+	cout << "Enter the string:"; cin >> text;
+	strcpy(reversed, text);
+	doStrReverse(reversed);
+
+	cout << "The given string is " << text << endl;
+	cout << "The reversed string is " << reversed << endl;
+	if (strcmp(text, reversed) == 0) {
+		cout << text << " is palindrome." << endl;
+	}
+	else {
+		cout << text << " is not palindrome." << endl;
+	}
+
+	return EXIT_SUCCESS;
+}
+------------------------------------------------------
+
+------------------------------------------------------
+Question 
+Find number of palindrome strings from given N strings 
+    
+Test Case 1:
+Input
+N=5
+hello
+malayalam
+racecar 
+model
+level
+Output:
+Number of palindrome strings is 3
+------------------------------------------------------
+#define STR_SIZE 2000
+#define ARR_SIZE 20
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<cstring>
+using namespace std;
+void swapChar(char& first, char& second) {
+	char t = first;
+	first = second;
+	second = t;
+}
+
+void doStrReverse(char* text) {
+	int len = strlen(text);
+	int L = 0, R = 0;
+
+	for (L = 0, R = len - 1; L < R; L++, R--) {
+		swap(text[L], text[R]);
+	}
+}
+
+int main() {
+	char words[ARR_SIZE][STR_SIZE];
+	char reversed[STR_SIZE];
+
+	int N;
+	cout << "Enter number of words:"; cin >> N;
+	cout << "Enter words one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cin >> words[I];
+	}
+	
+	int count = 0;
+	for (int I = 0; I < N; I++) {
+		strcpy(reversed, words[I]);
+		doStrReverse(reversed);
+		if (strcmp(words[I], reversed) == 0) {
+			count++;
+		}
+	}
+
+	cout << "The number of palindrome strings is " << count << endl;
+	return EXIT_SUCCESS;
+}
+------------------------------------------------------
+
+------------------------------------------------------
+Map Example:
+------------------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<string>
+#include<map>
+using namespace std;
+
+
+int main() {
+	
+	cout << nameNumber["maheswaran"] << endl;
+	nameNumber["maheswaran"] = 1001;
+	cout << nameNumber["maheswaran"] << endl;
+	nameNumber["uma"] = 1002;
+
+	for (auto e : nameNumber) {
+		cout << e.first << " " << e.second << endl;
+	}
+
+    return EXIT_SUCCESS;
+}    
+------------------------------------------------------
+
+------------------------------------------------------
+Question 
+Count frequency of characters in given string
+using STL 
+------------------------------------------------------
+Test Case:
+Input:
+hihello 
+Output:
+h occurs 2 times 
+i occurs 1 time
+e occurs 1 time
+l occurs 2 times 
+o occurs 1 time 
+------------------------------------------------------
+#define STR_SIZE 2000
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<cstring>
+#include<map>
+using namespace std;
+
+
+int main() {
+	char text[STR_SIZE];
+	cout << "Enter the string:"; cin >> text;
+	map<char, int> charFreq;
+
+	for (int I = 0; text[I] != '\0';I++) {
+		char ch = text[I];
+		charFreq[ch] = charFreq[ch] + 1;
+	}
+
+	for (auto e : charFreq) {
+		cout << e.first << " occurs " << e.second << " times." << endl;
+	}
+
+	return EXIT_SUCCESS;
+} 
+------------------------------------------------------
+

@@ -1,0 +1,21 @@
+Algorithm:
+1. Count frequency of characters in given string.	
+2. Remove duplicates from sorted array.
+3. Rotate given array from the specified index.
+4. Find number of prime numbers in an array.	!!!DONE	
+5. reverse string, fibonacii					!!!DONE	
+6. Given an array of intergers where every number is repeating two times. 
+  Find the number which is occuring only once.
+7. Merge two sorted array.
+8. Find kth smallest element in an array.
+9. write vector/string.
+10. Implement stack and queue.
+11. Implement stack as queue and queue as stack.
+12. Delete a node from binary search tree.
+13. Insertion sort.								!!!DONE
+14. Merge sort.
+15. Reverse a given number.						!!!????
+
+Multithreading:
+1. Producer Consumer problem
+2. Program to print 1-10 in sequence using two threads.
