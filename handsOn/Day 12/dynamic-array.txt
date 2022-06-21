@@ -1,0 +1,381 @@
+===================================================================
+1. Solution for 
+Input  : 30 10 40 20 15 35 12 38 43 18
+Output : 10 43 12 40 15 38 18 35 20 30
+
+Use C++ Dynamic Array (Memory)
+
+
+Migration from static array into dynamic array
+Use the "Initial Code" to migrate
+===================================================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Initial Code
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#define MAX_SIZE 1000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void readNumbers(int N, short numbers[]) {
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter salary at index " << I << ":";
+		cin >> numbers[I];
+	}
+}
+
+void printNumbers(int N, short numbers[]) {
+
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+void swapNumbers(short& first, short& second) {
+	short t = first;
+	first = second;
+	second = t;
+}
+void sortSelectionAsc(int size, short numbers[]) {
+	for (int I = 0; I < (size - 1); I++) {
+		int sortableIndex = I;
+		for (int J = I + 1; J < size; J++) {
+			if (numbers[J] < numbers[sortableIndex]) {
+				sortableIndex = J;
+			}
+		}
+
+		if (sortableIndex != I) {
+			swapNumbers(numbers[I], numbers[sortableIndex]);
+		}
+	}
+}
+void arrange(int size, short data[], short output[]) {
+	sortSelectionAsc(size, data);//Note sortSelectionAsc has double array -> migrate the code to short 
+	int evenIndexInData = 0;
+	int oddIndexInData = size - 1;
+	for (int I = 0; I < size; I++) {
+		if (I % 2 == 0) {
+			output[I] = data[evenIndexInData];
+			evenIndexInData++;
+		}
+		else {
+			output[I] = data[oddIndexInData];
+			oddIndexInData--;
+		}
+	}
+}
+
+int main() {
+	short numbers[MAX_SIZE]{ 30, 10, 40, 20, 15, 35, 12, 38, 43, 18 };
+	short result[MAX_SIZE]{};
+	int size = 10;
+
+	cout << "(Before Arrangement) numbers are:" << endl;
+	printNumbers(size, numbers);
+
+	arrange(size, numbers, result);
+
+	cout << "(After Arrangement) numbers are:" << endl;
+	printNumbers(size, result);
+
+	return EXIT_SUCCESS;
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solved Code
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void readNumbers(int N, short* numbers) {
+//void readNumbers(int N, short numbers[]) {
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter salary at index " << I << ":";
+		cin >> numbers[I];
+	}
+}
+
+void printNumbers(int N, short* numbers) {
+//void printNumbers(int N, short numbers[]) {
+
+	for (int I = 0; I < N; I++) {
+		cout << numbers[I] << " ";
+	}
+	cout << endl;
+}
+void swapNumbers(short& first, short& second) {
+	short t = first;
+	first = second;
+	second = t;
+}
+void sortSelectionAsc(int size, short* numbers) {
+//void sortSelectionAsc(int size, short numbers[]) {
+	for (int I = 0; I < (size - 1); I++) {
+		int sortableIndex = I;
+		for (int J = I + 1; J < size; J++) {
+			if (numbers[J] < numbers[sortableIndex]) {
+				sortableIndex = J;
+			}
+		}
+
+		if (sortableIndex != I) {
+			swapNumbers(numbers[I], numbers[sortableIndex]);
+		}
+	}
+}
+void arrange(int size, short* data, short* output){
+//void arrange(int size, short data[], short output[]) {
+	sortSelectionAsc(size, data);//Note sortSelectionAsc has double array -> migrate the code to short 
+	int evenIndexInData = 0;
+	int oddIndexInData = size - 1;
+	for (int I = 0; I < size; I++) {
+		if (I % 2 == 0) {
+			output[I] = data[evenIndexInData];
+			evenIndexInData++;
+		}
+		else {
+			output[I] = data[oddIndexInData];
+			oddIndexInData--;
+		}
+	}
+}
+
+int main() {
+	int size = 10;
+
+	cout << "Enter number of numbers:"; cin >> size;
+	
+	short* numbers = nullptr;
+	short* result = nullptr;
+
+	//numbers = /* dynamic array */;
+	numbers = new short[size] {};
+	//result = /* dynamic array */;
+	result = new short[size] {};
+
+	readNumbers(size, numbers);
+
+	cout << "(Before Arrangement) numbers are:" << endl;
+	printNumbers(size, numbers);
+
+	arrange(size, numbers, result);
+
+	cout << "(After Arrangement) numbers are:" << endl;
+	printNumbers(size, result);
+
+	/* deallocate dynamic array so that there should not be no DANGLING PTR */
+	delete[] numbers;
+	delete[] result;
+
+	return EXIT_SUCCESS;
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+===================================================================
+
+
+===================================================================
+2. Read N salaries(double) and print forward and backward
+
+Example of "Use Pointer arithmetic"
+===================================================================
+#define MAX_SIZE 2000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void readData(int N, double* arrayData) {
+	//assumption:double is 8 byte wide
+	//data: 1000 2000 1500
+	//addr:  346 354  362 
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter salary at index " << I << ":";
+		cin >> (*(arrayData + I));
+	}
+}
+
+void printData(int N, double* arrayData) {
+	for (int I = 0; I < N; I++) {
+		cout << (*arrayData) << " ";
+		arrayData++;
+	}
+	cout << endl;
+}
+void printDataBackward(int N, double* arrayData) {
+	arrayData = arrayData + N - 1;
+	for (int I = 0; I < N; I++) {//for (int I = N-1; I >= 0; I--) {
+		cout << (*arrayData) << " ";
+		arrayData--;
+	}
+	cout << endl;
+}
+int main() {
+	int N;
+	cout << "Enter number of salaries"; cin >> N;
+
+	double salaries[MAX_SIZE];
+	readData(N, salaries);
+
+	cout << "The salaries are:" << endl;
+	printData(N, salaries);
+	cout << "The reverse of the salaries are:" << endl;
+	printDataBackward(N, salaries);
+
+	return EXIT_SUCCESS;
+}
+===================================================================
+
+
+===================================================================
+    double salaries[MAX_SIZE];
+    int I = 2;
+    
+    cout << salaries[I]  << endl;   //-> salaries at index I <- (salaries + I) then dereference
+    
+    cout << (*(salaries+I))  << endl; // (salaries + I) then dereference -> salaries at index I
+    
+    cout << (*(I + salaries))  << endl; //(I + salaries) then dereference -> salaries at index I
+    
+    cout << I[salaries]  << endl;   //-> salaries at index I <- (I + salaries) then dereference
+    
+These are all options for 
+    -Dereferencing array element or dynamic array from pointer    
+===================================================================    
+
+
+With Pointer,
+   You can form the expression like
+        Assume arrayData is pointer 
+        arrayData = arrayData + N - 1;
+        cin >> (*(arrayData + I));
+        
+        arrayData++;    
+        arrayData--;
+        
+        arrayData = arrayData + (N - 1);
+        arrayData = arrayData - (N - 1);
+        
+   
+With Pointer,
+    we can do addition 
+        -to the number to move from the pointer address to the address after the number'th address
+              subtraction with number 
+    we can do increment
+              decrement 
+              
+   
+    To subtract two address will give us "number of addresses" in between two addresses.
+===================================================================
+
+-----------------------------------------------------
+example for "difference between two addresses"
+            "I[arrayName]"
+-----------------------------------------------------
+#define MAX_SIZE 2000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void readData(int N, double* arrayData) {
+	//assumption:double is 8 byte wide
+	//data: 1000 2000 1500
+	//addr:  346 354  362 
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter salary at index " << I << ":";
+		cin >> (*(arrayData + I));
+	}
+}
+
+void printData(int N, double* arrayData) {
+	for (int I = 0; I < N; I++) {
+		cout << (*arrayData) << " ";
+		arrayData++;
+	}
+	cout << endl;
+}
+void printDataBackward(int N, double* arrayData) {
+	arrayData = arrayData + N - 1;
+	for (int I = 0; I < N; I++) {//for (int I = N-1; I >= 0; I--) {
+		cout << (*arrayData) << " ";
+		arrayData--;
+	}
+	cout << endl;
+}
+void printDatav2(int N, double* arrayData) {
+	for (int I = 0; I < N; I++) {
+		cout << I[arrayData] << " ";
+	}
+	cout << endl;
+}
+
+void f(int N, double* arrayData) {
+	double* lastAddr = arrayData + N - 1;
+	cout << (lastAddr - arrayData) << endl;
+}
+int main() {
+	int N;
+	cout << "Enter number of salaries"; cin >> N;
+
+	double salaries[MAX_SIZE];
+	readData(N, salaries);
+
+	cout << "The salaries are:" << endl;
+	printDatav2(N, salaries);
+	cout << "The reverse of the salaries are:" << endl;
+	printDataBackward(N, salaries);
+
+	f(N, salaries);
+
+	return EXIT_SUCCESS;
+}
+-----------------------------------------------------
+===================================================================
+
+===================================================================
+Summarize:
+    1. array (1D)
+    2. 2D array - matrix 
+    3. array traversal 
+        forward 
+        backward 
+    4. array 
+        implemented 
+            stack 
+            queue 
+    5. array 
+        sorting - one of the sorting algorithm selection, bubble, insertion, quick, merge
+    6. array with STL algorithms -> sort, for_each 
+        range loop to iterate the array 
+        for(auto e: arrayName) { /* Body */ }
+    7. pointer to single data variable 
+    8. pointer to array 
+    9. dynamic memory C++ 
+        memory allocation 
+            for single data 
+            for dynamic array 
+        memory deallocation 
+            for single data 
+            for dynamic array 
+    10. dynamic memory <cstdlib> functions malloc, calloc, realloc 
+        memory allocation 
+            for single data 
+            for dynamic array 
+        memory deallocation 
+            for single data 
+            for dynamic array 
+        memory reallocation 
+            for dynamic array 
+    11. how will you achieve reallocation for the C++ dynamic array?
+        To do: "implement vector" 
+    12. pointer arithmetic 
+        addition with number, subtraction with number, increment, decrement
+        subtraction between two same type pointers
+===================================================================     
+        
+            
+    
+    
+
+

@@ -1,0 +1,198 @@
+------------------------------------------------------
+1. insertion sort 
+   Read N "long double" data 
+   and sort ascending using "insertion sort"
+------------------------------------------------------
+Test Case:
+Input:
+Enter value for N: 5
+Enter data at index 0: 14    
+Enter data at index 1: 12
+Enter data at index 0: 8
+Enter data at index 0: 11
+Enter data at index 0: 13
+Output:
+Sorted data: 
+8 11 12 13 14 
+------------------------------------------------------
+14 12 8 11 13               12
+   --  
+...   
+14 14 8 11 13 
+12 14 8 11 13       12 14 (sorted)      8 11 13 (unsorted)
+      --                    8
+12 12 14   
+8  12 14 11 13      8 12 14 (sorted)    11 13 (unsorted) 
+         --                 11
+   12 12 14   
+8  11 12 14 13      8 11 12 14(sorted)   13 (unsorted)
+            --          13
+         14 14
+8  11 12 13 14      8 11 12 13 14(sorted) {} (unsorted)
+
+
+    How we insert an element to array?
+    The same way we are approaching in the insertion sort.
+    Thats why we got the name "insertion sort" 
+------------------------------------------------------
+#define MAX_SIZE 2000
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void readData(int N, long double* arrayData) {
+	cout << "Enter numbers one by one:" << endl;
+	for (int I = 0; I < N; I++) {
+		cout << "Enter number at index " << I << ":";
+		cin >> arrayData[I];
+	}
+}
+
+void printData(int N, long double* arrayData) {
+	for (int I = 0; I < N; I++) {
+		cout << arrayData[I] << " ";
+	}
+	cout << endl;
+}
+void sortInsertionAsc(int N, long double* arrayData) {
+	for (int I = 1; I < N; I++) {
+		long double takeOutElement = arrayData[I];
+		int position = I;
+		//seek the position for takeOutElement from the prevous list 
+		for (int J = I - 1; J >= 0; J--) {//Decrement loop for previous list from "takeOutElement"
+			if (takeOutElement < arrayData[J]) {
+				arrayData[J + 1] = arrayData[J];//Shifting Right
+				position = J;
+			}
+			else {
+				break;
+			}
+		}
+		if (position != I) {
+			arrayData[position] = takeOutElement;//Inserting
+		}
+	}
+}
+int main() {
+	int N;
+	cout << "Enter number of salaries"; cin >> N;
+
+	long double numberArray[MAX_SIZE];
+	readData(N, numberArray);
+
+	cout << "(Before Sort)The numbers are:" << endl;
+	printData(N, numberArray);
+
+	sortInsertionAsc(N, numberArray);
+
+	cout << "The sorted numbers are:" << endl;
+	printData(N, numberArray);
+
+	return EXIT_SUCCESS;
+}
+------------------------------------------------------
+
+
+
+
+------------------------------------------------------
+2. insertion sort 
+   Read N "long double" data 
+   and sort descending using "insertion sort"
+   
+*************Lab Assignment*************
+------------------------------------------------------
+Test Case:
+Input:
+Enter value for N: 5
+Enter data at index 0: 14    
+Enter data at index 1: 12
+Enter data at index 0: 8
+Enter data at index 0: 11
+Enter data at index 0: 13
+Output:
+Sorted data: 
+14 13 12 11 8
+------------------------------------------------------
+
+
+------------------------------------------------------
+3.
+*************Lab Assignment*************
+------------------------------------------------------
+Question:
+
+For given N words and index of each word 
+Based on the index, 
+Sort the words and 
+print the words in sentence form.
+
+Note: arrangement of words using index is the sentence actually.
+
+Input:
+maheswarn trainer developer am I and cum twenty years plus last for
+3          5         7       2 1   4  6   10     12    11   9   8
+Output:
+I am maheswaran and trainer cum developer for last twenty plus years
+------------------------------------------------------
+Test Case:
+
+Input:
+Enter value for N: 14
+Enter 14 words and its index:
+Enter word at 0:maheswaran
+Index of maheswaran: 3
+Enter word at 1:trainer 
+Index of trainer: 5
+Enter word at 2:developer 
+Index of developer: 7
+Enter word at 3:am 
+Index of am: 2
+Enter word at 4:I 
+Index of I: 1
+Enter word at 5:and
+Index of and: 4 
+Enter word at 6:cum
+Index of cum: 6
+Enter word at 7:twenty 
+Index of twenty: 10
+Enter word at 8:years
+Index of years: 12
+Enter word at 9:plus 
+Index of plus: 11
+Enter word at 10:last
+Index of last: 9
+Enter word at 11:for
+Index of for: 8
+
+Output:
+I am maheswaran and trainer cum developer for last twenty plus years
+1 2  3            4  5      6    7        8    9    10     11   12
+------------------------------------------------------
+
+
+------------------------------------------------------
+4.
+*************Lab Assignment*************
+------------------------------------------------------
+Read N numbers 
+Sort the  numbers based on the frequency of occuracne of the number 
+
+N=10
+100 200 100 200 400 300 500 500 500 100
+100 occurs 3 times 
+200 occurs 2 times 
+300 occurs 1 time 
+400 occurs 1 time 
+500 occurs 3 times 
+
+100 100 100 500 500 500 200 200 400 300
+
+------------------------------------------------------
+Test Case:
+Input:
+Enter value for N: 10
+Enter numbers:
+100 200 100 200 400 300 500 500 500 100
+Output: 
+100 100 100 500 500 500 200 200 400 300  
+------------------------------------------------------
