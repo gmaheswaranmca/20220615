@@ -221,7 +221,12 @@ SinglyLinkedList::SinglyLinkedList() {
 	this->head = nullptr;
 }
 SinglyLinkedList::~SinglyLinkedList() {
-
+	//cout << endl;
+	while (this->head != nullptr) {
+		//cout << this->front() << " deleted." << endl;
+		this->pop_front();
+	}
+	//cout << "We further managed memory well!!!" << endl;
 }
 void SinglyLinkedList::push_front(double val) {
 	//[.]-> 2000 -> 1500 -> 1800 -> 2500 -> 2400
@@ -248,8 +253,14 @@ void SinglyLinkedList::pop_front() {
 	if (this->head == nullptr) {
 		return;
 	}
-	this->head = this->head->next;
+	SLNode* node = this->head;
+    this->head = this->head->next;
+    
+    node->next = nullptr;
+    delete node;
+    node = nullptr;
 }
+
 double SinglyLinkedList::front() {
 	return this->head->data;
 }
@@ -339,7 +350,9 @@ SinglyLinkedList::SinglyLinkedList() {
 	this->head = nullptr;
 }
 SinglyLinkedList::~SinglyLinkedList() {
-
+	while (this->head != nullptr) {
+		this->pop_front();
+	}
 }
 void SinglyLinkedList::push_front(double val) {
 
@@ -354,12 +367,19 @@ void SinglyLinkedList::push_front(double val) {
 		this->head = node; 
 	}
 }
+
 void SinglyLinkedList::pop_front() {
-	if (this->head == nullptr) {
-		return;
-	}
-	this->head = this->head->next;
+    if (this->head == nullptr) {
+        return;
+    }
+    SLNode* node = this->head;
+    this->head = this->head->next;
+    
+    node->next = nullptr;
+    delete node;
+    node = nullptr;
 }
+
 double SinglyLinkedList::front() {
 	return this->head->data;
 }
