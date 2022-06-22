@@ -51,3 +51,54 @@ int main() {
 ----------------------------------------------
 
 	
+----------------------------------------------
+Singly Linked List 
+	using STL forward_list class 
+	1) construct the singly linked list 
+		call the member function "push_front()"
+	2) forward traversal
+    
+    menu driven : 1-add, 2-delete, 3-traversal 
+        push_front 
+        pop_front 
+        front 
+----------------------------------------------    
+#define STR_SIZE 2000
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<forward_list>
+using namespace std;
+
+
+int main() {
+	//[.]-> 2000 -> 1500 -> 1800 -> 2500 -> 2400
+	//head
+	forward_list<double> salaries;
+	
+	int menu;
+	do {
+		cout << "Choice(1-Add Front, 2-Delete Front, 3-Traversal,0-Exit):"; cin >> menu;
+		if (1 == menu) {
+			double data;
+			cout << "Enter data:"; cin >> data;
+			salaries.push_front(data);
+		}else if (2 == menu) {
+			cout << "The salary at front is " << salaries.front() << endl;
+			salaries.pop_front();
+		}
+		else if (3 == menu) {
+			cout << "The salaires are: " << endl;
+			for (auto e : salaries) {
+				cout << e << " ";
+			}
+			cout << endl;
+		}
+		else {
+			cout << "App is shutting down...";
+		}
+	} while ((1 <= menu) && (menu <= 3));
+
+	return EXIT_SUCCESS;
+}
+----------------------------------------------
