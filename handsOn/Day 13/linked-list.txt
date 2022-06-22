@@ -9,10 +9,45 @@ STL
 	forward_list 
 	array 				priority_queue
 	---------------------------------------------------------------
+    
+    
 ----------------------------------------------
 Linked List 
 ----------------------------------------------
+    sequential data structure 
+    
+    this is not like array ie internal data structure in C++ / C / Java
+    
+    !!! linked list in c++ is defined in STL 
+    !!! linked list in java is defined in collection library
 
+    Sequenced linked nodes 
+        each node will carry data and link to the next node 
+        
+    Types of the linked list 
+    1. Singly Linked List 
+            each node : data, linkToNextNode 
+            lastNode->linkToNextNode will be NULL
+            head is pointer to first node 
+            
+        Circular Singly Linked List
+            each node : data, linkToNextNode 
+            lastNode->linkToNextNode will be "firstNode"    ****
+            head is pointer to first node 
+                
+    2. Doubly Linked List 
+            each node : data, linkToNextNode, linkToPreviousNode 
+            lastNode->linkToNextNode will be NULL
+            firstNode->linkToPreviousNode will be NULL
+            head is pointer to first node 
+            end is pointer to last node 
+            
+        Circular Doubly Linked List
+            each node : data, linkToNextNode, linkToPreviousNode 
+            lastNode->linkToNextNode will be "firstNode"  ****
+            firstNode->linkToPreviousNode will be "lastNode" ****
+            head is pointer to first node 
+            end is pointer to last node 
 
 ----------------------------------------------
 Singly Linked List 
@@ -72,6 +107,7 @@ using namespace std;
 
 
 int main() {
+    2400 2500 1800 1500 2000
 	//[.]-> 2000 -> 1500 -> 1800 -> 2500 -> 2400
 	//head
 	forward_list<double> salaries;
@@ -93,6 +129,265 @@ int main() {
 				cout << e << " ";
 			}
 			cout << endl;
+		}
+		else {
+			cout << "App is shutting down...";
+		}
+	} while ((1 <= menu) && (menu <= 3));
+
+	return EXIT_SUCCESS;
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Output
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Choice(1-Add Front, 2-Delete Front, 3-Traversal,0-Exit):1
+Enter data:2000
+Choice(1-Add Front, 2-Delete Front, 3-Traversal,0-Exit):1
+Enter data:1500
+Choice(1-Add Front, 2-Delete Front, 3-Traversal,0-Exit):1
+Enter data:1800
+Choice(1-Add Front, 2-Delete Front, 3-Traversal,0-Exit):1
+Enter data:2500
+Choice(1-Add Front, 2-Delete Front, 3-Traversal,0-Exit):1
+Enter data:2400
+Choice(1-Add Front, 2-Delete Front, 3-Traversal,0-Exit):3
+The salaires are:
+2400 2500 1800 1500 2000
+Choice(1-Add Front, 2-Delete Front, 3-Traversal,0-Exit):2
+The salary at front is 2400
+Choice(1-Add Front, 2-Delete Front, 3-Traversal,0-Exit):3
+The salaires are:
+2500 1800 1500 2000
+Choice(1-Add Front, 2-Delete Front, 3-Traversal,0-Exit):
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------------
+
+----------------------------------------------
+ 1. Singly Linked List 
+            each node : data, linkToNextNode 
+            lastNode->linkToNextNode will be NULL
+            head is pointer to first node 
+            
+        Circular Singly Linked List
+            each node : data, linkToNextNode 
+            lastNode->linkToNextNode will be "firstNode"    ****
+            head is pointer to first node 
+----------------------------------------------
+Question 
+Implement Singly Linked Listed (User-Defined)
+----------------------------------------------
+#define STR_SIZE 2000
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<forward_list>
+using namespace std;
+
+struct SLNode {
+public:
+	double data;
+	SLNode* next;
+public:
+	SLNode();
+	SLNode(double val);
+	~SLNode();
+};
+
+SLNode::SLNode() {
+	this->data = 0.0;
+	this->next = nullptr;
+}
+SLNode::SLNode(double val) {
+	this->data = val;
+	this->next = nullptr;
+}
+SLNode::~SLNode() {
+
+}
+
+
+struct SinglyLinkedList {
+public:
+	SLNode* head;
+public:
+	SinglyLinkedList();
+	~SinglyLinkedList();
+	void push_front(double val);
+	void pop_front();
+	double front();
+	void traversal();
+};
+SinglyLinkedList::SinglyLinkedList() {
+	this->head = nullptr;
+}
+SinglyLinkedList::~SinglyLinkedList() {
+
+}
+void SinglyLinkedList::push_front(double val) {
+	//[.]-> 2000 -> 1500 -> 1800 -> 2500 -> 2400
+
+	//			[x]
+	//Add 2400  [.]-> {2400,x} 
+	//Add 2500	{2500,x}				
+	//			{2500,-}-> {2400,x} 
+	//			[.]-> {2500,-}-> {2400,x} 	
+	SLNode* node = new SLNode(val);//dynamic node={val,NULL}
+	if (this->head == nullptr) {
+		this->head = node;
+	}
+	else {
+		node->next = head; // node next points the entire list 
+		this->head = node; // head points the new node so that 
+						   // head points new node ; new node point previous list 
+						   // head points new list included new node as the first node 
+	}
+}
+void SinglyLinkedList::pop_front() {
+	//[.]-> 2000 -> 1500 -> 1800 -> 2500 -> 2400
+	//[.] -> 1500 -> 1800 -> 2500 -> 2400
+	if (this->head == nullptr) {
+		return;
+	}
+	this->head = this->head->next;
+}
+double SinglyLinkedList::front() {
+	return this->head->data;
+}
+void SinglyLinkedList::traversal() {
+	SLNode* node = this->head;
+	cout << "The salaries are:" << endl;
+	while (node != nullptr) {
+		cout << node->data << " -> " ;
+		node = node->next;
+	}
+	cout << endl;
+}
+int main() {
+	//[.]-> 2000 -> 1500 -> 1800 -> 2500 -> 2400
+	//head
+	//forward_list<double> salaries;
+	SinglyLinkedList salaries;
+	
+	int menu;
+	do {
+		cout << "Choice(1-Add Front, 2-Delete Front, 3-Traversal,0-Exit):"; cin >> menu;
+		if (1 == menu) {
+			double data;
+			cout << "Enter data:"; cin >> data;
+			salaries.push_front(data);
+		}else if (2 == menu) {
+			cout << "The salary at front is " << salaries.front() << endl;
+			salaries.pop_front();
+		}
+		else if (3 == menu) {
+			salaries.traversal();
+		}
+		else {
+			cout << "App is shutting down...";
+		}
+	} while ((1 <= menu) && (menu <= 3));
+
+	return EXIT_SUCCESS;
+}
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+After removal of comments
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#define STR_SIZE 2000
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<forward_list>
+using namespace std;
+
+struct SLNode {
+public:
+	double data;
+	SLNode* next;
+public:
+	SLNode();
+	SLNode(double val);
+	~SLNode();
+};
+
+SLNode::SLNode() {
+	this->data = 0.0;
+	this->next = nullptr;
+}
+SLNode::SLNode(double val) {
+	this->data = val;
+	this->next = nullptr;
+}
+SLNode::~SLNode() {
+
+}
+
+
+struct SinglyLinkedList {
+public:
+	SLNode* head;
+public:
+	SinglyLinkedList();
+	~SinglyLinkedList();
+	void push_front(double val);
+	void pop_front();
+	double front();
+	void traversal();
+};
+SinglyLinkedList::SinglyLinkedList() {
+	this->head = nullptr;
+}
+SinglyLinkedList::~SinglyLinkedList() {
+
+}
+void SinglyLinkedList::push_front(double val) {
+
+	
+	SLNode* node = new SLNode(val);
+    
+	if (this->head == nullptr) {
+		this->head = node;
+	}
+	else {
+		node->next = head;  
+		this->head = node; 
+	}
+}
+void SinglyLinkedList::pop_front() {
+	if (this->head == nullptr) {
+		return;
+	}
+	this->head = this->head->next;
+}
+double SinglyLinkedList::front() {
+	return this->head->data;
+}
+void SinglyLinkedList::traversal() {
+	SLNode* node = this->head;
+	cout << "The salaries are:" << endl;
+	while (node != nullptr) {
+		cout << node->data << " -> " ;
+		node = node->next;
+	}
+	cout << endl;
+}
+int main() {
+	SinglyLinkedList salaries;
+	
+	int menu;
+	do {
+		cout << "Choice(1-Add Front, 2-Delete Front, 3-Traversal,0-Exit):"; cin >> menu;
+		if (1 == menu) {
+			double data;
+			cout << "Enter data:"; cin >> data;
+			salaries.push_front(data);
+		}else if (2 == menu) {
+			cout << "The salary at front is " << salaries.front() << endl;
+			salaries.pop_front();
+		}
+		else if (3 == menu) {
+			salaries.traversal();
 		}
 		else {
 			cout << "App is shutting down...";
