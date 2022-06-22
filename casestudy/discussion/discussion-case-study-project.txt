@@ -1,0 +1,85 @@
+Deliverables					Team									Communication 
+	SRS 						Formation								Media
+	LLD								15	Size/Members	Title			webex-breakout sessions
+	HLD								T1	5								whatsapp group per team 
+	Presentation 					T2	5								gmeet 
+	Source Code 					T3	4+1								github	[permission to use in company laptop]
+
+1. Case Study 
+	Documentation 
+	
+	
+				T1								T2								T3
+				Najeem V T(POC)					Rahul P(POC)					Dilshamol Abbas(POC)		
+				Maria Benny						Ms. Sandra T T					Akhil K
+				Arunima Jayaraj					Mariya Justin					Ankith Suresh
+				Muhammad AP						Vinu Yesudas M					Muhamed S
+				Uma Devi						Sona Vennikkal					Venkata Reddy Kasarla?????
+				
+				Maheswaran						Maheswaran						Maheswaran
+				Amutha Madam					Amutha Madam					Amutha Madam
+		
+Title   
+
+Whatsapp			
+
+gmeet a/c				
+webex a/c
+
+github 
+  repository
+  (after conclusion of title)
+
+
+
+
+------------------------------------------------------------------------	
+1. Najeem V T				Banking
+							Billing
+							Individaul Custoemr
+4. Maria Benny
+7. Arunima Jayaraj
+10. Muhammad AP
+13. Uma Devi
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+2. Rahul P
+5. Ms. Sandra T T				Employee Management	MFC
+8. Mariya Justin
+11.Vinu Yesudas M
+14. Sona Vennikkal
+------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------
+3. Dilshamol Abbas			Library System	Faculty	Librarian	Student	
+							IssueBook	ChangePwd	UserAccess	SelectBk	
+							SearchBk	Bk-DisplayIssued
+							
+							Railway Ticket Reservation				
+							Trading	Bidding	Finance	Commodity	Price
+6. Akhil K
+9. Ankith Suresh
+12. Muhamed S
+15.Venkata Reddy Kasarla
+------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

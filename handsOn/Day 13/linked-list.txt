@@ -1,0 +1,53 @@
+STL
+	sequence			container 	associative 
+	container 			adapter 	container 
+	---------------------------------------------------------------			
+	vector 				stack		set map
+	list 				queue 		unordered_set unordered_map	
+	deque							multiset	multimap
+									unordered_multiset unordered_multimap
+	forward_list 
+	array 				priority_queue
+	---------------------------------------------------------------
+----------------------------------------------
+Linked List 
+----------------------------------------------
+
+
+----------------------------------------------
+Singly Linked List 
+	using STL forward_list class 
+	1) construct the singly linked list 
+		call the member function "push_front()"
+	2) forward traversal
+----------------------------------------------
+#define STR_SIZE 2000
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<forward_list>
+using namespace std;
+
+
+int main() {
+	//[.]-> 2000 -> 1500 -> 1800 -> 2500 -> 2400
+	//head
+	forward_list<double> salaries;
+	
+	salaries.push_front(2000);
+	salaries.push_front(1500);
+	salaries.push_front(1800);
+	salaries.push_front(2500);
+	salaries.push_front(2400);
+
+	cout << "The salaires are: " << endl;
+	for(auto e:salaries){
+		cout << e << " ";
+	}
+	cout << endl;
+
+	return EXIT_SUCCESS;
+}
+----------------------------------------------
+
+	
