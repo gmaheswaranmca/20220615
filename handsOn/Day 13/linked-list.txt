@@ -640,7 +640,7 @@ void traversal(SinglyLinkedList& list) {
 	SLNode* node = list.head;
 	cout << "The salaries are:" << endl;
 	while (node != nullptr) {
-		cout << node->data << " -> " ;
+		cout << node->data << " -> ";
 		node = node->next;
 	}
 	cout << endl;
@@ -659,34 +659,39 @@ void traversalRecursionv2(SLNode* node) {
 	}
 	traversalRecursionv2(node->next);
 	cout << node->data << " -> ";
-	
+
 }
 int main() {
 	//[.]-> 2000 -> 1500 -> 1800 -> 2500 -> 2400
 	//head
 	//forward_list<double> salaries;
 	SinglyLinkedList salaries;
-	
+
 	int menu;
 	do {
-		cout << "Choice(1-Add Front, 2-Delete Front, 3-Traversal,4-Traversal Recursion,5-Backward Traversal, 0-Exit):"; cin >> menu;
+		cout << "Pick Choice" << endl;
+		cout << "1 - Add Front, 2 - Delete Front, 3 - Traversal" << endl;
+		cout << "4 - Traversal Recursion, 5 - Backward Traversal" << endl;
+		cout << "0 - Exit" << endl;
+		cout << "Your Choice: "; cin >> menu;
 		if (1 == menu) {
 			double data;
 			cout << "Enter data:"; cin >> data;
 			salaries.push_front(data);
-		}else if (2 == menu) {
+		}
+		else if (2 == menu) {
 			cout << "The salary at front is " << salaries.front() << endl;
 			salaries.pop_front();
 		}
 		else if (3 == menu) {
 			traversal(salaries);
 		}
-        else if (4 == menu) {
+		else if (4 == menu) {
 			cout << "The salaries are:" << endl;
 			traversalRecursion(salaries.head);
 			cout << endl;
 		}
-        else if (5 == menu) {
+		else if (5 == menu) {
 			cout << "The salaries are:" << endl;
 			traversalRecursionv2(salaries.head);
 			cout << endl;
