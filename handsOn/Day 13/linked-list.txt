@@ -699,7 +699,7 @@ int main() {
 		else {
 			cout << "App is shutting down...";
 		}
-	} while ((1 <= menu) && (menu <= 3));
+	} while ((1 <= menu) && (menu <= 5));
 
 	return EXIT_SUCCESS;
 }
