@@ -704,3 +704,262 @@ int main() {
 	return EXIT_SUCCESS;
 }
 ----------------------------------------------
+
+
+
+
+
+doubly-linked-list (DLL)
+    is like "list" in STL containers 
+
+    each node of DLL takes three attributes 
+        data 
+        next
+        prev 
+    DLL 
+        head 
+        tail 
+----------------------------------------------
+Implement doubly-linked-list 
+    -front 
+    -push_front 
+    -pop_front 
+    -back 
+    -push_back 
+    -pop_back 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//2400 2500 1800 1500 2000
+//					head[x][x]tail
+//add_back 2400		head[x] [x,2400,x] [x]tail
+//					head[.]-> [x,2400,x] <-[.]tail
+//add_back 2500		head[.]-> [x,2400,.]-> <-[.,2500,x]  <-[.]tail
+//add_back 1800		head[.]-> [x,2400,.]-> <-[.,2500,.]-> <-[.,1800,x]  <-[.]tail
+//add_back 1500		head[.]-> [x,2400,.]-> <-[.,2500,.]-> <-[.,1800,.]-> <-[.,1500,x]  <-[.]tail
+//add_back 2000		head[.]-> [x,2400,.]-> <-[.,2500,.]-> <-[.,1800,.]-> <-[.,1500,.]-> <-[.,2500,x]  <-[.]tail
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Initial Code:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+#define STR_SIZE 2000
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<forward_list>
+using namespace std;
+
+struct DLNode {
+public:
+	DLNode* prev;
+	double data;
+	DLNode* next;
+public:
+	DLNode();
+	DLNode(double val);
+	~DLNode();
+};
+
+DLNode::DLNode() {
+	this->prev = nullptr;
+	this->data = 0.0;
+	this->next = nullptr;
+}
+DLNode::DLNode(double val) {
+	this->prev = nullptr;
+	this->data = val;
+	this->next = nullptr;
+}
+DLNode::~DLNode() {
+
+}
+
+
+struct DoublyLinkedList {
+public:
+	DLNode* head;
+	DLNode* tail;
+public:
+	DoublyLinkedList();
+	~DoublyLinkedList();
+	void push_front(double val);
+	void pop_front();
+	double front();
+
+	void push_back(double val);
+	void pop_back();
+	double back();
+};
+DoublyLinkedList::DoublyLinkedList() {
+	this->head = nullptr;
+	this->tail = nullptr;
+}
+DoublyLinkedList::~DoublyLinkedList() {
+	while (this->head != nullptr) {
+		this->pop_front();
+	}
+	this->head = nullptr;
+	this->tail = nullptr;
+}
+void DoublyLinkedList::push_front(double val) {
+	DLNode* node = new DLNode(val);
+	//CODE HERE ;attach the node in the DLL ; adjust both head and tail
+}
+
+void DoublyLinkedList::pop_front() {
+	if (this->head == nullptr) {
+		return;
+	}
+	DLNode* node = this->head;
+	
+	//CODE HERE ; detach the node ; adjust both head and tail
+
+	//deallocation of node
+	node->next = nullptr;
+	delete node;
+	node = nullptr;
+}
+double DoublyLinkedList::front() {
+	if (this->head == nullptr) {
+		throw "List is empty.";
+	}
+	return this->head->data;
+}
+void DoublyLinkedList::push_back(double val) {
+	DLNode* node = new DLNode(val);
+	//CODE HERE ;attach the node in the DLL ; adjust both head and tail
+}
+void DoublyLinkedList::pop_back() {
+	if (this->tail == nullptr) {
+		return;
+	}
+	DLNode* node = this->tail;
+
+	//CODE HERE ; detach the node ; adjust both head and tail
+
+	//deallocation of node
+	node->next = nullptr;
+	delete node;
+	node = nullptr;
+}
+double DoublyLinkedList::back() {
+	if (this->tail == nullptr) {
+		throw "List is empty.";
+	}
+	return this->tail->data;
+}
+void traversalForward(DoublyLinkedList& list) {
+	DLNode* node = list.head;
+	cout << "The salaries are:" << endl;
+	while (node != nullptr) {
+		cout << node->data << " -> ";
+		node = node->next;
+	}
+	cout << endl;
+}
+void traversalBackward(DoublyLinkedList& list) {
+	DLNode* node = list.tail;
+	cout << "The reverse of salaries are:" << endl;
+	while (node != nullptr) {
+		cout << node->data << " -> ";
+		node = node->prev;
+	}
+	cout << endl;
+}
+void traversalUsingNextRecursionForward(DLNode* node) {
+	if (node == nullptr) {
+		return;
+	}
+	cout << node->data << " -> ";
+	traversalUsingNextRecursionForward(node->next);
+}
+
+void traversalUsingNextRecursionBackward(DLNode* node) {
+	if (node == nullptr) {
+		return;
+	}
+	traversalUsingNextRecursionBackward(node->next);
+	cout << node->data << " -> ";
+}
+void traversalUsingPrevRecursionBackward(DLNode* node) {
+	if (node == nullptr) {
+		return;
+	}
+	cout << node->data << " -> ";
+	traversalUsingPrevRecursionBackward(node->prev);
+}
+
+void traversalUsingPrevRecursionForward(DLNode* node) {
+	if (node == nullptr) {
+		return;
+	}
+	traversalUsingPrevRecursionBackward(node->prev);
+	cout << node->data << " -> ";
+}
+int main() {
+	
+	DoublyLinkedList salaries;
+
+	int menu;
+	do {
+		cout << "Pick Choice" << endl;
+		cout << "1 - Add Front, 2 - Delete Front" << endl;
+		cout << "3 - Add Back, 4 - Delete Back" << endl;
+		cout << "5 - Traversal Forward, 6-Traversal Backward" << endl;
+		cout << "Recursion(Next)7 -Traversal Forward, 8-Traversal Backward" << endl;
+		cout << "Recursion(Prev)9 -Traversal Forward, 10-Traversal Backward" << endl;
+		cout << "0 - Exit" << endl;
+		cout << "Your Choice: "; cin >> menu;
+		if (1 == menu) {
+			double data;
+			cout << "Enter data:"; cin >> data;
+			salaries.push_front(data);
+		}
+		else if (2 == menu) {
+			cout << "The salary at front is " << salaries.front() << endl;
+			salaries.pop_front();
+		}else if (3 == menu) {
+			double data;
+			cout << "Enter data:"; cin >> data;
+			salaries.push_back(data);
+		}
+		else if (4 == menu) {
+			cout << "The salary at front is " << salaries.back() << endl;
+			salaries.pop_back();
+		}
+		else if (5 == menu) {
+			traversalForward(salaries);
+		}
+		else if (6 == menu) {
+			traversalBackward(salaries);
+		}
+		else if (7 == menu) {
+			cout << "(Recursion-Next)The salaries are:" << endl;
+			traversalUsingNextRecursionForward(salaries.head);
+			cout << endl;
+		}
+		else if (8 == menu) {
+			cout << "(Recursion-Next)The reverse of salaries are:" << endl;
+			traversalUsingNextRecursionBackward(salaries.head);
+			cout << endl;
+		}
+		else if (9 == menu) {
+			cout << "(Recursion-Prev)The salaries are:" << endl;
+			traversalUsingPrevRecursionForward(salaries.head);
+			cout << endl;
+		}
+		else if (10 == menu) {
+			cout << "(Recursion-Next)The reverse of salaries are:" << endl;
+			traversalUsingPrevRecursionBackward(salaries.head);
+			cout << endl;
+		}
+		else {
+			cout << "App is shutting down...";
+		}
+	} while ((1 <= menu) && (menu <= 5));
+
+	return EXIT_SUCCESS;
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------------    
