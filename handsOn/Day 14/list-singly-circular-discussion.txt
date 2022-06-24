@@ -1,4 +1,9 @@
 Circular Singly Linked List 
+	each node : data, linkToNextNode 
+	lastNode->linkToNextNode will be "firstNode"    ****
+	head is pointer to first node 
+	tail is pointer to last node 
+		last node->next points first node to make the list as circular
 
 Input: 2400 2500 1800 1500 2000
 

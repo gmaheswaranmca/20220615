@@ -1,0 +1,181 @@
+-------------------------------------------------------------	
+Paradigm of the programming models
+-------------------------------------------------------------
+Procedural Programming - Paradigm?
+	Procedural Programming	- "program/software code is collection of procedures(functions)"
+	
+	Procedural Programming - Paradigm	
+		Here, writing functions for solving "tasks"
+		
+		"tasks" oriented not "data" oriented 
+		
+		top-down programming model 
+		
+		main 
+			- librarian application 
+				- manage book catalog 
+				- issue book 
+				- receive book 
+			- user application 
+				- search book 
+				- go for getting book 
+				- return the book 
+	
+Object Oriented Programming - Paradigm?	
+	Object Oriented Programming - "program/software code is collection of objects and communication within objects"
+	
+	Object Oriented Programming - Paradigm 
+		"objects" ie "data" oriented, not "tasks" oriented 
+		"tasks" for data are encapsulated into objects 
+		
+	bottom-up progamming model 
+	
+		books collection object 
+			manage 
+		book object
+			issue 
+			receive 
+			
+			==>
+				main 
+					driver programs 
+	
+	advantage: 
+		we can convert real-word business objects
+		into software objects 
+		=> easy to understand because of real world objects 
+		=> reusability even through inheritance 
+		=> as we delegate the data processing/access to the "encapsulated" functions of the object
+			data is secured 
+				-> "Data Hiding" 
+		=> architecutring of the software will be so easy 
+			"abstract classess"		"interfaces" 
+				-> "ideas" than "events" 
+				==> Develop so many frameworks
+					framework -> library 
+						it will have read to use software constructable components 
+-------------------------------------------------------------
+
+
+What is OOPs?
+	The concepts in OOP 
+		1. class 
+		2. object 
+		3. encapsulation 
+		4. data hiding 
+		5. abstraction 
+		6. inheirtance 
+		7. polimorphism 
+		8. dynamic binding 
+-------------------------------------------------------------		
+Learn articles from 
+	https://cplusplus.com/doc/tutorial/
+-------------------------------------------------------------	
+	Classes (I)					https://cplusplus.com/doc/tutorial/classes/
+	Classes (II)				https://cplusplus.com/doc/tutorial/templates/
+	Special members				https://cplusplus.com/doc/tutorial/classes2/
+	Friendship and inheritance	https://cplusplus.com/doc/tutorial/inheritance/
+	Polymorphism				https://cplusplus.com/doc/tutorial/polymorphism/
+	Exceptions					https://cplusplus.com/doc/tutorial/exceptions/
+-------------------------------------------------------------	
+
+Reference
+	https://learn.onlinegdb.com/c%2B%2B_class_and_object	
+	
+	
+	
+What is object oriented programming?
+	This consists of creating objects that contain data and functions. 
+	This is different from procedural programming that performs operations on data sequentially. 
+	Classes and objects are two main aspects of object oriented programming.	
+	
+	
+class 
+	user-defined data type 
+	data type for object 
+	blue print for object 
+	class is defined by three class-keys 
+		class, struct, union 
+	
+object 
+	variable of type class 
+	An object is created from a class
+	
+encapsulation 
+	the mecahnism by which we bundle the attributes and the behaviors of the object 
+
+	attributes: object member data, instance variables
+	behaviors: member functions to operate on member data, instance methods to operate on instance variables 
+	
+	advantage:
+		we can secure the data 
+		
+data hiding
+	the process by which we ensure only the encapsulated functions will access and process data 
+		and outside the object the data should be accessed 
+		but the data can be exposed to ouside the object via the encapsulated functions 
+		
+abstraction 	
+	data abstraction 
+		calling the object will process or access data via the encapsulated functions
+					or 
+		the way by which the object allows encapsulated functions to operate on data 
+		so the service calls to encapsulated functions will not disclose about the data 
+		
+	interfaces abstraction 
+		"abstract classes" 
+			"ideas" not the "events" 
+			-> we can develop frameworks 
+	
+inheritance 
+	deriving new class from the existing class 
+	Derived class : Inherited from another class
+	Base class: Class being inherited from
+	
+polimorphism 
+	poly - many 
+	morphism - forms 
+	
+	one object taking many forms 
+	
+	1. function overloading 
+	2. constructor overloading 
+	3. operator overloading 
+	4. function overriding 
+	5. virtual function 
+		dynamic binding 
+		
+dynamic binding 
+	the name resolution of the overridden function will happen at runtime 
+	when we call the child object via 
+		"the parent pointer" to the "child object" 
+		"the parent reference" to the "child object"
+-------------------------------------------------------------	
+	
+Employee
+	hra - House Rent Allowances			15 % of basic 
+	da - Dearness Allowances			20 % of basic 
+		 Medical Allowance
+	PF - providunt fund 				15 % of basic
+
+	
+-------------------------------------------------------------
+Employee
+---------------------------
+	- empId :	int
+	- empName: text -> c-string / string 
+	- basicSalary: double 
+	
+	-hra:double				 
+	-da:double 
+	-pf:double 
+	-netSalary:double
+	----------------------
+	+ Employee(empName,basicSalari)
+	+ ~Employee()
+	+ doPayrollCalculation():void
+	+ getNetSalary():double 
+---------------------------
+	
+	
+	

@@ -1,4 +1,7 @@
 Singly Linked List 
+	each node : data, linkToNextNode 
+	lastNode->linkToNextNode will be NULL
+	head is pointer to first node 
 
 Input: 2400 2500 1800 1500 2000
 

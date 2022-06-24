@@ -1,0 +1,33 @@
+Doubly Linked List 
+	each node : data, linkToNextNode, linkToPreviousNode 
+	lastNode->linkToNextNode will be NULL
+	firstNode->linkToPreviousNode will be NULL
+	head is pointer to first node 
+	end is pointer to last node 
+            
+
+
+//2400 2500 1800 1500 2000
+//					head[x][x]tail
+//add_back 2400		head[.]-> [x,2400,x] <-[.]tail
+//add_back 2500		head[.]-> [x,2400,.]-> <-[.,2500,x]  <-[.]tail
+//add_back 1800		head[.]-> [x,2400,.]-> <-[.,2500,.]-> <-[.,1800,x]  <-[.]tail
+//add_back 1500		head[.]-> [x,2400,.]-> <-[.,2500,.]-> <-[.,1800,.]-> <-[.,1500,x]  <-[.]tail
+//add_back 2000		head[.]-> [x,2400,.]-> <-[.,2500,.]-> <-[.,1800,.]-> <-[.,1500,.]-> <-[.,2500,x]  <-[.]tail
+
+
+Circular Doubly Linked List
+	each node : data, linkToNextNode, linkToPreviousNode 
+	lastNode->linkToNextNode will be "firstNode"  ****
+	firstNode->linkToPreviousNode will be "lastNode" ****
+	head is pointer to first node 
+	end is pointer to last node 
+	
+//2400 2500 1800 1500 2000
+//					head[x][x]tail
+//add_back 2400		head[.]-> [tail,2400,head] <-[.]tail		
+//add_back 2500		head[.]-> [tail,2400,.]-> <-[.,2500,head]  <-[.]tail
+//add_back 1800		head[.]-> [tail,2400,.]-> <-[.,2500,.]-> <-[.,1800,head]  <-[.]tail
+//add_back 1500		head[.]-> [tail,2400,.]-> <-[.,2500,.]-> <-[.,1800,.]-> <-[.,1500,head]  <-[.]tail
+//add_back 2000		head[.]-> [tail,2400,.]-> <-[.,2500,.]-> <-[.,1800,.]-> <-[.,1500,.]-> <-[.,2500,head]  <-[.]tail
+	
