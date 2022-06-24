@@ -161,7 +161,7 @@ Employee
 	
 -------------------------------------------------------------
 Employee
----------------------------
+-------------------------------------------------------------
 	- empId :	int
 	- empName: text -> c-string / string 
 	- basicSalary: double 
@@ -175,7 +175,39 @@ Employee
 	+ ~Employee()
 	+ doPayrollCalculation():void
 	+ getNetSalary():double 
----------------------------
+-------------------------------------------------------------
+
+-------------------------------------------------------------
+Book
+	Drishyam 
+	Author: Jithu Joseph
+	Publication: Unknown Publication 
+
+BookCopy
+	Book book;
+		1 
+		102030		CatalogNumber
+		holder		available for issue 
+	
+	
+		2
+		102031 		
+		holder 		Rahul	
+-------------------------------------------------------------
+class: Book 
+-------------------------------------------------------------	
+	- book_tiltle: string 
+	- author: string 
+	- publication: string 
+-------------------------------------------------------------	
+class: BookCopy
+	-book : Book 
+	-catalogNumber: string 
+	-bookReaderName: string 
+	
+	+issue(readerName:string):void 		bookReaderName = readerName
+	+recive():void 						bookReaderName = ""
+-------------------------------------------------------------		
 	
 	
 	
