@@ -1,0 +1,158 @@
+
+:: :: ::20220627:: :: ::
+====================================================================
+Introduction to OOPS                                        
+	1. What is OOPS?
+	2. Necessity and Advantage of OOPS
+	3. OOPS Designs with real-time examples.
+	4. What is mean by class and object?
+	5. Relation between a Class and an Object
+	6. How to create class and object
+	7. User-defined / Custom Datatypes
+
+Class and Objects                                                            
+	1.	Defining a Class
+	2.	Creating Objects
+	3.	Access specifiers
+		a.	private
+		b.	public
+	4.	Accessing Class Members
+	5.	Achieving abstraction and encapsulation using objects
+	6.	Scope Resolution Operator (::)
+	7. Defining Member Functions
+		a. Outside the class
+		b. Inside the class
+		c. Passing Objects as Arguments
+		d. Returning Objects
+	8. Function Overloading
+	9. Constructors
+		a. Properties of constructors
+		b. Constructor Overloading
+	10. Types of constructors
+		a. Default Constructors
+		b. Parameterized Constructors
+		c. Copy Constructors
+	11. Destructors
+	12. Static Data Members
+	13. Static member functions
+	14. Constant data members
+	15. Constant Member Functions
+	16. Friend Functions
+	17. Friend Class
+	18. Array of objects					Ex 08
+	19. Object as member of a class - composition	Ex 10
+		a. Container class
+		b. Contained class
+		c. The “has a” relationship
+	20. Pointer to objects					Ex 01-02
+	21. The this pointer
+	22. Dynamic objects					/array Ex 07 / 09
+
+
+Exercise 20220607-01-01/02/03		Number of programs: 3
+Define RectangleEntity class of attributes width and length (public access).
+Define service functions outside the class to operate on attributes of class RectangleEntity.
+1… readRect
+2… printRect
+3… findArea
+4… findCircumference
+
+
+Write driver code to invoke those functions
+
+Learning outcome: 
+o function call by value Ex 1.1
+o function call by pointer Ex 1.2
+o function call by reference Ex 1.3
+o pointer to const Ex 1.2
+   const pointer Ex 1 2
+   const pointer to const Ex 1.2
+o const reference Ex 1 3
+
+
+Exercise 20220607-02
+Define RectangleEntity class of attributes width and length (public access).
+Define RectangleService class to define service functions to operate on attributes of class RectangleEntity.
+1… readRect
+2… printRect
+3… findArea
+4… findCircumference
+
+Write driver code to invoke those functions
+
+Learning outcome: 
+o static functions
+
+Exercise 20220607-03-04/05/06			Number of programs: 3
+Define RectangleEntity class of attributes width and length (public access).
+Define service functions using encapsulated functions
+1… readRect
+2… printRect
+3… findArea
+4… findCircumference
+
+Write driver code to invoke those functions
+
+Learning outcome:
+o encapsulated functions
+o define encapsulated functions within class Ex 3.4
+o define encapsulated functions outside the class Ex 3.5
+o define default constructor / parameterized / copy Ex 3.4 Ex 3.5
+o define destructor Ex 3.4 Ex 3.5
+o define const function Ex 3.6
+
+
+Exercise 20220607-04
+Define RectangleEntity class of attributes width and length (private access).
+Define service functions outside the class to operate on attributes of class RectangleEntity.
+1… readRect
+2… printRect
+3… findArea
+4… findCircumference
+
+Write driver code to invoke those functions
+
+Learning outcome:
+friend functions
+
+Exercise 20220607-05
+Define RectangleEntity class of attributes width and length (private access).
+Define RectangleService class to define service functions to operate on attributes of class RectangleEntity.
+1… readRect
+2… printRect
+3… findArea
+4… findCircumference
+Write driver code to invoke those functions
+
+Learning outcome
+o friend class
+
+Exercise 20220607-06
+Define RectangleEntity class of attributes width and length (private access).
+Define service functions using encapsulated functions
+1… readRect
+2… printRect
+3… findArea
+4… findCircumference
+
+Write driver code to invoke those functions
+
+Learning outcomes
+o encapsulated functions 
+o data hiding
+
+Total Number of programs: 3 + 1 + 3 + 1 + 1 + 1 = 10 (from exercises)
+1 + 1 + 1 + 1 (from curriculum)
+
+Day Assignment:
+Circle
+	+/- radius
+	+findDiameter
+	+findCircumference
+	+findArea
+	+readCircle
+	+printCircle
+
+
+====================================================================
+End of :: :: ::20220627:: :: ::

@@ -1,0 +1,33 @@
+/*
+
+Rectange{length,width}
+
+readRect
+printRect
+findArea
+findCircumference 
+
+
+Exercise 1: 
+	Rectange is the "RectangeEntity" class 
+	the above four functions are outside the class like c-functions 
+	
+	o object as call by value 
+	o object as call by pointer 		| const pointer, pointer to const, const pointer to const 
+	o object as call by reference 		| const reference 
+
+Exercise 2: 
+	Rectange is the "RectangeEntity" class 
+	the above four functions are outside the class but in class "RectangleService" as static 
+	
+Exercise 3: 
+	Rectange is the "RectangeEntity" class 
+	the above four functions are inside the class as encapsulated functions 
+	
+	3.4 -> member functions of class defined outside 
+	3.5 -> member functions of class defined inside 
+	3.6 -> + const member function to process 'const object'
+	
+	o constructor - arg, no-arg(default), copy 
+	o destructor 
+*/

@@ -1,0 +1,33 @@
+/*
+	Today Summary 
+*/
+
+class definition 
+	RectangleEntity 
+		attributes: length, width 
+	
+We have solved 10 exercises.
+public attributes | "public" access specifier 
+1. RectangleEntity has attributes, functions are defined outside the class 
+	o function argument by value 
+	o function argument by pointer 
+	o function argument by reference 
+2. RectangleEntity has attributes, RectangleService class 
+	has static functions to operate on attributes of object of RectangleEntity
+3.  RectangleEntity has attributes and encapsulated functions to operate on attributes 
+
+private attributes 
+4. RectangleEntity has attributes, functions are defined outside the class 
+	o friend functions 
+5. RectangleEntity has attributes, RectangleService class 
+	has static functions to operate on attributes of object of RectangleEntity
+	o friend class 
+6.  RectangleEntity has attributes and encapsulated functions to operate on attributes 
+--------------------
+7. dynamic object (single) for the exercise 6 
+8. array of objects  for the exercise 6 
+9. dynamic array of objects  for the exercise 6 
+10. composition (container / inner object) for the exercise 6 
+	class Box has Rectangle 
+
+	
