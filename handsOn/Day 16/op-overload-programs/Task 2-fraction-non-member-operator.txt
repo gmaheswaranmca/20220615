@@ -1,0 +1,45 @@
+//for fraction object 
+//non-member operators
+//		binary:	+ - * /
+//		unary: + - 
+//		post increment/decrement: ++ --
+//		pre increment/decrement: ++ --
+//		assignment: =, +=, -=
+//		relational: <, >
+//non-member operators:
+//		ostream: << 
+//		istream: >>
+//write the driver code as menu-driven to handle above operators
+
+class Fraction
+private:
+	int numerator;
+	int denominator;
+public:
+	Fraction();
+	Fraction(int n, int d);
+
+	void print();
+public:
+	friend ostream& operator<<(ostream& out, const Fraction& first);
+	friend istream& operator>>(istream& in, Fraction& first);
+	friend Fraction operator+(const Fraction& first,const Fraction& second);
+    friend Fraction operator-(const Fraction& first,const Fraction& second);
+    friend Fraction operator*(const Fraction& first,const Fraction& second);
+    friend Fraction operator/(const Fraction& first,const Fraction& second);
+    
+    friend Fraction operator+(const Fraction& first);
+    friend Fraction operator-(const Fraction& first);
+    
+    friend Fraction operator++(const Fraction& first);//pre 
+    friend Fraction operator--(const Fraction& first);//pre
+    
+    friend Fraction operator++(const Fraction& first,int);//post
+    friend Fraction operator--(const Fraction& first,int);//post
+    
+    friend Fraction& operator=(const Fraction& first,const Fraction& second);
+    friend Fraction& operator+=(const Fraction& first,const Fraction& second);
+    
+    friend bool operator<(const Fraction& first,const Fraction& second);
+    friend bool operator>(const Fraction& first,const Fraction& second);    
+};

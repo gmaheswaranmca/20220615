@@ -116,3 +116,31 @@ Exercise:
 	overload << stream operator : only by friend 
 	overload >> stream operator : only by friend 
 -------------------------------------------------------------------------	
+
+
+-------------------------------------------------------------------------	
+1. To check C++ STL "string" the concat operator "+"
+2. To check C++ STL "vector" the subscript operator  "[]"
+	how it is overloaded via 
+		member operator or 
+		friend operator 
+		
+Experimenting....		
+-------------------------------------------------------------------------	
+#include<string>
+#include<vector>
+
+//Test Code to be written in main()
+
+string firstName = "Maheswran ";
+string lastName = "Govindaraju";
+//string fullName = firstName + lastName;
+//string fullName = firstName.operator+(lastName);
+string fullName = operator+(firstName,lastName);
+cout << fullName << endl;
+
+vector<double> salaries{ 1000.0,2000.0,1500.0,4000.0 };
+//cout << salaries[2] << endl;
+//cout << operator[](salaries,2) << endl;
+cout << salaries.operator[](2) << endl;
+-------------------------------------------------------------------------	
