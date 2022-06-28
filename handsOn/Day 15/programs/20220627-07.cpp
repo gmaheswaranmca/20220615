@@ -1,5 +1,5 @@
 /*
-Exercise 20220607-06
+Exercise 
 Define RectangleEntity class of attributes width and length (private access).
 Define service functions using encapsulated functions
 1… readRect

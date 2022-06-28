@@ -1,0 +1,46 @@
+function overloading
+-------------------------------------------------------------------------
+	Lab Assignment 
+		Exercises : 
+			01 args arrangements | Define the functions | Read data for functions in main() and call them in main()
+			02 args type 		 | Define the functions | Read data for functions in main() and call them in main()
+			03 args number 		 | Define the functions | Read data for functions in main() and call them in main()
+			04 const 			 | Define the functions | Read data for functions in main() and call them in main()
+-------------------------------------------------------------------------
+	functions of same names but having many definitions
+	same named many different functions
+	
+	1. by arguments 
+		by arranagements of the arguments 
+			double findSum(int first, double second); //I
+			double findSum(double first, int second); //II
+			
+			Calls:
+				double sum1 = findSum(10,10.0); //I 
+				double sum2 = findSum(10.0,10); //II
+		by types in the arguments 
+			int findDifference(int first, int second);//I
+			double findDifference(double first, double second);//II
+			Calls: 
+				int difference1 = findDifference(10,20);
+				double difference2 = findDifference(10.0,20.0);
+		by number of arguments:
+			int findProduct(int first, int second);//I
+			int findProduct(int first, int second, int third);//II
+			Calls: 
+				int product1 = findProduct(2,3); //I 
+				int product2 = findProduct(2,3,5); //II 
+	2. by const member function 
+		by const member function within class:
+			Rectange::
+				int findArea() const;	//I
+				int findArea();			//II
+			Calls: 
+				Rectangle rect1(5,3);
+				int area1 = rect1.findArea(); // II
+				
+				const Rectangle rect2(4,2);
+				int area2 = rect2.findArea(); // I
+-------------------------------------------------------------------------	
+operator overloading 
+-------------------------------------------------------------------------
