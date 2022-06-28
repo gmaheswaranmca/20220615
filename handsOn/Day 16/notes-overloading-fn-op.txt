@@ -7,8 +7,10 @@ function overloading
 			03 args number 		 | Define the functions | Read data for functions in main() and call them in main()
 			04 const 			 | Define the functions | Read data for functions in main() and call them in main()
 -------------------------------------------------------------------------
-	functions of same names but having many definitions
-	same named many different functions
+	Definition for function overloading 
+		o functions of same names but having many definitions
+		or 
+		o same named many different functions
 	
 	1. by arguments 
 		by arranagements of the arguments 
@@ -42,5 +44,75 @@ function overloading
 				const Rectangle rect2(4,2);
 				int area2 = rect2.findArea(); // I
 -------------------------------------------------------------------------	
+
+-------------------------------------------------------------------------
 operator overloading 
 -------------------------------------------------------------------------
+	o new defintion of the 'overloadable operator'
+	  for operands of user-defined type 
+	o each operator in c++ is associated with the function 
+	  when we go for overloading 
+-------------------------------------------------------------------------	
+	1. member operator function overloading 
+	2. friend operator function overloading 
+	
+	Complex Number: 
+		1+i2 
+		3+i5
+		
+		addition operation: 
+			add two complex numbers:
+				first: 1+i2		
+				second: 3+i5
+				sum: complex number 
+				
+				Standard: go for member operator overloading 
+					go for friend operator overloading for C programmer migrated to C++
+			add complex number with number:
+				first: 1+i2		
+				second: 10
+				sum: complex number 
+				
+				Standard: go for friend operator overloading 
+				Possible: member operator overloading 
+	Rational Number: 
+		3/4
+		1/2
+		1/4 
+		5/8
+-------------------------------------------------------------------------
+	General Standard: Dont overload operator 
+-------------------------------------------------------------------------
+	c-string 
+	char firstName[256];
+	char lastName[256];
+	strcat() - to add two c-strings 
+	
+		
+	C++ STL class "string" is there for handling strings/texts 
+		"string" has overloadable "+" operator 
+		
+-------------------------------------------------------------------------		
+	Special Violation you can do when there is highly required 
+	Now, Standard: Do overload operator 
+-------------------------------------------------------------------------	
+	
+Exercise:
+	a/b	 c/d
+	member operator 
+	
+	1. binary operator 
+		+
+		a      c      ad + cb
+		-   +  -   =  --------
+		b      d         bd 
+	2. unary operator 
+	
+	friend opeartor 
+	
+	1. binary operator 
+	2. unary operator 
+	
+	overload << stream operator : only by friend 
+	overload >> stream operator : only by friend 
+-------------------------------------------------------------------------	
