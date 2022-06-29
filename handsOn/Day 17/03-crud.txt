@@ -1,0 +1,126 @@
+//CRUD operations
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<fstream>
+#include<sstream>
+#include<cstdlib>
+#include<string>
+#include<cstring>
+using namespace std;
+
+class Employee {
+public: 
+	char name[257];
+	double sal;
+public: 
+	friend istream& operator>>(istream& in, Employee& emp);
+};
+istream& operator>>(istream& in, Employee& emp) {
+	cout << "Enter name:"; in >> emp.name;
+	cout << "Enter salary:"; in >> emp.sal;
+	return in;
+}
+
+char emp_db_file_name[256] = "employee.dat";
+
+void emp_db_create(Employee& emp) {
+	ofstream output;
+	output.open(emp_db_file_name, ios::out | ios::app | ios::binary);
+	if (output.is_open()) {
+		output.write((char*)&emp, sizeof(Employee));
+	}
+	output.close();
+}
+
+void emp_db_search(Employee& emp, char searchText[256], bool& is_found) {
+	is_found = false;
+	ifstream input;
+	input.open(emp_db_file_name, ios::in | ios::binary);
+	if (input.is_open()) {
+		Employee temp;
+		while (input.read((char*)&temp, sizeof(Employee))) {
+			if (strstr(temp.name, searchText) != nullptr) {
+				emp = temp;
+				is_found = true;
+				break;
+			}
+		}
+	}
+	input.close();
+}
+void emp_db_update(Employee& emp) {
+	fstream inout;
+	inout.open(emp_db_file_name, ios::in | ios::out | ios::binary);
+	if (inout.is_open()) {
+		Employee temp;
+		int I = 0;
+		while (inout.read((char*)&temp, sizeof(Employee))) {
+			I++;
+			if (strcmp(temp.name, emp.name) == 0) {
+				int offset = (I-1) * sizeof(Employee); // the position of the beginning of the object
+				inout.seekg(offset,ios::beg);
+				inout.write((char*)&emp, sizeof(Employee));
+				break;
+			}
+		}
+	}
+	inout.close();
+}
+
+int main() {
+	int menu;
+	do {
+		cout << endl << endl << "Choices are" << endl;
+		cout << "\t1-Create Employee 2-Search Employee" << endl;
+		cout << "\t3-Update Employee" << endl;
+		cout << "\t0-Exit" << endl;
+		cout << "Your choice:"; cin >> menu; 
+		cout << endl;
+
+		if (1 == menu) {
+			Employee employee;
+			cout << "Enter employee details" << endl;
+			cin >> employee;
+			emp_db_create(employee);
+			cout << "Employee is created successfully" << endl;
+		}
+		else if (2 == menu) {
+			char name[256];
+			bool is_found;
+			
+			cout << "Enter employee name to search:"; cin >> name;
+			Employee employee;
+			emp_db_search(employee, name, is_found);
+			if(is_found){
+				cout << "The employee we found is " << endl;
+				cout << employee.name << " " << employee.sal << endl;
+
+			}
+			else {
+				cout << "The employee cannot be found." << endl;
+			}
+		}
+		else if (3 == menu) {
+			char name[256];
+			bool is_found;
+
+			cout << "Enter employee name to search:"; cin >> name;
+			Employee employee;
+			emp_db_search(employee, name, is_found);
+			if (is_found) {
+				cout << "The employee we found is " << endl;
+				cout << employee.name << " " << employee.sal << endl;
+				//here you do update
+				cout << "New Salary:"; cin >> employee.sal;
+				emp_db_update(employee);
+				cout << "Employee is updated successfully" << endl;
+			}
+			else {
+				cout << "The employee cannot be found." << endl;
+			}
+		}
+	} while ((1 <= menu && menu <= 3));
+	return EXIT_SUCCESS;
+}
+
+ 

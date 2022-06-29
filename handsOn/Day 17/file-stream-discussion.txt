@@ -1,0 +1,100 @@
+------------------------------------------------------------------
+File
+	File Stream Classes
+		fstream 
+			ifstream
+			ofstream 
+			
+	Text File 
+	Binary File 
+			
+	Sequential File 		
+	Random Access File  - To move within file 
+------------------------------------------------------------------	
+stream objects
+	#include<fstream>
+	ifstream / fstream : read from file	: 	>>
+	ofstream / fstream : write into file : <<
+------------------------------------------------------------------	
+Exercise 1
+	1. Read N business objects from keyboard 
+		Write into the text file 
+	2. Read the business objects from the text file    
+		and print in the console 
+------------------------------------------------------------------			
+Exercise 2
+	1. Read N business objects from keyboard 
+		Write into the binary file 
+	2. Read the business objects from the binary file    
+		and print in the console 	
+------------------------------------------------------------------					
+Write into the text file 
+	ofstream output;
+	output.open("emp.txt", ios::out | ios::trunc);//ios::out | ios::app //ios::in
+	//...
+	output << employees[I].name << " " << employees[I].sal << endl;
+	//...
+	output.close();
+Read the business objects from the text file   
+    ifstream input;
+	input.open("emp.txt", ios::in);
+	string empLine;
+	getline(input, empLine);                            //  READ
+	
+	while (empLine != "") {
+		stringstream inputSS(empLine);                  //STR input stream to read into attributes of obj 
+		inputSS >> employees[J].name >> employees[J].sal;
+        
+		getline(input, empLine);                        //  READ 
+		J++;
+	}	
+	input.close(); 
+    
+    
+Write into the binary file 
+    ofstream output;
+	output.open("emp.dat", ios::out | ios::trunc | ios::binary);//ios::out | ios::app //ios::in
+	//....
+    output.write((char*)&employees[I], sizeof(Employee)); // addr of object, number of bytes 
+	//....
+	output.close();
+    
+    
+Read the business objects from the binary file    
+    ifstream input;
+	input.open("emp.dat", ios::in | ios::binary);
+	int J = 0;
+	Employee tempEmp;
+	while (input.read((char*)&tempEmp,sizeof(Employee))) {
+		employees[J] = tempEmp;
+		J++;
+	}	
+	input.close();
+------------------------------------------------------------------    
+Exercise 3
+    (Binary) File DataBase (Flat File/DB) CRUD operations for business object 
+    C - Create          ********DONE
+    R - Read            ********DONE
+    U - Update          ********DONE
+    D - Delete          NOT DONE
+------------------------------------------------------------------        
+Random Access in the file processing:
+tellg
+    syntax 
+        streampos tellg();    
+    Get position in input sequence
+    
+seekg     
+    syntax 
+        istream& seekg (streampos pos)    
+        istream& seekg (streamoff off, ios_base::seekdir way);    
+    Set position in input sequence    
+    
+    the argument "way"
+    value	            offset is relative to...
+    ios_base::beg   	beginning of the stream
+    ios_base::cur	    current position in the stream
+    ios_base::end	    end of the stream
+------------------------------------------------------------------    
+    
+    
