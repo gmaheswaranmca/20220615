@@ -1,0 +1,26 @@
+1. templates 
+	- function 
+	- class 
+		- inheritance 
+2. STL 
+	containers 
+		sequence 
+			vector deque list 
+		associative 
+			set 			multi_set	
+			unorderedset	unordered_multi_set 
+			...
+		adapter
+			stack queue 
+	algorithm
+		sort 
+		unique 
+		reverse 
+		for_each 
+		...
+		partition 	
+	lambda function 
+	
+	
+		
+		

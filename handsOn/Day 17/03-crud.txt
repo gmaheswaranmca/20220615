@@ -22,6 +22,7 @@ istream& operator>>(istream& in, Employee& emp) {
 }
 
 char emp_db_file_name[256] = "employee.dat";
+char emp_db_tempfile_name[256] = "employee_temp.dat";
 
 void emp_db_create(Employee& emp) {
 	ofstream output;
@@ -67,12 +68,35 @@ void emp_db_update(Employee& emp) {
 	inout.close();
 }
 
+void emp_db_delete(Employee& emp) { //obj2
+	ifstream in;
+    ifstream out;
+	in.open(emp_db_file_name, ios::in | ios::binary);//obj1ojb2obj3...obj10
+    out.open(emp_db_tempfile_name, ios::out | ios::trunc | ios::binary);//obj1obj3...obj10
+	if (inout.is_open()) {
+		Employee temp;
+		int I = 0;
+		while (in.read((char*)&temp, sizeof(Employee))) {
+			I++;
+			if (strcmp(temp.name, emp.name) != 0) {//obj2.name == emp.name  
+               out.write((char*)&temp, sizeof(Employee));     
+			}
+		}
+	}
+	out.close();
+    in.close();
+    remove(emp_db_file_name); // employee.dat deleted 
+    rename(emp_db_tempfile_name,emp_db_file_name); "employee_temp.dat" renamed as "employee.dat"
+}
+
+
 int main() {
 	int menu;
 	do {
 		cout << endl << endl << "Choices are" << endl;
 		cout << "\t1-Create Employee 2-Search Employee" << endl;
 		cout << "\t3-Update Employee" << endl;
+        cout << "\t4-Delete Employee" << endl;
 		cout << "\t0-Exit" << endl;
 		cout << "Your choice:"; cin >> menu; 
 		cout << endl;
@@ -118,8 +142,26 @@ int main() {
 			else {
 				cout << "The employee cannot be found." << endl;
 			}
+		}else if (4 == menu) {
+			char name[256];
+			bool is_found;
+
+			cout << "Enter employee name to search:"; cin >> name;
+			Employee employee;
+			emp_db_search(employee, name, is_found);
+			if (is_found) {
+                char ch;
+				cout << "Are you sure to delete the employee(y/n)?"; cin >> ch;
+                if(('y' == ch) || ('Y' == ch)){
+                    emp_db_update(employee);
+                    cout << "Employee is deleted successfully" << endl;
+                }
+			}
+			else {
+				cout << "The employee cannot be found." << endl;
+			}
 		}
-	} while ((1 <= menu && menu <= 3));
+	} while ((1 <= menu && menu <= 4));
 	return EXIT_SUCCESS;
 }
 

@@ -69,8 +69,12 @@ github
 
 
 
-
-
+bug management system 
+	uma 		login
+	maria		dashboard - navigation - logout 
+	arunima		bug management 
+	ajnas		user management 
+	najeem 		"source integration - application" 
 
 
 
