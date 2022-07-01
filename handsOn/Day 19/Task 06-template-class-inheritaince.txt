@@ -1,0 +1,155 @@
+/*
+Task: Inheritance with respect to templated class 
+Job:
+GGStack(user-defined)
+is inherited as 
+GGStackExt with extra member function isFull() to check the stack is full or not 
+Make all the private attributes of GGStack as protected 
+*/
+
+
+#define STACK_SIZE 5
+#include<iostream>
+#include<cstdlib>
+
+using namespace std;
+
+template<class T>
+class GGStack {
+protected:
+	T salaries[STACK_SIZE];
+	int topIndex;
+	int count;
+public:
+	GGStack();
+	void push(T val);
+	int size();
+	bool empty();
+	void pop();
+	T top();
+};
+
+template<class T>
+GGStack<T>::GGStack() {
+	this->topIndex = -1;
+	this->count = 0;
+}
+template<class T>
+int GGStack<T>::size() {
+	return this->count;
+}
+template<class T>
+bool GGStack<T>::empty() {
+	return (this->count == 0);
+}
+template<class T>
+T GGStack<T>::top() {
+	T temp{};
+	if (this->empty()) {
+		return temp;
+	}
+	return salaries[this->topIndex];
+}
+template<class T>
+void GGStack<T>::push(T val) {
+	if (this->count >= STACK_SIZE) {
+		throw "Stack is full";
+	}
+
+	this->topIndex++;
+	this->count++;
+
+	salaries[this->topIndex] = val;
+}
+template<class T>
+void GGStack<T>::pop() {
+	if (this->count <= 0) {
+		throw "Stack is empty";
+	}
+	this->topIndex--;
+	this->count--;
+}
+
+template<class T>
+class GGStackExt :public GGStack<T> {
+public:
+	bool isFull() {
+		return this->count >= STACK_SIZE;
+	}
+};
+
+int main() {
+	GGStackExt<double> salaries;
+
+	int menu;
+	do {
+		cout << "Choice(1-Add, 2-Delete, 3-Exit):";
+		cin >> menu;
+
+		if (1 == menu) {
+			double sal;
+			cout << "Enter the salary:";
+			cin >> sal;
+			try {
+				salaries.push(sal);
+				if (salaries.isFull()) {
+					cout << "Stack became full. Dont add further salary." << endl;
+				}
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Stack is Full" << endl;
+				cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Full" << endl;
+			}
+
+		}
+		else if (2 == menu) {
+			try {
+				cout << "Pay salary of worth Rs." << salaries.top() << endl; // PROCESS
+				salaries.pop();
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Stack is Empty" << endl;
+				cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Empty" << endl;
+			}
+		}
+		else {
+			cout << "Shutting Down App!!!" << endl;
+		}
+	} while (1 == menu || 2 == menu);
+
+	return EXIT_SUCCESS;
+}
+
+/*
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the salary:5000
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the salary:3000
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the salary:2500
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the salary:4000
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the salary:2200
+Stack became full. Dont add further salary.
+Choice(1-Add, 2-Delete, 3-Exit):2
+Pay salary of worth Rs.2200
+Choice(1-Add, 2-Delete, 3-Exit):2
+Pay salary of worth Rs.4000
+Choice(1-Add, 2-Delete, 3-Exit):3
+Shutting Down App!!!
+*/
+
+
+
+/*
+Lab Assignment:
+    Test for type short (ages)
+    Test for user-type Emp(employees)
+*/

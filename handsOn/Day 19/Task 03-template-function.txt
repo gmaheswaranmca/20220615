@@ -1,0 +1,43 @@
+// Task - Overloadable findProduct functions migrated into template function 
+//Assignment 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<iomanip>
+using namespace std;
+
+float findProduct(int first, float second) {
+	return ((float)first * second);
+}
+double findProduct(int first, double second) {
+	return (double)((double)first * second);
+}
+int findProduct(int first, int second) {
+	return first * second;
+}
+
+int main() {
+	float prodOne = findProduct(5, 2.0f);//10.0f
+	double prodTwo = findProduct(5, 2.0);//10.0
+	int prodThree = findProduct(5, 2);//10
+
+	cout << right << setw(10) << setprecision(2) << fixed << prodOne << endl;
+	cout << right << setw(10) << setprecision(2) << fixed << prodTwo << endl;
+	cout << right << setw(10) << prodThree << endl;
+
+	return EXIT_SUCCESS;
+}
+
+
+/*
+Output:
+      10.00
+      10.00
+         10
+*/
+
+/*
+
+====> Migrated to template is 
+*/

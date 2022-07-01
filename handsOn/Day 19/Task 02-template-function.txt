@@ -1,0 +1,112 @@
+// Task - Overloadable findDifference functions migrated into template function 
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<iomanip>
+using namespace std;
+
+float findDifference(int first, float second) {
+	return ((float)first - second);
+}
+double findDifference(double first, int second) {
+	return (double)(first - (double)second);
+}
+float findDifference(float first, float second) {
+	return (first - second);
+}
+int findDifference(int first, int second) {
+	return first - second;
+}
+
+int main() {
+	float diffOne = findDifference(10, 5.0f);//5.0
+	double diffTwo = findDifference(10.1, 5);//5.1
+	float diffThree = findDifference(10.0f, 5.0f);//5.0
+	int diffFour = findDifference(10, 5);//5
+	
+	cout << right << setw(10) << setprecision(2) << fixed << diffOne << endl;
+	cout << right << setw(10) << setprecision(2) << fixed << diffTwo << endl;
+	cout << right << setw(10) << setprecision(2) << fixed << diffThree << endl;
+	cout << right << setw(10) << diffFour << endl;
+	
+	return EXIT_SUCCESS;
+}
+
+
+/*
+Output:
+      5.00
+      5.10
+      5.00
+         5
+*/
+
+/*
+
+====> Migrated to template is 
+Step 1
+*/
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<iomanip>
+using namespace std;
+
+float findDifference(int first, float second) {
+	return (float)((float)first - (float)second);
+}
+double findDifference(double first, int second) {
+	return (double)((double)first - (double)second);
+}
+float findDifference(float first, float second) {
+	return (float)((float)first - (float)second);
+}
+int findDifference(int first, int second) {
+	return (int)((int)first - (int)second);
+}
+
+int main() {
+	float diffOne = findDifference(10, 5.0f);//5.0
+	double diffTwo = findDifference(10.1, 5);//5.1
+	float diffThree = findDifference(10.0f, 5.0f);//5.0
+	int diffFour = findDifference(10, 5);//5
+	
+	cout << right << setw(10) << setprecision(2) << fixed << diffOne << endl;
+	cout << right << setw(10) << setprecision(2) << fixed << diffTwo << endl;
+	cout << right << setw(10) << setprecision(2) << fixed << diffThree << endl;
+	cout << right << setw(10) << diffFour << endl;
+	
+	return EXIT_SUCCESS;
+}
+
+/*
+
+====> Migrated to template is 
+Step 2 (Final)
+*/
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<iomanip>
+using namespace std;
+
+template <class S, class T, class U>
+U findDifference(S first, T second) {
+	return (U)((U)first - (U)second);
+}
+
+int main() {
+	float diffOne = findDifference<int,float,float>(10, 5.0f);//5.0
+	double diffTwo = findDifference<double, int, double>(10.1, 5);//5.1
+	float diffThree = findDifference<float,float,float>(10.0f, 5.0f);//5.0
+	int diffFour = findDifference<int,int,int>(10, 5);//5
+
+	cout << right << setw(10) << setprecision(2) << fixed << diffOne << endl;
+	cout << right << setw(10) << setprecision(2) << fixed << diffTwo << endl;
+	cout << right << setw(10) << setprecision(2) << fixed << diffThree << endl;
+	cout << right << setw(10) << diffFour << endl;
+
+	return EXIT_SUCCESS;
+}

@@ -1,0 +1,525 @@
+/*
+---------------------------------------------------------------------
+1.6 Implement Stack Class / Structure [User Defined] 	
+	to define five salaries (double) 
+    Use menu-driven based Add and Delete
+    With Exception Handling
+	
+	
+===> Convert into template 
+		from double data type 
+		all primitive and user-defined data type 
+---------------------------------------------------------------------
+*/
+#define STACK_SIZE 5
+#include<iostream>
+#include<cstdlib>
+
+using namespace std;
+
+class GGStack {
+	private:
+		double salaries[STACK_SIZE];
+		int topIndex;
+		int count;
+	public:
+		GGStack();
+		void push(double val);
+		int size();
+		bool empty();
+		void pop();
+		double top();
+};
+
+GGStack::GGStack() {
+	this->topIndex = -1;
+	this->count = 0;
+}
+
+int GGStack::size() {
+	return this->count;
+}
+bool GGStack::empty() {
+	return (this->count == 0);
+}
+
+double GGStack::top() {
+	return salaries[this->topIndex];
+}
+
+void GGStack::push(double val) {
+	if (this->count >= STACK_SIZE) {
+		throw "Stack is full";
+	}
+
+	this->topIndex++;
+	this->count++;
+
+	salaries[this->topIndex] = val;
+}
+
+void GGStack::pop() {
+	if (this->count <= 0) {
+		throw "Stack is empty";
+	}
+	this->topIndex--;
+	this->count--;
+}
+
+int main() {
+	GGStack salaries;
+
+	int menu;
+	do {
+		cout << "Choice(1-Add, 2-Delete, 3-Exit):";
+		cin >> menu;
+
+		if (1 == menu) {
+			double sal;
+			cout << "Enter the salary:";
+			cin >> sal;
+            try{
+				salaries.push(sal);
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Stack is Full"<< endl;
+                cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Full"<< endl;
+			}
+			
+		}
+		else if (2 == menu) {
+			try{
+				cout << "Pay salary of worth Rs." << salaries.top() << endl; // PROCESS
+				salaries.pop();
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Stack is Empty"<< endl;
+                cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Empty"<< endl;
+			}
+		}
+		else {
+			cout << "Shutting Down App!!!" << endl;
+		}
+	}while(1==menu || 2==menu);
+
+	return EXIT_SUCCESS;
+}
+
+
+/*
+
+Migrated to template 
+*/
+
+/* tested for double */
+#define STACK_SIZE 5
+#include<iostream>
+#include<cstdlib>
+
+using namespace std;
+
+template<class T>
+class GGStack {
+private:
+	T salaries[STACK_SIZE];
+	int topIndex;
+	int count;
+public:
+	GGStack();
+	void push(T val);
+	int size();
+	bool empty();
+	void pop();
+	T top();
+};
+
+template<class T>
+GGStack<T>::GGStack() {
+	this->topIndex = -1;
+	this->count = 0;
+}
+template<class T>
+int GGStack<T>::size() {
+	return this->count;
+}
+template<class T>
+bool GGStack<T>::empty() {
+	return (this->count == 0);
+}
+template<class T>
+T GGStack<T>::top() {
+	T temp{};
+	if (this->empty()) {
+		return temp;
+	}
+	return salaries[this->topIndex];
+}
+template<class T>
+void GGStack<T>::push(T val) {
+	if (this->count >= STACK_SIZE) {
+		throw "Stack is full";
+	}
+
+	this->topIndex++;
+	this->count++;
+
+	salaries[this->topIndex] = val;
+}
+template<class T>
+void GGStack<T>::pop() {
+	if (this->count <= 0) {
+		throw "Stack is empty";
+	}
+	this->topIndex--;
+	this->count--;
+}
+
+int main() {
+	GGStack<double> salaries;
+
+	int menu;
+	do {
+		cout << "Choice(1-Add, 2-Delete, 3-Exit):";
+		cin >> menu;
+
+		if (1 == menu) {
+			double sal;
+			cout << "Enter the salary:";
+			cin >> sal;
+			try {
+				salaries.push(sal);
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Stack is Full" << endl;
+				cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Full" << endl;
+			}
+
+		}
+		else if (2 == menu) {
+			try {
+				cout << "Pay salary of worth Rs." << salaries.top() << endl; // PROCESS
+				salaries.pop();
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Stack is Empty" << endl;
+				cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Empty" << endl;
+			}
+		}
+		else {
+			cout << "Shutting Down App!!!" << endl;
+		}
+	} while (1 == menu || 2 == menu);
+
+	return EXIT_SUCCESS;
+}
+
+
+/*
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the salary:5000
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the salary:3000
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the salary:4000
+Choice(1-Add, 2-Delete, 3-Exit):2
+Pay salary of worth Rs.4000
+Choice(1-Add, 2-Delete, 3-Exit):2
+Pay salary of worth Rs.3000
+Choice(1-Add, 2-Delete, 3-Exit):2
+Pay salary of worth Rs.5000
+Choice(1-Add, 2-Delete, 3-Exit):2
+Pay salary of worth Rs.0
+(handler of object 'const char*')Stack is Empty
+         the exception is 'Stack is empty'
+Choice(1-Add, 2-Delete, 3-Exit):3
+Shutting Down App!!!
+
+
+tested for short type 
+*/
+
+#define STACK_SIZE 5
+#include<iostream>
+#include<cstdlib>
+
+using namespace std;
+
+template<class T>
+class GGStack {
+private:
+	T salaries[STACK_SIZE];
+	int topIndex;
+	int count;
+public:
+	GGStack();
+	void push(T val);
+	int size();
+	bool empty();
+	void pop();
+	T top();
+};
+
+template<class T>
+GGStack<T>::GGStack() {
+	this->topIndex = -1;
+	this->count = 0;
+}
+template<class T>
+int GGStack<T>::size() {
+	return this->count;
+}
+template<class T>
+bool GGStack<T>::empty() {
+	return (this->count == 0);
+}
+template<class T>
+T GGStack<T>::top() {
+	T temp{};
+	if (this->empty()) {
+		return temp;
+	}
+	return salaries[this->topIndex];
+}
+template<class T>
+void GGStack<T>::push(T val) {
+	if (this->count >= STACK_SIZE) {
+		throw "Stack is full";
+	}
+
+	this->topIndex++;
+	this->count++;
+
+	salaries[this->topIndex] = val;
+}
+template<class T>
+void GGStack<T>::pop() {
+	if (this->count <= 0) {
+		throw "Stack is empty";
+	}
+	this->topIndex--;
+	this->count--;
+}
+
+int main() {
+	GGStack<short> ages;
+
+	int menu;
+	do {
+		cout << "Choice(1-Add, 2-Delete, 3-Exit):";
+		cin >> menu;
+
+		if (1 == menu) {
+			short age;
+			cout << "Enter the age:";
+			cin >> age;
+			try {
+				ages.push(age);
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Stack is Full" << endl;
+				cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Full" << endl;
+			}
+
+		}
+		else if (2 == menu) {
+			try {
+				cout << "Process the age " << ages.top() << endl; // PROCESS
+				ages.pop();
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Stack is Empty" << endl;
+				cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Empty" << endl;
+			}
+		}
+		else {
+			cout << "Shutting Down App!!!" << endl;
+		}
+	} while (1 == menu || 2 == menu);
+
+	return EXIT_SUCCESS;
+}
+
+/*
+
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the age:21
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the age:25
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the age:43
+Choice(1-Add, 2-Delete, 3-Exit):2
+Process the age 43
+Choice(1-Add, 2-Delete, 3-Exit):2
+Process the age 25
+Choice(1-Add, 2-Delete, 3-Exit):2
+Process the age 21
+Choice(1-Add, 2-Delete, 3-Exit):2
+Process the age 0
+(handler of object 'const char*')Stack is Empty
+         the exception is 'Stack is empty'
+Choice(1-Add, 2-Delete, 3-Exit):3
+Shutting Down App!!!
+*/
+
+
+
+
+/* Tested for Emp(user-defined)
+*/
+
+#define STACK_SIZE 5
+#include<iostream>
+#include<cstdlib>
+
+using namespace std;
+
+class Emp {
+public:
+	int empId;
+	char name[256];
+};
+
+
+template<class T>
+class GGStack {
+private:
+	T salaries[STACK_SIZE];
+	int topIndex;
+	int count;
+public:
+	GGStack();
+	void push(T val);
+	int size();
+	bool empty();
+	void pop();
+	T top();
+};
+
+template<class T>
+GGStack<T>::GGStack() {
+	this->topIndex = -1;
+	this->count = 0;
+}
+template<class T>
+int GGStack<T>::size() {
+	return this->count;
+}
+template<class T>
+bool GGStack<T>::empty() {
+	return (this->count == 0);
+}
+template<class T>
+T GGStack<T>::top() {
+	T temp{};
+	if (this->empty()) {
+		return temp;
+	}
+	return salaries[this->topIndex];
+}
+template<class T>
+void GGStack<T>::push(T val) {
+	if (this->count >= STACK_SIZE) {
+		throw "Stack is full";
+	}
+
+	this->topIndex++;
+	this->count++;
+
+	salaries[this->topIndex] = val;
+}
+template<class T>
+void GGStack<T>::pop() {
+	if (this->count <= 0) {
+		throw "Stack is empty";
+	}
+	this->topIndex--;
+	this->count--;
+}
+
+int main() {
+	GGStack<Emp> employees;
+
+	int menu;
+	do {
+		cout << "Choice(1-Add, 2-Delete, 3-Exit):";
+		cin >> menu;
+
+		if (1 == menu) {
+			Emp emp;
+			cout << "Enter the employee(id and name):";
+			cin >> emp.empId >> emp.name;
+			try {
+				employees.push(emp);
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Stack is Full" << endl;
+				cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Full" << endl;
+			}
+
+		}
+		else if (2 == menu) {
+			try {
+				Emp emp = employees.top();
+				cout << "Process the employee{id=" << emp.empId << ",name=" << emp.name << "}" << endl; // PROCESS
+				employees.pop();
+			}
+			catch (const char* ex) {
+				cout << "(handler of object 'const char*')Stack is Empty" << endl;
+				cout << "\t the exception is '" << ex << "'" << endl;
+			}
+			catch (...) {
+				cout << "(default exception handler)Stack is Empty" << endl;
+			}
+		}
+		else {
+			cout << "Shutting Down App!!!" << endl;
+		}
+	} while (1 == menu || 2 == menu);
+
+	return EXIT_SUCCESS;
+}
+
+
+
+/*
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the employee(id and name):101 Uma
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the employee(id and name):102 Sandra
+Choice(1-Add, 2-Delete, 3-Exit):1
+Enter the employee(id and name):103
+MariaJustin
+Choice(1-Add, 2-Delete, 3-Exit):2
+Process the employee{id=103,name=MariaJustin}
+Choice(1-Add, 2-Delete, 3-Exit):2
+Process the employee{id=102,name=Sandra}
+Choice(1-Add, 2-Delete, 3-Exit):2
+Process the employee{id=101,name=Uma}
+Choice(1-Add, 2-Delete, 3-Exit):2
+Process the employee{id=0,name=}
+(handler of object 'const char*')Stack is Empty
+         the exception is 'Stack is empty'
+Choice(1-Add, 2-Delete, 3-Exit):3
+Shutting Down App!!!
+*/

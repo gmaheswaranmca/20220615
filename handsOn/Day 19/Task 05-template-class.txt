@@ -1,0 +1,13 @@
+/*
+---------------------------------------------------------------------
+    Implement Queue Class / Structure [User Defined] 	
+	to define five salaries (double) 
+    Use menu-driven based Add and Delete
+    With Exception Handling
+	
+	
+===> Convert into template 
+		from double data type 
+		all primitive and user-defined data type 
+---------------------------------------------------------------------
+*/

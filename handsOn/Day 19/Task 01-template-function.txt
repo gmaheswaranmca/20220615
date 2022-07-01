@@ -1,0 +1,181 @@
+// Task - Overloadable findSum functions migrated into template function 
+
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<iomanip>
+using namespace std;
+
+int gcf(int a, int b) {
+	a = abs(a);
+	b = abs(b);
+	while (a != b) {
+		if (a > b)
+			a -= b;
+		else
+			b -= a;
+	}
+	return a;
+}
+
+class Fraction {/*		x/y		*/
+private:
+	int numerator;
+	int denominator;
+public:
+	Fraction();
+	Fraction(int n, int d);
+	Fraction operator+(const Fraction& second);
+
+public:
+	friend ostream& operator<<(ostream& out, const Fraction& first);
+	friend istream& operator>>(istream& in, Fraction& first);
+};
+Fraction::Fraction() :numerator(0), denominator(0) {
+
+}
+Fraction::Fraction(int n, int d) : numerator(n), denominator(d) {
+
+}
+Fraction Fraction::operator+(const Fraction& second) {
+	const Fraction& first = (*this);
+	Fraction sum;
+	sum.numerator = (first.numerator * second.denominator) + (second.numerator * first.denominator);
+	sum.denominator = first.denominator * second.denominator;
+
+	int factor = gcf(sum.numerator, sum.denominator);
+	if (factor > 1) {
+		sum.numerator /= factor;
+		sum.denominator /= factor;
+	}
+	return sum;
+}
+
+ostream& operator<<(ostream& out, const Fraction& first) {
+	out << "[" << first.numerator << "/" << first.denominator << "]";
+	return out;//*****
+}
+istream& operator>>(istream& in, Fraction& first) {
+	cout << "Enter numerator:"; in >> first.numerator;
+	cout << "Enter denominator:"; in >> first.denominator;
+	return in;//*****
+}
+
+int findSum(int first, int second);
+double findSum(double first, double second);
+Fraction findSum(Fraction first, Fraction second);
+
+int main() {
+	int sumOne = findSum(10, 5);//15
+	double sumTwo = findSum(10.1, 5.1);//15.2
+	Fraction sumThree = findSum(Fraction(1,2), Fraction(1, 4));//3/4
+	cout << right << setw(10) << sumOne << endl;
+	cout << right << setw(10) << setprecision(2) << fixed << sumTwo << endl;
+	cout << right << setw(10) << sumThree << endl;
+	return EXIT_SUCCESS;
+}
+int findSum(int first, int second) {
+	return first + second;
+}
+double findSum(double first, double second) {
+	return first + second;
+}
+Fraction findSum(Fraction first, Fraction second) {
+	return first + second;
+}
+
+/*
+Output:
+        15
+     15.20
+         [3/4]
+*/
+
+/*
+
+====> Migrated to template is 
+*/
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<cstdlib>
+#include<iomanip>
+using namespace std;
+
+int gcf(int a, int b) {
+	a = abs(a);
+	b = abs(b);
+	while (a != b) {
+		if (a > b)
+			a -= b;
+		else
+			b -= a;
+	}
+	return a;
+}
+
+class Fraction {/*		x/y		*/
+private:
+	int numerator;
+	int denominator;
+public:
+	Fraction();
+	Fraction(int n, int d);
+	Fraction operator+(const Fraction& second);
+
+public:
+	friend ostream& operator<<(ostream& out, const Fraction& first);
+	friend istream& operator>>(istream& in, Fraction& first);
+};
+Fraction::Fraction() :numerator(0), denominator(0) {
+
+}
+Fraction::Fraction(int n, int d) : numerator(n), denominator(d) {
+
+}
+Fraction Fraction::operator+(const Fraction& second) {
+	const Fraction& first = (*this);
+	Fraction sum;
+	sum.numerator = (first.numerator * second.denominator) + (second.numerator * first.denominator);
+	sum.denominator = first.denominator * second.denominator;
+
+	int factor = gcf(sum.numerator, sum.denominator);
+	if (factor > 1) {
+		sum.numerator /= factor;
+		sum.denominator /= factor;
+	}
+	return sum;
+}
+
+ostream& operator<<(ostream& out, const Fraction& first) {
+	out << "[" << first.numerator << "/" << first.denominator << "]";
+	return out;//*****
+}
+istream& operator>>(istream& in, Fraction& first) {
+	cout << "Enter numerator:"; in >> first.numerator;
+	cout << "Enter denominator:"; in >> first.denominator;
+	return in;//*****
+}
+
+template<class T>
+T findSum(T first, T second);
+
+int main() {
+	int sumOne = findSum<int>(10, 5);//15
+	double sumTwo = findSum<double>(10.1, 5.1);//15.2
+	Fraction sumThree = findSum<Fraction>(Fraction(1,2), Fraction(1, 4));//3/4
+	cout << right << setw(10) << sumOne << endl;
+	cout << right << setw(10) << setprecision(2) << fixed << sumTwo << endl;
+	cout << right << setw(10) << sumThree << endl;
+	return EXIT_SUCCESS;
+}
+template<class T>
+T findSum(T first, T second){
+	return first + second;
+}
+
+/*
+Output:
+        15
+     15.20
+         [3/4]
+*/
