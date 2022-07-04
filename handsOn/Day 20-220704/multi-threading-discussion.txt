@@ -105,13 +105,14 @@ int main() {
 }
 
 
-
-
-
-
 -----------------------------------------------
-three routines (functions) threaded 
-    actual task 
+two routines (functions) 
+    non-threaded 
+    vs
+    threaded peer to peer 
+    vs
+    threaded manager-worker 
+    
 -----------------------------------------------
 #include<iostream>
 #include<cstdlib>
@@ -120,44 +121,566 @@ three routines (functions) threaded
 using namespace std;
 
 void parentSayHi() {
-	int sum = 0;
-	for(int I=1; I <= 100000; I++){
-	//Sleep(300);
-	//cout << "Hi " << I << " . ";
-		sum += I;
+	for (int I = 1; I <= 6; I++) {
+		Sleep(300);
+		cout << "Hi from parent" << endl;
 	}
-	cout << "The sum(parent) is " << sum << endl;
-	//Sleep(300);
+	Sleep(300);
 }
 void childSayHello() {
-	int sum = 0;
-	for (int I = 1; I <= 100000; I++) {
-		//Sleep(300);
-		//cout << "Hello " << I << " . " ;
-		sum += I;
+	for (int I = 1; I <= 6; I++) {
+		Sleep(300);
+		cout << "Hello from child" << endl;
 	}
-	//Sleep(300);
-	cout << "The sum(hello child) is " << sum << endl;
+	Sleep(300);
 }
-void childSayMorning() {
-	int sum = 0;
-	for (int I = 1; I <= 100000; I++) {
-		//Sleep(300);
-		//cout << "Morning " << I << " . ";
-		sum += I;
-	}
-	//Sleep(300);
-	cout << "The sum(morning child) is " << sum << endl;
+void mainNonThreaded() {
+    childSayHello();
+    parentSayHi();
+}
+void mainThreadedPeerToPeer() {
+    thread child(childSayHello); //worker -- peer 
+    parentSayHi();//manager became worker -- peer
+    child.join();//synchronization 
+}
+void mainThreadedManagerWorker() {
+    thread child(childSayHello); //worker -- peer 
+    thread child2(parentSayHi);//worker
+    child.join();//synchronization 
+    child2.join();
+    cout << "Manager thread doing task..." << endl;
 }
 int main() {
-	cout << "Waiting...." << endl;
-	for(int J = 1; J <= 10; J++){
-		cout << "Concurrency #" << J << endl << endl;
-		thread child(childSayHello);//worker
-		thread childTwo(childSayMorning);//worker
-		parentSayHi();//manager
-		child.join();//synchroization 
-		childTwo.join();
+    cout << "Non-threaded...." << endl;
+    mainNonThreaded();
+    for (int i = 0;i < 3;i++) {
+        cout << "Threaded....Peer to Peer #"<<i << endl;
+        mainThreadedPeerToPeer();
+        
+    }
+    for (int i = 0;i < 3;i++) {
+        cout << "Threaded....manager-worker #" << i << endl;
+        mainThreadedManagerWorker();
+    }
+    return EXIT_SUCCESS;
+}
+
+
+-----------------------------------------------
+two routines (functions) threaded 
+    sum of natural numbers till very big number 
+    1000000UL
+-----------------------------------------------
+#define BIG_NUMBER 1000000UL
+#include<iostream>
+#include<cstdlib>
+#include<chrono> //thread::sleep_for(chrono::milliseconds(500));
+#include<thread>
+using namespace std;
+
+void parentCountBig() {
+	unsigned long count = 0UL;
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		count++;
+	}
+	cout << "(parent)counted to " << count << endl;
+}
+void childCountBig() {
+	unsigned long count = 0UL;
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		count++;
+	}
+	cout << "(child)counted to " << count << endl;
+}
+
+void mainThreadedPeerPeer() {
+	thread child(childCountBig); //peer
+	parentCountBig();//peer
+	child.join();//synchronization 
+	
+}
+int main() {
+	for (int I = 1; I <= 10; I++) {
+		cout << "threaded-peers for count big #" << I << "...." << endl;
+		mainThreadedPeerPeer();
+	}
+	return EXIT_SUCCESS;
+}
+
+
+
+-----------------------------------------------
+Shared variable by two peer threads 
+    Result is unpredicted (undefined)
+
+WHY?
+    RACE 
+        ie two peer threads as they shared the variable 
+           both trying to update 
+           so may lead to wrong result 
+           
+FIX:
+    We went multithreading for concurrency which leads speed
+    DONT think about speed 
+    Just think about fixing result 
+-----------------------------------------------
+#define BIG_NUMBER 1000000UL
+#include<iostream>
+#include<cstdlib>
+#include<chrono> //thread::sleep_for(chrono::milliseconds(500));
+#include<thread>
+using namespace std;
+unsigned long counter = 0UL;
+
+void parentCountBig() {
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		counter++;
+	}
+	//cout << "(parent)counted to " << counter << endl;
+}
+void childCountBig() {
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		counter++;
+	}
+	//cout << "(child)counted to " << counter << endl;
+}
+
+void mainThreadedPeerPeer() {
+	
+	thread child(childCountBig); //peer
+	parentCountBig();//peer
+	child.join();//synchronization 
+	cout << "After jobs done, the counter is " << counter << endl;
+}
+int main() {
+	for (int I = 1; I <= 10; I++) {
+		cout << "threaded-peers for count big #" << I << "...." << endl;
+		counter = 0UL;
+		mainThreadedPeerPeer();
+	}
+	return EXIT_SUCCESS;
+}
+
+
+
+-----------------------------------------------
+Shared variable by two peer threads 
+    Result is unpredicted (undefined) ie RACE problem 
+
+Fix Race problem by automic operation 
+
+
+What is atomic operations?
+    These components are provided 
+    for fine-grained atomic operations allowing 
+    for lockless concurrent programming.
+
+    In atomic operation,
+    If one thread writes to an atomic object 
+    while another thread reads from it, 
+    the behavior is well-defined
+-----------------------------------------------
+
+#define BIG_NUMBER 1000000UL
+#include<iostream>
+#include<cstdlib>
+#include<chrono> //thread::sleep_for(chrono::milliseconds(500));
+#include<thread>
+#include<atomic>
+using namespace std;
+//unsigned long counter = 0UL;
+atomic<unsigned long> counter = 0UL;
+
+void parentCountBig() {
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		counter++;
+	}
+}
+void childCountBig() {
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		counter++;
+	}
+}
+
+void mainThreadedPeerPeer() {
+	
+	thread child(childCountBig); //peer
+	parentCountBig();//peer
+	child.join();//synchronization 
+	cout << "After jobs done, the counter is " << counter << endl;
+}
+int main() {
+	for (int I = 1; I <= 10; I++) {
+		cout << "threaded-peers for count big #" << I << "...." << endl;
+		counter = 0UL;
+		mainThreadedPeerPeer();
+	}
+	return EXIT_SUCCESS;
+}    
+-----------------------------------------------
+
+
+
+-----------------------------------------------
+Shared variable by two peer threads 
+    Result is unpredicted (undefined) ie RACE problem 
+
+Fix Race problem by mutex lock 
+
+
+What is mutex?
+    mutex - mutually exclusion 
+    
+    Mutual exclusion algorithms prevent multiple threads 
+    from simultaneously accessing shared resources. 
+    This prevents data races and 
+    provides support for synchronization between threads.    
+-----------------------------------------------
+#define BIG_NUMBER 1000000UL
+#include<iostream>
+#include<cstdlib>
+#include<chrono> //thread::sleep_for(chrono::milliseconds(500));
+#include<thread>
+#include<mutex>
+using namespace std;
+unsigned long counter = 0UL;
+
+mutex MUTX;
+
+void parentCountBig() {
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		MUTX.lock();
+		counter++;
+		MUTX.unlock();
+	}
+}
+void childCountBig() {
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		MUTX.lock();
+		counter++;
+		MUTX.unlock();
+	}
+}
+
+void mainThreadedPeerPeer() {
+	
+	thread child(childCountBig); //peer
+	parentCountBig();//peer
+	child.join();//synchronization 
+	cout << "After jobs done, the counter is " << counter << endl;
+}
+int main() {
+	for (int I = 1; I <= 10; I++) {
+		cout << "threaded-peers for count big #" << I << "...." << endl;
+		counter = 0UL;
+		mainThreadedPeerPeer();
+	}
+	return EXIT_SUCCESS;
+}
+-----------------------------------------------
+
+
+-----------------------------------------------
+Shared variable by two peer threads 
+    Result is unpredicted (undefined) ie RACE problem 
+
+    Fix Race problem 
+        by mutex lock 
+        by atomic operations 
+        
+    Speed went down 
+
+    who will increase the SPEED?    
+        Programmer has to do something 
+-----------------------------------------------  
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    for mutex
+    
+    programmer's strategy 
+    
+    introduced local "sum/counter"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#define BIG_NUMBER 1000000UL
+#include<iostream>
+#include<cstdlib>
+#include<chrono> //thread::sleep_for(chrono::milliseconds(500));
+#include<thread>
+#include<mutex>
+using namespace std;
+unsigned long counter = 0UL;
+
+mutex MUTX;
+
+void parentCountBig() {
+	unsigned long c = 0UL;
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		c++;
+	}
+	MUTX.lock();
+	counter+=c;
+	MUTX.unlock();
+}
+void childCountBig() {
+	unsigned long c = 0UL;
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		c++;
+	}
+	MUTX.lock();
+	counter += c;
+	MUTX.unlock();
+}
+
+void mainThreadedPeerPeer() {
+	
+	thread child(childCountBig); //peer
+	parentCountBig();//peer
+	child.join();//synchronization 
+	cout << "After jobs done, the counter is " << counter << endl;
+}
+int main() {
+	for (int I = 1; I <= 100; I++) {
+		cout << "threaded-peers for count big #" << I << "...." << endl;
+		counter = 0UL;
+		
+		mainThreadedPeerPeer();
+	}
+	return EXIT_SUCCESS;
+}  
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    for atomic operations
+    
+    programmer's strategy 
+    
+    introduced local "sum/counter"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#define BIG_NUMBER 1000000UL
+#include<iostream>
+#include<cstdlib>
+#include<chrono> //thread::sleep_for(chrono::milliseconds(500));
+#include<thread>
+#include<atomic>
+using namespace std;
+//unsigned long counter = 0UL;
+atomic<unsigned long> counter = 0UL;
+
+
+void parentCountBig() {
+	unsigned long c = 0UL;
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		c++;
+	}
+	counter+=c;
+}
+void childCountBig() {
+	unsigned long c = 0UL;
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		c++;
+	}
+	counter += c;
+}
+
+void mainThreadedPeerPeer() {
+	
+	thread child(childCountBig); //peer
+	parentCountBig();//peer
+	child.join();//synchronization 
+	cout << "After jobs done, the counter is " << counter << endl;
+}
+int main() {
+	for (int I = 1; I <= 100; I++) {
+		cout << "threaded-peers for count big #" << I << "...." << endl;
+		counter = 0UL;
+		
+		mainThreadedPeerPeer();
+	}
+	return EXIT_SUCCESS;
+}
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    for mutex lock_guard
+        
+    programmer's strategy 
+    
+    introduced local "sum/counter"
+    
+NOTE: lock_guard is the scoped lock 
+    the scope where it is defined there we can use for all the shared resources ie memory 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#define BIG_NUMBER 1000000UL
+#include<iostream>
+#include<cstdlib>
+#include<chrono> //thread::sleep_for(chrono::milliseconds(500));
+#include<thread>
+#include<mutex>
+using namespace std;
+
+
+mutex MUTX;
+
+void parentCountBig(unsigned long& counter) {
+	unsigned long c = 0UL;
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		c++;
+	}
+	lock_guard<mutex> guard(MUTX);
+	counter += c;
+	// code 
+}
+void childCountBig(unsigned long& counter) {
+	unsigned long c = 0UL;
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		c++;
+	}
+	lock_guard<mutex> guard(MUTX);
+	counter += c;
+}
+
+void mainThreadedPeerPeer() {
+	unsigned long counter = 0UL;
+	thread child(childCountBig,ref(counter)); //peer
+	parentCountBig(counter);//peer
+	child.join();//synchronization 
+	cout << "After jobs done, the counter is " << counter << endl;
+}
+int main() {
+	for (int I = 1; I <= 100; I++) {
+		cout << "threaded-peers for count big #" << I << "...." << endl;
+		mainThreadedPeerPeer();
+	}
+	return EXIT_SUCCESS;
+}
+
+
+-----------------------------------------------
+
+
+
+-----------------------------------------------
+Argument passing to thread 
+    as reference using ref function 
+    
+    as value (as normal actual argument) 
+-----------------------------------------------
+#define BIG_NUMBER 1000000UL
+#include<iostream>
+#include<cstdlib>
+#include<chrono> //thread::sleep_for(chrono::milliseconds(500));
+#include<thread>
+#include<mutex>
+using namespace std;
+
+
+mutex MUTX;
+
+void parentCountBig(unsigned long& counter) {
+	unsigned long c = 0UL;
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		c++;
+	}
+	MUTX.lock();
+	counter += c;
+	MUTX.unlock();
+}
+void childCountBig(unsigned long& counter) {
+	unsigned long c = 0UL;
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		c++;
+	}
+	MUTX.lock();
+	counter += c;
+	MUTX.unlock();
+}
+
+void mainThreadedPeerPeer() {
+	unsigned long counter = 0UL;
+	thread child(childCountBig,ref(counter)); //peer
+	parentCountBig(counter);//peer
+	child.join();//synchronization 
+	cout << "After jobs done, the counter is " << counter << endl;
+}
+int main() {
+	for (int I = 1; I <= 100; I++) {
+		cout << "threaded-peers for count big #" << I << "...." << endl;
+		mainThreadedPeerPeer();
+	}
+	return EXIT_SUCCESS;
+}
+
+
+
+
+-----------------------------------------------------
+condition variable 
+-----------------------------------------------------
+    monitor - wait - once response / result 
+        continue 
+        
+    Example: 
+        browser waiting for web server's page request 
+        once response got browser continues to display the server's response 
+        
+        
+-----------------------------------------------------
+#define BIG_NUMBER 1000000UL
+#include<iostream>
+#include<cstdlib>
+#include<chrono> //thread::sleep_for(chrono::milliseconds(500));
+#include<thread>
+#include<mutex>
+#include<condition_variable>
+using namespace std;
+
+unsigned long counter = 0UL;
+mutex MUTX;
+condition_variable COND_VAR;
+
+void countBig() {
+	lock_guard<mutex> guard(MUTX);
+	for (unsigned long I = 1; I <= BIG_NUMBER; I++) {
+		counter++;
+		if (counter == BIG_NUMBER) {
+			COND_VAR.notify_one();//WAKE UP the monitor 
+		}
+	}
+}
+
+
+void monitorTheCounter() {//BLOCKED/SLEEP/NON-WAKE UP state 
+	unique_lock<mutex> UNI_LOC(MUTX);
+	while (counter < BIG_NUMBER) {
+		COND_VAR.wait(UNI_LOC);
+		//wait for becoming BIG_NUMBER 
+	}
+
+	//Continuing for processing 
+	cout << "After wait, the counter is " << counter << endl;
+	// if it is networking, here the server listens the clients
+	// if client request is received
+	// here monitorThread can create a worker thread to delete the client's request 
+	// to server for the requested client / incoming client 
+}
+
+void mainThreadedManagerWorker() {
+	unsigned long counter = 0UL;
+	thread counterThr(countBig);
+	thread monitorThr(monitorTheCounter); // monitor task is done after countBig is achieved the result 
+	counterThr.join();//synchronization 
+	monitorThr.join();//synchronization 
+
+}
+int main() {
+	for (int I = 1; I <= 100; I++) {
+		cout << "threaded-manager worker for monitor-wait-do #" << I << "...." << endl;
+		counter = 0UL;
+		mainThreadedManagerWorker();
 	}
 	return EXIT_SUCCESS;
 }
