@@ -77,9 +77,9 @@ two routines (functions) threaded
 using namespace std;
 
 void parentSayHi() {
-	for(int I=1; I <= 6; I++){
-	Sleep(300);
-	cout << "Hi from parent" << endl;
+	for (int I = 1; I <= 6; I++) {
+		Sleep(300);
+		cout << "Hi from parent" << endl;
 	}
 	Sleep(300);
 }
@@ -92,14 +92,72 @@ void childSayHello() {
 }
 int main() {
 	cout << "Non-threaded...." << endl;
-    childSayHello();
-    parentSayHi();
-    
-    cout << "Threaded....manager-worker" << endl;
-    thread child(childSayHello); //worker 
-	parentSayHi();//manager 
-    child.join();//synchronization 
-    
-    
+	childSayHello();
+	parentSayHi();
+
+	cout << "Threaded....manager(worker)-worker" << endl;
+	thread child(childSayHello); //worker -- peer 
+	parentSayHi();//manager became worker -- peer
+	child.join();//synchronization 
+
+
+	return EXIT_SUCCESS;
+}
+
+
+
+
+
+
+-----------------------------------------------
+three routines (functions) threaded 
+    actual task 
+-----------------------------------------------
+#include<iostream>
+#include<cstdlib>
+#include<windows.h>
+#include<thread>
+using namespace std;
+
+void parentSayHi() {
+	int sum = 0;
+	for(int I=1; I <= 100000; I++){
+	//Sleep(300);
+	//cout << "Hi " << I << " . ";
+		sum += I;
+	}
+	cout << "The sum(parent) is " << sum << endl;
+	//Sleep(300);
+}
+void childSayHello() {
+	int sum = 0;
+	for (int I = 1; I <= 100000; I++) {
+		//Sleep(300);
+		//cout << "Hello " << I << " . " ;
+		sum += I;
+	}
+	//Sleep(300);
+	cout << "The sum(hello child) is " << sum << endl;
+}
+void childSayMorning() {
+	int sum = 0;
+	for (int I = 1; I <= 100000; I++) {
+		//Sleep(300);
+		//cout << "Morning " << I << " . ";
+		sum += I;
+	}
+	//Sleep(300);
+	cout << "The sum(morning child) is " << sum << endl;
+}
+int main() {
+	cout << "Waiting...." << endl;
+	for(int J = 1; J <= 10; J++){
+		cout << "Concurrency #" << J << endl << endl;
+		thread child(childSayHello);//worker
+		thread childTwo(childSayMorning);//worker
+		parentSayHi();//manager
+		child.join();//synchroization 
+		childTwo.join();
+	}
 	return EXIT_SUCCESS;
 }
