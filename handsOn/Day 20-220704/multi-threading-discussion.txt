@@ -1,0 +1,105 @@
+-----------------------------------------------
+1. multi-threading
+2. windows socket programming 
+3. serial port communication 
+4. designs - solid design principles, couple of design patterns, 
+	refactoring 
+-----------------------------------------------
+Pending 
+	STL containers / algorithms / iterators 
+	exception - user defined exception class 
+-----------------------------------------------	
+multi-threading
+	- process: is created when program is in exection 
+	- part of process, shares memory space of processs 
+		- main thread is the default thread 
+			from main thread we can go multiple threads 
+-----------------------------------------------
+	two routines (main) 
+		sequential flow 
+	two threads 
+		main thread 
+		worker thread 
+			-- synchroization of main and worker 
+				by joining 
+				
+				
+		---concurrency of the code flow 
+-----------------------------------------------
+	thread api 
+		url : en.cppreference.com/w/cpp/thread 
+		
+		<thread> 
+			class thread 
+-----------------------------------------------			
+
+
+
+
+-----------------------------------------------
+two routines (functions) non-threaded 
+-----------------------------------------------
+#include<iostream>
+#include<cstdlib>
+#include<windows.h>
+using namespace std;
+
+void parentSayHi() {
+	for(int I=1; I <= 6; I++){
+	Sleep(300);
+	cout << "Hi from parent" << endl;
+	}
+	Sleep(300);
+}
+void childSayHello() {
+	for (int I = 1; I <= 6; I++) {
+		Sleep(300);
+		cout << "Hello from child" << endl;
+	}
+	Sleep(300);
+}
+int main() {
+	cout << "Waiting...." << endl;
+	childSayHello();
+	parentSayHi();
+	return EXIT_SUCCESS;
+}
+
+
+
+-----------------------------------------------
+two routines (functions) threaded 
+-----------------------------------------------
+#include<iostream>
+#include<cstdlib>
+#include<windows.h>
+#include<thread>
+using namespace std;
+
+void parentSayHi() {
+	for(int I=1; I <= 6; I++){
+	Sleep(300);
+	cout << "Hi from parent" << endl;
+	}
+	Sleep(300);
+}
+void childSayHello() {
+	for (int I = 1; I <= 6; I++) {
+		Sleep(300);
+		cout << "Hello from child" << endl;
+	}
+	Sleep(300);
+}
+int main() {
+	cout << "Non-threaded...." << endl;
+    childSayHello();
+    parentSayHi();
+    
+    cout << "Threaded....manager-worker" << endl;
+    thread child(childSayHello); //worker 
+	parentSayHi();//manager 
+    child.join();//synchronization 
+    
+    
+	return EXIT_SUCCESS;
+}

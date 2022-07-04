@@ -1,0 +1,122 @@
+Rahul
+-- Library
+o diagrams 
+	usecase, class, sequence 
+o ui designs
+o SRS completed / Project Report 
+	-- In Progress
+o coding started
+Apps: 
+	Librarian, Faculty, Student 
+	  1           2-a	  2-b
+Librarian App 
+	o Login -- [Preloaded admin.dat - admin/1234,user1/4321,user2/6789]
+		!!! Sandra TT
+	o Registration of Student -- same student.dat !!! DONE Maria Justin 
+	o Registration of Faculty -- same faculty.dat !!! DONE Maria Justin 	
+	o View Users !!! Maria Justin
+	o Delete[Purge] User !!! Maria Justin
+	o Add Book 	!!! Vinu Yesudas
+	o View Book Details !!! Vinu Yesudas
+	o Delete[Purge] Book !!! Vinu Yesudas
+	o Issue Book !!! Rahul 
+		[preloaded books, preloaded admin, preloaded students, preloaded faculties]
+	o Receive[Returned] Book !!! Rahul 
+	o Issue "No-Due" Certificate !!! Rahul 
+Faculty-Student App 
+	Faculty 
+		o Login !!! Sandra 
+		o Search !!! Sandra  
+			o Request for borrowing book !!! Sandra 
+				o Receive Book !!! Sandra 
+		o Returning book !!! Sandra 
+		o Change Password !!! Sandra 
+	Student 
+		o Login !!! Sona 
+		o Search !!! Sona 
+			o Request for borrowing book !!! Sona 
+				o Receive Book !!! Sona 
+		o Returning book !!! Sona 
+		o Change Password!!! Sona 
+Friday: 2PM-3PM CRUD, till 5PM diagrams, 
+	till 6PM started coding-{classes, driver}, 
+	Sandra - Joined with Maria 
+	Maria - Class Diagram / Friday@after 
+	Vinu - SRS / Firday@after 
+	Rahul - three diagrams / {Firday,Sat}@after
+	Sona - sequence / Friday@after 
+	meeting on Sunday@after {all} 
+			
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~			
+Dilshamol Abbas	
+---Employee (Payroll) Management 
+o Diagrams usecase, class, seq !!!thursday, friday
+o UIs done 
+o SRS done / Project Report in progress !!!saturday@after 
+o High Level Document - progressed, in progress !!!saturday@after 
+o Coding 			!!!friday, sunday@after 
+	o Welcome Screen !!!ankith 		sunday@after 
+	o menus admin, employee !!!		
+		admin login - !!! akhil 	sunday@after 
+			[admin.dat - preloaded admin/1234,user1/5678, user2/4343]
+		admin memu !!! Dilshamol 	sunday@after 
+		manage employee menu - !!!Sajad	sunday@after 
+	o admin sunday@after 	
+		add emp, !!! akhil 				sunday@after 
+			[emp_details.dat] 
+				emp_id, emp name, addr, etc 
+			[emp_payroll_pref.dat]
+				emp_id,hra %, da %, pf % etc 
+		delete emp, !!! ankith 			sunday@after 
+		update emp, !!! sajad 			sunday@after 
+		search emp !!! dilshamol 		sunday@after 
+	o admin registration is the updating details by given admin's login credentials 
+	o list employees !!! ankith 
+		-- admin 
+	o View Details/Profile !!! akhil 
+		-- employee 
+	o process payroll 		!!! dilshamol
+		[payroll-data.dat] 
+			payroll-id, month: , who generated: 
+		[payroll-emp.dat] 
+			payroll-id, emp_id, no of days leave taken,
+	o generate salary slip  !!! dilshamol 
+	o display payroll for given month !!! sajad 
+		-- employee 
+		-- admin for all employees 		
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+Najeem
+-- bug management 
+o documents seq,usecase,class@Friday,dbdesign done 
+o SRS / LLD/ HLD done 
+o coding 
+	uma 		login
+		customer user [user.db for engineer, admin, customer] 
+			pre-loaded users -> merging -> test her is correct or not 
+				@Friday@after @Sunday@after
+	maria		dashboard - navigation - logout 
+			!!! Dash board design and menus completed @Friday@after, @Saturday@after
+			!!! 			array of initialized objects 
+			!!!				20 bug objects 
+	arunima		bug(heart of app) management 
+		'single ui screen' 
+		list of the bugs | engineer, customer user 
+		bug recording !!! bug is reported from customer user 
+			-- admin screen (auto bug id)
+			db [bug.dat]
+				-create, read, display @Friday@after, @Saturday@after
+	ajnas		user management 
+		user is of engineer, customer user !!!completed @Friday @Friday@after, @Saturday@after
+		change the user status | 
+		update user password (random new password / admin will send the generated password)
+			-- admin module 
+	najeem 		"source integration - application" 
+		-- classes@Friday, driver code@Friday 
+		-- integration of all module 
+		
+		!!! mail is mode of sending the code among team players
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+	
+	
+	
+	
