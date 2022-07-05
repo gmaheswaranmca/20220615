@@ -1,0 +1,20 @@
+Windows Socket Programming:
+------------------------------------------------
+	TCP/IP client-server 
+	
+	TCP/IP 
+		OSI model 
+		
+		
+1. https://docs.microsoft.com/en-us/windows/win32/winsock/getting-started-with-winsock
+	Learn Step By Step 
+		for TCP client programming 
+		for TCP server programming 
+2. https://docs.microsoft.com/en-us/windows/win32/winsock/complete-server-code
+		complete server code 
+3. https://docs.microsoft.com/en-us/windows/win32/winsock/complete-client-code
+		complete client code 
+		
+OSI Model (Open Model)
+	- https://www.geeksforgeeks.org/layers-of-osi-model/
+	- https://www.javatpoint.com/osi-model

@@ -1,3 +1,10 @@
+Resources: 
+	1. https://hpc-tutorials.llnl.gov/posix/
+	2. https://hpc.llnl.gov/documentation/tutorials/introduction-parallel-computing-tutorial
+	
+	3. https://www.cs.cmu.edu/afs/cs/academic/class/15492-f07/www/pthreads.html
+References:
+	cppreference.com
 -----------------------------------------------
 1. multi-threading
 2. windows socket programming 
@@ -25,6 +32,58 @@ multi-threading
 				
 				
 		---concurrency of the code flow 
+		
+	C++ 11/14 threads 		
+		
+	non-threaded two routines(functions) 
+	threaded two routines 
+		-- manager-worker 
+		-- manager(peer)-peer 
+	threaded two routines solving jobs 
+		- count to BIG	// individual job 
+		- count to BIG 	// individual job 
+	threaded two routines solving jobs 
+		two routines together to count 2 x BIG 
+			sharing global variable (shared memory)
+		if there is no MUTEX LOCK, atomic operation
+			RACE problem has to be fixed.
+				to fix RACE: MUTEX LOCK or atomic operation 
+			NO CONCURRENCY or CONCURRENCY without speed 
+			To fix the speed 
+				strategy has to be implemented by the programmer 
+				1. we will the count/sum/result processing with local variable(mem)
+					only one update from each routine -> either atomic/MUTEX LOCK 
+				2. we will delegate(assign) each routine the global memory 
+					then there will not memory sharing 
+						then manager will accumulate or aggregate/summarize the result 
+							from intermediate results updated by each thread routine 
+	CONDITIONAL VARIABLE 
+		wait(BLOCKED/NON-WAKEUP) for some job has to be completed 
+			once waited thread(monitor thread) will WAKEUP 
+				the further "monitor thread" 
+					continuining job 
+					appoint another worker thread to continue job 
+		analogy: web browser requested web page from the server 
+			a thread : "web browser requested web page from the server"
+				this thread will release the monitor thread from 
+					WAIT state to WAKEUP state 
+			web browser delegate the job to "monitor thread" 
+				"monitor thread" will go for "WAIT" mode 
+					till it receives the server response is completed status 
+	Synchronization 
+		1. joining the threads 
+		2. (for shared resource) MUTEX LOCK 
+		3. (for shared resource) atomic operation 
+		4. CONDITIONAL VARIABLE (wait(monitor/listen)-continue kind of job)
+	List few features:
+		1. how to pass the argument to thread 
+		2. the ways to create thread objects 
+		3. why we have to detach() function 
+		4. why joinable() function is required 
+	Thread models / methods:
+		1. manager-worker 
+		2. peer-peer 
+		
 -----------------------------------------------
 	thread api 
 		url : en.cppreference.com/w/cpp/thread 
