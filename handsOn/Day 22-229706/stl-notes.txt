@@ -1,0 +1,1522 @@
+References (Learning Resources)
+    1) https://cs.smu.ca/~porter/csc/ref/stl/               --Learning
+    2) https://hackingcpp.com/cpp/cheat_sheets.html#hfold3a
+            cheat sheet 
+                gives maximum insight for learning
+    3) cppreference.com
+    4) cplusplus.com
+
+
+Standard Template Libraries (STL)
+Topics:
+	1.	Containers
+	2.	vector
+	3.	list, deque
+	4.	arrays
+	5.	forward_list
+	6.	queue
+	7.	priority_queue
+	8.	stack
+	9.	set, multiset
+	10.	map, multimap
+	11.	Algorithms
+		a.	Sorting, Searching
+		b.	Important STL Algorithms
+		c.	Useful Array algorithms
+	12.	Partition Operations
+	13.	Iterators
+---------------------------------------------	
+STL Components
+---------------------------------------------
+o STL is based on components such as containers, iterators, and algorithms.
+o The concept of the STL is based on a separation of data and operations.
+o The data is managed by container classes, and 
+  the operations are defined by configurable algorithms. 
+  Iterators are the glue(connector) between these two components.
+---------------------------------------------
+**Containers**
+o Containers are used to manage collections of objects of a certain kind.
+o The containers may be implemented as arrays or as linked lists, or 
+  they may have a special key for every element.
+---------------------------------------------
+**Iterators**  
+o Iterators are used to step through the elements of collections of objects.
+o Iterators work with arbitrary containers 
+o The iterator interface for iterators is common for all container types
+o The interface for iterators is almost the same as for ordinary pointers
+o operator ++ is used to increment an iterator
+o operator *  is used to access the value of an iterator
+---------------------------------------------
+**Algorithms**
+o Algorithms are used to process the elements of collections.
+o they can search, sort, modify, or simply use the elements for different purposes
+o Algorithms use iterators to work with arbitrary containers 
+---------------------------------------------
+**Containers**
+o Container classes manage a collection of elements
+o kinds: 
+	o Sequence containers (ordered collections:element has a position)
+		o Sequence container classes: vector, deque, and list
+	o Associative containers (sorted collections: element position is based on its value)
+		o Associative container classes: set, multiset, map, and multimap
+---------------------------------------------
+
+---------------------------------------------
+*vector** 	|  std::vector	|  header <vector> | class template
+---------------------------------------------
+o container	
+o dynamic contiguous array
+o a sequence container that encapsulates dynamic size arrays
+o The elements are stored contiguously
+  which means that elements can be accessed 
+	not only 
+			through iterators, 
+	but also 
+			using offsets to regular pointers to elements.
+o The storage of the vector is handled automatically
+  being expanded and contracted as needed
+o Vectors usually occupy more space than static arrays, 
+  because more memory is allocated to handle future growth  
+	o This way a vector does not need to reallocate each time an element is inserted
+	  but only when the additional memory is exhausted
+o The total amount of allocated memory can be queried using capacity() function
+o The complexity (efficiency) of common operations on vectors is as follows:
+	o Random access - constant 𝓞O(1)
+	o Insertion or removal of elements at the end - amortized constant 𝓞O(1)
+	o Insertion or removal of elements - linear in the distance to the end of the vector O(n)  
+o vector meets the requirements of 
+	Container, 
+	AllocatorAwareContainer, 
+	SequenceContainer , 
+	ContiguousContainer (since C++17) 
+	and ReversibleContainer
+---------------------------------------------
+---------------------------------------------
+	
+---------------------------------------------
+***deque*** |  std::queue	|   header <queue> | class template
+---------------------------------------------
+o container	
+o double-ended queue
+o an indexed sequence container
+o allows fast insertion at both its beginning and its end
+o allows fast deletion at both its beginning and its end
+o insertion and deletion at either end of a deque never invalidates 
+  pointers or references to the rest of the elements.
+o As opposed to "vector", the elements of a deque are not stored contiguously  
+o typical implementations use:
+	o a sequence of individually allocated fixed-size arrays, 
+	  with additional bookkeeping, 
+	  - which means indexed access to deque must perform two pointer dereferences
+	  - compared to vector's indexed access which performs only one
+o The storage of a deque is automatically expanded and contracted as needed.
+o Expansion of a "deque" is cheaper than the expansion of a "vector" 
+  because it does not involve copying of the existing elements to a new memory location.	  
+o deques typically have large minimal memory cost; 
+  a deque holding just one element has to allocate its full internal array  
+  e.g. 
+	8 times the object size on 64-bit libstdc++; 
+	16 times the object size or 4096 bytes, whichever is larger, on 64-bit libc++
+o The complexity (efficiency) of common operations on deques is as follows:
+	o Random access - constant O(1)
+	o Insertion or removal of elements at the end or beginning - constant O(1)
+	o Insertion or removal of elements - linear O(n)
+o "deque" meets the requirements of 
+	Container, 
+	AllocatorAwareContainer, 
+	SequenceContainer and 
+	ReversibleContainer	
+---------------------------------------------
+---------------------------------------------
+
+---------------------------------------------
+**list**	|  std::list	|  header <list> | class template
+---------------------------------------------
+o container	
+o doubly-linked list
+o list is a container that supports 
+	constant time insertion and removal of elements 
+	from anywhere in the container
+o Fast random access is not supported
+o Compared to "forward_list",
+  this container provides bidirectional iteration capability 
+  while being less space efficient	
+o Adding, removing and moving the elements 
+  within the list or across several lists 
+  does not invalidate the iterators or references. 
+  
+  An iterator is invalidated only 
+  when the corresponding element is deleted.  
+o list meets the requirements of 
+	Container, 
+	AllocatorAwareContainer, 
+	SequenceContainer and 
+	ReversibleContainer  
+---------------------------------------------
+---------------------------------------------	
+
+
+---------------------------------------------
+**set**	|  std::set std::multiset	|  header <set> | class template
+---------------------------------------------	
+o associative container
+o collection of unique keys, sorted by keys
+o Sorting is done using the key comparison function "Compare".
+o Search, removal, and insertion operations have logarithmic complexity
+o Sets are usually implemented as red-black trees
+o set meets the requirements of 
+	Container, 
+	AllocatorAwareContainer, 
+	AssociativeContainer and 
+	ReversibleContainer
+	
+multiset
+o associative container
+o collection of keys, sorted by keys
+---------------------------------------------
+---------------------------------------------
+
+
+---------------------------------------------
+**map**	|  std::map std::multimap	|  header <map> | class template
+---------------------------------------------
+o associative container
+o collection of key-value pairs, sorted by keys, keys are unique
+o Keys are sorted by using the comparison function Compare.
+o Search, removal, and insertion operations have logarithmic complexity
+o Maps are usually implemented as red-black trees
+o map meets the requirements of 
+	Container, 
+	AllocatorAwareContainer, 
+	AssociativeContainer and 
+	ReversibleContainer
+
+multimap
+o associative container
+o collection of key-value pairs, sorted by keys
+
+
+---------------------------------------------
+**stack**	|  std::stack	|  header <stack> | class template
+---------------------------------------------
+o container adaptor
+o adapts a container to provide stack (LIFO data structure)
+o The class template acts as a wrapper to the underlying container - 
+  only a specific set of functions is provided. 
+o The stack "push"es and "pop"s the element from the back of the underlying container, 
+  known as the "top" of the stack.
+o standard containers are 
+	std::vector
+	std::deque 		---Default
+	std::list 
+	ie satisfy the requirements of SequenceContainer
+	+ functions "back()" "push_back()" "pop_back()"
+---------------------------------------------
+---------------------------------------------
+
+---------------------------------------------
+**queue**	|  std::queue	std::priority_queue |  header <queue> | class template
+---------------------------------------------
+o container adaptor
+o adapts a container to provide queue (FIFO data structure)
+o The class template acts as a wrapper to the underlying container - 
+  only a specific set of functions is provided. 
+o The queue 
+  "push"es the elements on the "back" 
+		of the underlying container and 
+  "pop"s them from the "front".
+o standard containers are 
+	std::vector
+	std::deque 		---Default
+	std::list   
+	ie satisfy the requirements of SequenceContainer
+	+ functions "back()" "front()" "push_back()" "pop_front()"
+
+priority_queue
+o container adaptor
+o adapts a container to provide priority queue
+o standard containers are 
+	std::vector		---Default
+	std::deque 		
+	ie satisfy the requirements of "SequenceContainer"
+	   and its iterators must satisfy the requirements of "LegacyRandomAccessIterator"
+	+ functions "front()" "push_back()" "push_back()"
+
+---------------------------------------------
+---------------------------------------------
+
+---------------------------------------------
+---------------------------------------------	
+---------------------------------------------
+Q1
+Problem:
+Given numbers array of size N 
+Sort the numbers based on occurance frequency
+---------------------------------------------
+Step 1:
+	Read N numbers and print 
+---------------------------------------------
+#include <iostream>
+#include <vector>
+#include <utility>
+using namespace std;
+
+int main()
+{
+   int N;                                   //8
+   cout << "Number of numbers:"; cin >> N;
+   vector<int> numbers(N);                  //2 1 3 2 3 1 1 4 
+   //int numbers[N];
+   for(auto& e: numbers){
+       cout << "Enter number:"; cin >> e;
+   }
+
+   for (int I=0; I<N; ++I) {
+        cout << numbers[I] << " ";
+   }
+   return 0;
+}	
+---------------------------------------------
+Step 2:
+	Read N numbers and put into map
+---------------------------------------------
+#include <iostream>
+#include <vector>
+#include <map>
+using namespace std;
+
+int main()
+{
+   int N = 8;
+   //cout << "Number of numbers:"; cin >> N;			//I
+   vector<int> numbers = {3, 2, 4, 2, 3, 4, 4, 1};		//II
+   //vector<int> numbers(N);							//I	
+   map<int,int> numFreq;
+   for(int I=0; I < numbers.size(); I++){
+        auto& e = numbers[I];
+        //cout << "Enter number:"; cin >> e;			//I
+	  
+	    numFreq[e] = numFreq[e] + 1;
+   }
+   multimap<int,int,greater<int>> freqNum;
+   for (auto& e : numFreq) {
+       freqNum.insert(make_pair(e.second,e.first));
+   }
+   
+   for (auto& e : freqNum) {
+       cout << e.second << " is of " << e.first << " times." << endl;
+   }
+   return 0;
+}
+---------------------------------------------
+Use unordered_map and sort algorithm to achieve the same.
+---------------------------------------------
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <utility>
+#include <algorithm>
+using namespace std;
+bool compFreqNum(pair<int,int> one, pair<int,int> two){
+    //Freq is at "first" of pair object
+    //Num is at "second" of pair object 
+    if(one.first > two.first){ //sort by freq desc
+        return true;
+    }
+    if(one.first == two.first && 
+        one.second < two.second){//then by num asc
+        return true;    
+    }
+    return false;
+}
+int main()
+{
+   int N = 8;
+   //cout << "Number of numbers:"; cin >> N;			//I
+   vector<int> numbers = {3, 2, 4, 2, 3, 4, 4, 1};		//II
+   //vector<int> numbers(N);							//I	
+   unordered_map<int,int> numFreq;
+   for(int I=0; I < numbers.size(); I++){
+        auto& e = numbers[I];
+        //cout << "Enter number:"; cin >> e;			//I
+	  
+	    numFreq[e] = numFreq[e] + 1;
+   }
+   unordered_multimap<int,int> freqNum;
+   for (auto& e : numFreq) {
+       freqNum.insert(make_pair(e.second,e.first));
+   }
+   cout << "before sort:" << endl;
+   vector<pair<int,int>> freqNumList(freqNum.begin(),freqNum.end());
+   for (auto& e : freqNumList) {
+       cout << e.second << " is of " << e.first << " times." << endl;
+   }
+   
+   cout << endl;
+   cout << "after sort:" << endl;
+   sort(freqNumList.begin(),freqNumList.end(),compFreqNum);
+   for (auto& e : freqNumList) {
+       cout << e.second << " is of " << e.first << " times." << endl;
+   }
+   return 0;
+}
+---------------------------------------------
+Q2
+Rotate given N numbers left/right rotate K times 	
+---------------------------------------------
+#include <iostream>
+#include <vector>
+#include <map>
+using namespace std;
+
+int main()
+{
+   int N = 8, K=3;
+   //cout << "Number of numbers:"; cin >> N;			//I
+   //cout << "Rotate Index(Zero Based):";cin>>K;		//I
+   vector<int> numbers = {3, 2, 4, 2, 3, 4, 4, 1};		//II
+   //vector<int> numbers(N);
+   vector<int> rotated;          
+   //for (auto& e : numbers) { cout << e;}				//I
+   
+   //rotated.insert(rotated.end(), numbers.begin() + K, numbers.end());//LEFT ROTATE-Step 1			//AA
+   //rotated.insert(rotated.end(), numbers.begin()    , numbers.begin() + K);//LEFT ROTATE-Step 2	//AA
+   
+   rotated.insert(rotated.end(), numbers.end() - K, numbers.end());//RIGHT ROTATE-Step 1			//BB
+   rotated.insert(rotated.end(), numbers.begin()  , numbers.end() - K);//RIGHT ROTATE-Step 1		//BB
+   
+   cout << endl << endl << "Rotated:";
+   for (auto& e : rotated) {
+       cout << e << " ";
+   }
+   return 0;
+}
+---------------------------------------------
+Q3
+Given N numbers 
+	AA. sort assending order 
+	BB. sort each half list descending order 
+	Find max element 
+	Find min element 
+---------------------------------------------
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+   int N = 8, K=3;
+   //cout << "Number of numbers:"; cin >> N;			//I
+   //cout << "Rotate Index(Zero Based):";cin>>K;		//I
+   vector<int> numbers = {3, 2, 4, 2, 3, 4, 4, 1};		//II
+   //vector<int> numbers(N);
+   //for (auto& e : numbers) { cout << e;}				//I
+   
+   //sort(numbers.begin(),numbers.end());               //AA
+   int half = N / 2;                                    //BB
+   sort(numbers.begin(),numbers.begin()+half,greater<int>());             //BB
+   sort(numbers.begin()+half,numbers.end(),greater<int>());               //BB
+   
+   cout << endl << endl << "Numbers:";
+   for (auto& e : numbers) {
+       cout << e << " ";
+   }
+   
+   cout << endl << (*max_element(numbers.begin(),numbers.end())) << endl;
+   cout << endl << (*min_element(numbers.begin(),numbers.end())) << endl;
+   return 0;
+}
+---------------------------------------------
+Q4
+stack example:
+---------------------------------------------
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main()
+{
+   stack<double> salaries;
+   salaries.push(1000.0);
+   salaries.push(2000.0);
+   salaries.push(1500.0);
+   salaries.push(3000.0);
+   cout << "Stack is:";
+   while(!salaries.empty()){
+       cout << salaries.top() << " ";
+       salaries.pop();
+   }
+   cout << endl;
+   return 0;
+}
+---------------------------------------------
+Q5
+queue example:
+---------------------------------------------
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int main()
+{
+   queue<double> salaries;
+   salaries.push(1000.0);
+   salaries.push(2000.0);
+   salaries.push(1500.0);
+   salaries.push(3000.0);
+   cout << "Queue is:";
+   while(!salaries.empty()){
+       cout << salaries.front() << " ";
+       salaries.pop();
+   }
+   cout << endl;
+   return 0;
+}
+
+
+priority queue example:
+---------------------------------------------
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int main()
+{
+	priority_queue<double> salaries;//strict FIFO structure primitive / user types
+	//container adapter			vector "deque" list
+	//"push" at "back" 
+	//"pop" at "front"
+	salaries.push(1000.0);	//3000.0 2000 1500.0 1000
+	salaries.push(2000.0); 
+	salaries.push(1500.0);
+	salaries.push(3000.0);
+	cout << "Priority Queue is:";
+	while (!salaries.empty()) {
+		cout << salaries.top() << " ";
+		salaries.pop();
+	}
+	cout << endl;
+	return 0;
+}
+---------------------------------------------
+   vector<int> ages {7,37,43};
+   cout << ages[ages.size()-1] << " " << ages[ages.size()-3] << endl;
+   
+   what is the output of the above code?
+   
+---------------------------------------------   
+Q6
+map one on one element:
+---------------------------------------------
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+   vector<int> ages {7,37,43};
+   
+   for_each(ages.begin(),ages.end(),[](int& e){cout << e << " ";}); cout << endl;
+   for_each(ages.begin(),ages.end(),[](int& e){ e = e * 2;});
+   for_each(ages.begin(),ages.end(),[](int& e){cout << e << " ";}); cout << endl;
+   return 0;
+}
+---------------------------------------------
+Q7 map one on one element:
+---------------------------------------------
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+   vector<int> ages {20,10,30,34,5,6};
+   transform(ages.begin(),ages.end(),ages.begin(), [](int e)->int {return e + 1;});
+   for_each(ages.begin(),ages.end(),[](int& e){cout << e << " ";}); cout << endl;
+   
+   vector<int> agesTwo(ages.rbegin(),ages.rend());
+   vector<int> agesThree(ages.size());
+   transform(ages.begin(),ages.end(),agesTwo.begin(),agesThree.begin(), [](int a,int b)->int{return (a+b);});
+   for_each(agesThree.begin(),agesThree.end(),[](int& e){cout << e << " ";}); cout << endl;
+   
+   transform(ages.begin(),ages.end()-ages.size(),ages.rbegin(), [](int e)->int {return e;});
+   for_each(ages.begin(),ages.end(),[](int& e){cout << e << " ";}); cout << endl;
+   
+   return 0;
+}
+---------------------------------------------
+Q8 partial_sort:
+---------------------------------------------
+#include <algorithm>
+#include <array>
+#include <iostream>
+using namespace std;
+int main()
+{
+    array<int, 10> numbers{5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
+    
+    partial_sort(numbers.begin(), numbers.begin() + 3, numbers.begin() + 3);
+    for_each(numbers.begin(),numbers.end(),[](int e){cout << e << " ";}); cout << endl;
+   
+}
+---------------------------------------------
+
+
+
+
+Hands-on 
+---------------------------------------------
+vector construction
+vector traversal using range loop 
+dynamic allocation experimenting
+usage of functions size() capacity() max_size()
+---------------------------------------------
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+	//vector<int> ageList(ages,ages+N); 
+	//vector<int> ageList { 7,11,36,12,43,8,7,36,12,42,43,3,6 };
+	//vector<int> ageList(N);
+	//vector<int> ageList(N, 200);
+	//better array. seq container. dynamic contiguous array.
+	
+	vector<int> ageList;
+	cout << endl << " vector size:" << ageList.size()
+		<< ", capacity" << ageList.capacity()
+		<< ", max_size" << ageList.max_size() << endl;
+	for (int age : ages) {
+		ageList.push_back(age);
+		cout << endl << " vector size:" << ageList.size()
+			<< ", capacity" << ageList.capacity()
+			<< ", max_size" << ageList.max_size() << endl;
+	}
+
+	cout << endl << " vector size:" << ageList.size()
+		<< ", capacity" << ageList.capacity()
+		<< ", max_size" << ageList.max_size() << endl;
+	cout << "Ages are from vector :";
+	for (int age : ageList) {
+		cout << age << " ";
+	}
+	cout << endl;
+}
+---------------------------------------------
+vector
+Simple Example:1
+Add element from c++ array into vector 
+use range loop to print the elements of vector
+---------------------------------------------
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+	
+	vector<int> ageList;
+    
+	for (int age : ages) {
+		ageList.push_back(age);
+	}
+
+	cout << "Ages are from vector :";
+	for (int age : ageList) {
+		cout << age << " ";
+	}
+	cout << endl;
+    
+    return 0;
+}
+---------------------------------------------
+vector
+Simple Example:2
+Add element from c++ array into vector 
+use C++ loop to print the elements of vector 
+    with size() function of vector
+    and [] operator of vector
+---------------------------------------------
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+	
+	vector<int> ageList;
+    
+	for (int age : ages) {
+		ageList.push_back(age);
+	}
+
+	cout << "Ages are from vector :";
+	for (int I = 0; I < ageList.size(); I++) {
+        int& age = ageList[I];
+		cout << age << " ";
+	}
+	cout << endl;
+    
+    return 0;
+}
+
+---------------------------------------------
+vector
+Simple Example:3
+Add element from c++ array into vector 
+use C++ loop to print the elements of vector 
+    with size() function of vector
+    and "at(I)" function of vector
+---------------------------------------------
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	vector<int> ageList;
+
+	for (int age : ages) {
+		ageList.push_back(age);
+	}
+
+	cout << "Ages are from vector :";
+	for (int I = 0; I < ageList.size(); I++) {
+		int& age = ageList.at(I);
+		cout << age << " ";
+	}
+	cout << endl;
+
+	return 0;
+}
+
+---------------------------------------------
+Example:3
+    with type deduction
+    use of "auto" in the place data type
+
+---------------------------------------------    
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	vector<int> ageList;
+
+	for (auto age : ages) {
+		ageList.push_back(age);
+	}
+
+	cout << "Ages are from vector :";
+	for (int I = 0; I < ageList.size(); I++) {
+		auto& age = ageList.at(I);
+		cout << age << " ";
+	}
+	cout << endl;
+
+	return 0;
+}
+---------------------------------------------
+vector
+Simple Example:4
+Add element from c++ array into vector 
+use C++ loop to print the elements of vector 
+    with iterator 
+    only first two ages 
+-------------------------------------------------------
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	vector<int> ageList;
+
+	for (auto age : ages) {
+		ageList.push_back(age);
+	}
+
+	cout << "Ages are from vector :";
+	vector<int>::iterator refOne = ageList.begin();
+	vector<int>::iterator refTwo = ageList.begin() + 1;
+
+	cout << (*refOne) << " " << (*refTwo);
+	
+	cout << endl;
+
+	return 0;
+}
+-------------------------------------------------------
+vector
+Simple Example:5
+Add element from c++ array into vector 
+use C++ loop to print all the elements of vector 
+    with iterator 
+-------------------------------------------------------
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	vector<int> ageList;
+
+	for (auto age : ages) {
+		ageList.push_back(age);
+	}
+
+	cout << "Ages are from vector :";
+	for (vector<int>::iterator REF = ageList.begin(); REF != ageList.end(); REF++) {//DONT USE: REF < ageList.end()
+		cout << (*REF) << " ";
+	}
+	cout << endl;
+
+	cout << "[auto]Ages are from vector :";
+	for (auto REF = ageList.begin(); REF != ageList.end(); REF++) {//DONT USE: REF < ageList.end()
+		cout << (*REF) << " ";
+	}
+	cout << endl;
+
+
+	return 0;
+}
+-------------------------------------------------------
+vector
+Simple Example:5
+Add element from c++ array into vector 
+use C++ loop to print all the elements of vector 
+    after sorted the vector using "sort" algorithm function 
+    using "for_each" algorithm function to print the elements
+Note: 
+1. "sort" algorithm function works with iterator 
+2. "for_each" algorithm function works with iterator 
+-------------------------------------------------------    
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	vector<int> ageList;
+
+	for (auto age : ages) {
+		ageList.push_back(age);
+	}
+
+	cout << "(for_each algorithm)Ages are from vector Before Sort:";
+	for_each(ageList.begin(), ageList.end(), [](int e) {cout << e << " ";});
+	cout << endl;
+
+	sort(ageList.begin(), ageList.end());
+	
+	cout << "(for_each algorithm)Ages are from vector After Sort:";
+	for_each(ageList.begin(), ageList.end(), [](int e) {cout << e << " ";});
+	cout << endl;
+
+	cout << "(range loop)Ages are from vector After Sort:";
+	for (auto age : ageList) {
+		cout << age << " ";
+	}
+	return 0;
+}
+-------------------------------------------------------
+Application of algorithm functions for the vector 
+via the connector "iterator of the vector"
+-------------------------------------------------------
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	vector<int> ageList;
+
+	for (auto age : ages) {
+		ageList.push_back(age);
+	}
+
+	auto maxREF = max_element(ageList.begin(), ageList.end());
+	auto minREF = min_element(ageList.begin(), ageList.end());
+
+	cout << "Max age is " << (*maxREF) << endl;
+	cout << "Min age is " << (*minREF) << endl;
+
+	sort(ageList.begin(), ageList.end());//sort asc                 //    I
+	//sort(ageList.begin(), ageList.end(),greater<int>());//sort desc   II
+	reverse(ageList.begin(), ageList.end());			  // III , I & III, II & III		
+
+	cout << "Ages are from vector:";
+	for_each(ageList.begin(), ageList.end(), [](int e) {cout << e << " ";});
+	cout << endl;
+
+	return 0;
+}
+-------------------------------------------------------
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	vector<int> ageList;
+
+	for (auto age : ages) {
+		ageList.push_back(age);
+	}
+
+	auto maxREF = max_element(ageList.begin(), ageList.end());
+	auto minREF = min_element(ageList.begin(), ageList.end());
+
+	cout << "Max age is " << (*maxREF) << endl;
+	cout << "Min age is " << (*minREF) << endl;
+
+	auto REF = find(ageList.begin(), ageList.end(), 36);
+	cout << "Find :" << (*REF) << endl;
+
+	sort(ageList.begin(), ageList.end());//sort asc                 //    I
+	//sort(ageList.begin(), ageList.end(),greater<int>());//sort desc   II
+	//reverse(ageList.begin(), ageList.end());			  // III		
+
+	cout << "Ages are from vector:";
+	for_each(ageList.begin(), ageList.end(), [](int e) {cout << e << " ";});
+	cout << endl;
+
+	cout << "Binary Search :" << binary_search(ageList.begin(), ageList.end(), 36) << endl;
+	cout << "Binary Search :" << binary_search(ageList.begin(), ageList.end(), 37) << endl;
+
+	return 0;
+}
+-------------------------------------------------------
+Application of algorithm functions for the vector 
+via the connector "iterator of the vector"
+
+for the sub list of the vector 
+-------------------------------------------------------
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	vector<int> ageList;
+
+	for (auto age : ages) {
+		ageList.push_back(age);
+	}
+
+	auto maxREF = max_element(ageList.begin(), ageList.begin() + 4);
+	auto minREF = min_element(ageList.begin(), ageList.begin() + 4);
+
+	cout << "Max age is " << (*maxREF) << endl;
+	cout << "Min age is " << (*minREF) << endl;
+
+	sort(ageList.begin(), ageList.begin() + 4);//sort asc                 //    I
+	//sort(ageList.begin(), ageList.begin() + 4,greater<int>());//sort desc   II
+	//reverse(ageList.begin(), ageList.begin() + 4);			  // III		
+
+	cout << "Ages are from vector:";
+	for_each(ageList.begin(), ageList.end(), [](int e) {cout << e << " ";});
+	cout << endl;
+
+	
+
+	return 0;
+}
+-------------------------------------------------------
+-------------------------------------------------------
+
+
+
+dequeue
+Simple Example:1
+Add element from c++ array into dequeue
+use c++ loop to print the elements of dequeue
+-------------------------------------------------------
+#include <iostream>
+#include <dequeue>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	deque<int> ageList;
+
+	for (int age : ages) {
+		ageList.push_back(age);
+	}
+
+	cout << "Ages are from deque :";
+	for (int I = 0; I < ageList.size(); I++) {
+		int& age = ageList[I];
+		cout << age << " ";
+	}
+	cout << endl;
+
+	return 0;
+}
+-------------------------------------------------------
+dequeue
+Simple Example:1
+Add element from c++ array into dequeue
+use range loop to print the elements of dequeue
+-------------------------------------------------------
+#include <iostream>
+#include <deque>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	deque<int> ageList;
+
+	for (int age : ages) {
+		ageList.push_back(age);
+	}
+
+	cout << "Ages are from deque :";
+	for (auto age: ageList) {
+		cout << age << " ";
+	}
+	cout << endl;
+
+	return 0;
+}
+-------------------------------------------------------
+
+-------------------------------------------------------
+list
+Simple Example:1
+Add element from c++ array into list
+use range loop to print the elements of list
+
+
+
+-------------------------------------------------------
+#include <iostream>
+#include <list>
+using namespace std;
+
+int main()    //  {prev,data,next}   [7]<->[11]->[36]<->.....
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	list<int> ageList;
+
+	for (int age : ages) {
+		ageList.push_back(age);
+	}
+
+	cout << "Ages are from doubly-linked-list :";
+	for (auto age: ageList) {	
+		cout << age << " ";
+	}
+	cout << endl;
+
+	return 0;
+}
+-------------------------------------------------------
+
+
+-------------------------------------------------------
+forward_list
+Simple Example:1
+Add element from c++ array into forward_list
+use range loop to print the elements of forward_list 
+-------------------------------------------------------
+#include <iostream>
+#include <forward_list>
+using namespace std;
+
+int main()    
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	forward_list<int> ageList;
+
+	for (int age : ages) {
+		ageList.push_front(age);
+	}
+
+	cout << "Ages are from singly linked list :";
+	
+	for (auto age: ageList) {	
+		cout << age << " ";
+	}
+	cout << endl;
+
+	return 0;
+}
+-------------------------------------------------------
+
+Difference between list and forward_list 
+
+Code will insert at the beginning 
+The source order is reversed in the list 
+
+list 
+-------------------------------------------------------
+
+#include <iostream>
+#include <list>
+using namespace std;
+
+int main()    
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	list<int> ageList;
+
+	for (int age : ages) {
+		ageList.push_front(age);
+	}
+
+	cout << "Ages are from list :";
+	
+	for (auto REF = ageList.rbegin();REF != ageList.rend(); REF++) {
+		cout << (*REF) << " ";
+	}
+	cout << endl;
+
+	return 0;
+}
+
+forward_list (ERROR in trying to use reverse iterator)
+-------------------------------------------------------
+#include <iostream>
+#include <forward_list>
+using namespace std;
+
+int main()    
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	forward_list<int> ageList;
+
+	for (int age : ages) {
+		ageList.push_front(age);
+	}
+
+	cout << "Ages are from list :";
+	
+	for (auto REF = ageList.rbegin();REF != ageList.rend(); REF++) {//COMPILE TIME ERR
+		cout << (*REF) << " ";
+	}
+	cout << endl;
+
+	return 0;
+}
+-------------------------------------------------------
+
+
+
+set example using range loop 
+-------------------------------------------------------
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main()    
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	set<int> ageList;
+
+	for (int age : ages) {
+		ageList.insert(age);
+	}
+
+	cout << "Ages are from list :";
+	
+	for (auto age: ageList) {
+		cout << age << " ";
+	}
+	cout << endl;
+
+	return 0;
+}
+-------------------------------------------------------
+
+multiset example using range loop
+-------------------------------------------------------
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main()    
+{
+	int N = 13;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //13 elements
+
+	multiset<int> ageList;
+
+	for (int age : ages) {
+		ageList.insert(age);
+	}
+
+	cout << "Ages are from set :";
+	
+	for (auto age: ageList) {
+		cout << age << " ";
+	}
+	cout << endl;
+
+	return 0;
+}
+-------------------------------------------------------
+
+
+
+
+Rotate the given N numbers either left or right K positions
+--------------------------------------------------------------------
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	int N = 13; // number of elements 
+	int K = 3;  // rotate k positions 
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 }; //N=13 elements
+				//LEFT ROTATE K=3 times:12,43,8,7,36,12,42,43,3,6,     7,11,36
+				//RIGHT ROTATE K=3 times: 43,3,6    7,11,36,12,43,8,7,36,12,42
+	vector<int> ageList(ages, ages + N);
+
+	vector<int> leftRotatedList(ageList.begin() + K, ageList.end());//LEFT ROTATE K TIMES 
+	leftRotatedList.insert(leftRotatedList.end(),ageList.begin(), ageList.begin() + K);
+
+	vector<int> rightRotatedList(ageList.end() - K, ageList.end());//RIGHT ROTATE K TIMES 
+	rightRotatedList.insert(rightRotatedList.end(), ageList.begin(), ageList.end() - K);
+
+	cout << "Ages are from left rotated list :";
+	for (auto age : leftRotatedList) {
+		cout << age << " ";
+	}
+	cout << endl;
+
+	cout << "Ages are from right rotated list :";
+	for (auto age : rightRotatedList) {
+		cout << age << " ";
+	}
+	cout << endl;
+	return 0;
+}
+--------------------------------------------------------------------
+
+
+Find distinct ages 
+--------------------------------------------------------------------
+#include <iostream>
+#include<set>
+#include<algorithm>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int K = 3;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6 };
+
+	set<int> ageList;
+	for (auto age : ages) {
+		ageList.insert(age);
+	}
+
+	cout << "Distinct ages:";
+	for_each(ageList.begin(), ageList.end(), [](int e) {cout << e << " ";});
+	cout << endl;
+
+	return 0;
+}
+--------------------------------------------------------------------
+
+
+what is map?
+--------------------------------------------------------------------
+#include <iostream>
+#include<map>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int K = 3;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6,43 };
+
+	map<int, int> ageFreqs;
+	
+	cout << "empty:" << ageFreqs.empty() << ",size:" << ageFreqs.size() << endl;
+	cout << " at 7:" << ageFreqs[7] << ",at 11:" << ageFreqs[11] << endl;
+	cout << "empty:" << ageFreqs.empty() << ",size:" << ageFreqs.size() << endl;
+	ageFreqs[7] = ageFreqs[7] + 1;
+	ageFreqs[11] = ageFreqs[11] + 1;
+	cout << "empty:" << ageFreqs.empty() << ",size:" << ageFreqs.size() << endl;
+	cout << " at 7:" << ageFreqs[7] << ",at 11:" << ageFreqs[11] << endl;
+	ageFreqs[7] = ageFreqs[7] + 1;
+	cout << "empty:" << ageFreqs.empty() << ",size:" << ageFreqs.size() << endl;
+	cout << " at 7:" << ageFreqs[7] << ",at 11:" << ageFreqs[11] << endl;
+	
+}
+--------------------------------------------------------------------
+Find frequency of occurance of the ages
+--------------------------------------------------------------------
+
+#include <iostream>
+#include<map>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int K = 3;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6,43 };
+
+	map<int, int> ageFreqs;
+
+	for (auto age : ages) {
+		ageFreqs[age] = ageFreqs[age] + 1;
+	}
+
+	cout << "Age Freq:" << endl;
+	for (auto e : ageFreqs) {//pair -> {first, second}
+		cout << "The age " << e.first << " occurs " << e.second << " times." << endl;
+	}
+	return 0;
+}
+
+
+--------------------------------------------------------------------
+Find frequency of occurance of the ages
+and sort by frequency desc and then by age asc 
+--------------------------------------------------------------------
+
+
+#include <iostream>
+#include<map>
+using namespace std;
+
+int main()
+{
+	int N = 13;
+	int K = 3;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6,43 };
+
+	map<int, int> ageFreqs;//age-freq map
+	//a collection of key-value pairs, keys are sorted and unique
+	//multimap : a collection of key-value pairs, keys are sorted and allows duplicates keys
+	
+	for (auto age : ages) {
+		ageFreqs[age] = ageFreqs[age] + 1;
+	}
+
+	cout << "Age Freq:" << endl;
+	for (auto e : ageFreqs) {
+		cout << "The age " << e.first << " occurs " << e.second << " times." << endl;
+	}
+	cout << endl;
+	
+	multimap<int, int, greater<int>> freqAge;
+	for (auto e : ageFreqs) {//pair -> {first, second} first is the age , second is the freq
+		freqAge.insert(make_pair(e.second,e.first));//freq-age map
+	}
+
+	cout << "Age Freq:" << endl;
+	for (auto e : freqAge) {
+		cout << "The age " << e.second << " occurs " << e.first << " times." << endl;
+	}
+	cout << endl;
+	return 0;
+}
+
+--------------------------------------------------------------------
+
+
+
+Find frequency of occurance of the letter in the name "hello world hi how"
+and sort by freq desc and then by letter asc 
+--------------------------------------------------------------------
+#include <iostream>
+#include<cstring>
+#include<map>
+using namespace std;
+
+int main()
+{
+	char name[] = "hello world hi how";
+
+	map<char, int> charFreqs;
+
+	for (auto ch : name) {
+		if(ch!='\0')
+			charFreqs[ch] = charFreqs[ch] + 1;
+	}
+
+	cout << "Letter Freq:" << endl;
+	for (auto e : charFreqs) {
+		cout << "The letter " << e.first << " occurs " << e.second << " times." << endl;
+	}
+	cout << endl;
+
+	multimap<int, char, greater<int>> freqChar;
+	for (auto e : charFreqs) {//pair -> {first, second} first is the age , second is the freq
+		freqChar.insert(make_pair(e.second, e.first));//freq-age map
+	}
+
+	cout << "Letter Freq:" << endl;
+	for (auto e : freqChar) {
+		cout << "The letter " << e.second << " occurs " << e.first << " times." << endl;
+	}
+	cout << endl;
+	return 0;
+}
+--------------------------------------------------------------------
+
+
+--------------------------------------------------------------------
+Find frequency of occurance of the ages
+and sort by frequency desc and then by age asc
+using unordered_map, unordered_multimap 
+--------------------------------------------------------------------
+#include <iostream>
+#include<unordered_map>
+#include<algorithm>
+#include<utility>
+using namespace std;
+
+bool compare_freqage(pair<int,int> one, pair<int, int> two) {
+	if (one.first > two.first) { // first -> freq
+		return true;
+	}
+	if (one.first == two.first &&
+		one.second < two.second) {//second -> age
+		return true;
+	}
+	return false;
+}	
+
+int main()
+{
+	int N = 13;
+	int K = 3;
+	int ages[] = { 7,11,36,12,43,8,7,36,12,42,43,3,6,43 };
+
+	unordered_map<int, int> ageFreqs;//age-freq map
+	
+
+	for (auto age : ages) {
+		ageFreqs[age] = ageFreqs[age] + 1;
+	}
+
+	cout << "Age Freq:" << endl;
+	for (auto e : ageFreqs) {
+		cout << "The age " << e.first << " occurs " << e.second << " times." << endl;
+	}
+	cout << endl;
+
+	unordered_multimap<int, int> freqAge;
+	for (auto e : ageFreqs) {//pair -> {first, second} first is the age , second is the freq
+		freqAge.insert(make_pair(e.second, e.first));//freq-age map
+	}
+	vector<pair<int, int>> freqAgeList(freqAge.begin(),freqAge.end());
+
+	sort(freqAgeList.begin(), freqAgeList.end(), compare_freqage);
+
+	cout << "Age Freq:" << endl;
+	for (auto e : freqAgeList) {
+		cout << "The age " << e.second << " occurs " << e.first << " times." << endl;
+	}
+	cout << endl;
+	return 0;
+}
+------------------------------------------------------------
+
+container 
+sequence        vector          deque       list        forward_list    array
+                -----------------------------------------------------------------
+                dynamic array   double      doubly      singly          fixed 
+                                ended       linked      linked          array 
+                                queue       list        list 
+                                
+                                
+                iterators 
+                
+associative     set (sorted,unique)                         map (sorted,unique)    
+                multiset (sorted,duplicate)                 multimap (sorted,duplicate)
+                unordered_set (unsorted,unique)             unordered_map(unsorted,unique)
+                unordered_multiset(unsorted,duplicate)      unordered_multimap(unsorted,duplicate)
+                -----------------------------------------------------------------
+                element                                     key-value pairs  association
+                
+                
+container adapter stack         queue
+                                priority_queue   (based on the element value, takes the priority)
+                  -----------------------------------------------------------------
+                  LIFO          FIFO   
+                  
+                  they will have the sequence container inside to implement their structure 
+                  ie adapater -> adapst the container 
+                
+------------------------------------------------------------
+algorithms 
+    sort 
+    find 
+    binary_search 
+    reverse 
+    for_each 
+------------------------------------------------------------
+
+
+
+

@@ -1,0 +1,294 @@
+
+------------------------------------------------------------
+exception handling:
+------------------------------------------------------------		
+	exception (English) meaning: unlikely condition
+	In c++ exception? object of any type(primitive or composite) can be thrown
+	
+	throw -> here the runtime takes care if object is thrown 
+			 generates the exception and signals the runtime 
+			 
+	when we can use "throw"?
+		if we find any logical error or runtime error may be possible or occuring,
+		generate (ie throw) the exception 
+			 
+	if exception object is thrown,
+	we have to handle (try-catch) it.
+	
+	
+	throw : direct or indirect 
+		all data objects we can throw (generate as) for the exception 
+		standard: to use "exception" class to generate the exception 
+        direct: from our app's any module 
+        indirect: from std library or from third party library
+        
+	try-catch to handle the exception 
+----------------------------------------------------------
+#include<iostream>
+
+using namespace std;
+
+void f(){
+    cout << "Hi Uday" << endl;
+    for(int I = 0; I < 5; I++){
+        cout << I << endl;
+    }
+    
+    for(int I = 0; I < 5; I++){
+        int num;
+        cout << "Give a number(0-4):"; cin >> num;
+        if(0 == num)
+            throw 10UL;
+            
+        if(1 == num)
+            throw 1.2f;
+        
+        if(2 == num)
+            throw 2;
+        
+        if(3 == num)
+            throw "hi hello";
+        
+        if(4 == num)
+            throw 1.0001f;
+    }
+    
+    cout << "Bye from uday" << endl;
+}
+
+int main(){
+    try{
+	    f();
+    }catch(unsigned long ex){
+        cout << "(UL)Handled generated exception." << endl;
+    }
+    catch(float ex){
+        cout << "(f)Handled generated exception." << endl;
+    }catch(...){
+        cout << "(other than UL and f)Handled generated exception." << endl;
+    }
+	cout << "Continuing..." << endl;
+	return 0;
+}	
+----------------------------------------------------------
+#include<iostream>
+#include<exception>
+using namespace std;
+class FunctionFEx : public exception{
+    public:
+        virtual const char* what() throw(){
+            return "Unsigned Long Exception.";
+        }
+};
+
+void f(){
+    cout << "Hi Uday" << endl;
+    for(int I = 0; I < 5; I++){
+        cout << I << endl;
+    }
+    
+    for(int I = 0; I < 5; I++){
+        int num;
+        cout << "Give a number(0-4):"; cin >> num;
+        if(0 == num){
+            FunctionFEx ex;
+            throw ex;
+        }
+        
+        if(4 == num){
+            throw FunctionFEx();
+        }
+    }
+    
+    cout << "Bye from uday" << endl;
+}
+
+int main(){
+    try{
+	    f();
+    }catch(FunctionFEx& ex){
+        cout << "(FunctionFEx&)Handled generated exception." << ex.what() << endl;
+    }
+    catch(...){
+        cout << "(other than UL and f)Handled generated exception." << endl;
+    }
+	cout << "Continuing..." << endl;
+	return 0;
+}	
+----------------------------------------------------------	
+class 
+    const member 
+        const data 
+        const function 
+        
+there may be two same member function signatures of an object        
+with the difference of "const" qualified inbetween declaration and body
+
+the member function if qualified as "const" member function 
+the function is called by the const object 
+
+
+class Emp {
+    //....
+    public:
+    //....
+    void print() ;
+	void print() const;
+};
+//....
+
+Here, 
+"void print()" is invoked by "non-const Emp" object 
+"void print() const" is invoked by "const Emp" object 
+
+These two print have the same signatures 
+only difference is "const" member function 
+
+This is another overloaded approach available in C++ language standard.
+----------------------------------------------------------	
+#include<iostream>
+#include<vector>
+using namespace std;
+
+class Emp {
+private:
+	int id;
+	float sal;
+public:
+	Emp(int id, float sal) :id(id), sal(sal) {
+
+	}
+	friend ostream& operator<<(ostream& output, const Emp& emp);
+	void print() {
+		cout << (*this);
+	}
+	void print() const {
+		cout << (*this);
+	}
+};
+
+ostream& operator<<(ostream& output, const  Emp& emp) {
+	output << emp.id << " " << emp.sal << endl;
+	return output;
+}
+
+int main() {
+	vector<Emp> employees{ Emp(101,2000),Emp(102,2500) };
+	employees.push_back(Emp(103, 2200));
+	employees.emplace_back(104, 2400);
+	cout << "All employees:" << endl;
+	for (auto REF = employees.begin(); REF != employees.end(); REF++) {
+		(*REF).print();
+	}
+	cout << endl;
+
+	cout << "All employees:" << endl;
+	for (auto REF = employees.cbegin(); REF != employees.cend(); REF++) {
+		(*REF).print();
+	}
+	cout << endl;
+
+	const vector<Emp>& employeesTwo = employees;
+	cout << "All employees:" << endl;
+	for (auto REF = employeesTwo.begin(); REF != employeesTwo.end(); REF++) {
+		(*REF).print();
+	}
+	cout << endl;
+	return 0;
+}	
+----------------------------------------------------------
+Thumb rule: "virtual function class" have the virtual destructor 
+
+o    for abstract class or class having abstract / virtual function 
+    have the virtual destructor 
+    
+o    why?
+    if child object is dynamic memory 
+    to invoke the destructor of the child object by the parent pointer 
+    we have to make the parent destructor as abstract/virtual 
+----------------------------------------------------------
+#include<iostream>
+using namespace std;
+
+class Emp {
+protected:
+	int id;
+	float* salAddr;
+public:
+	Emp(int id, float sal) {
+		this->salAddr = new float;
+		this->id = id;
+		*(this->salAddr) = sal;
+		cout << "Emp Constructor"; this->print();
+	}
+	virtual ~Emp() {
+		cout << "Emp Destructor"; this->print();
+		delete this->salAddr;
+		this->salAddr = NULL;
+	}
+	void print() {
+		cout << this->id << " " << (*this->salAddr) << endl;
+	}
+	virtual float findNetSal() = 0;
+};
+class Salaried :public Emp {
+protected:
+	float* netSalAddr;
+public:
+	Salaried(int id, float sal) :Emp(id, sal) {
+		cout << "Salaried Constructor"; this->print();
+		this->netSalAddr = new float;
+	}
+	~Salaried() {
+		cout << "Salaried Destructor"; this->print();
+		delete this->netSalAddr;
+	}
+	float findNetSal() {
+		(*this->netSalAddr) = (*this->salAddr) + ((*this->salAddr) * 10.0f / 100.0f);
+		return (*this->netSalAddr);
+	}
+};
+
+class Wage :public Emp {
+protected:
+	float* netSalAddr;
+public:
+	Wage(int id, float sal) :Emp(id, sal) {
+		this->netSalAddr = new float;
+		cout << "Wage Constructor"; this->print();
+		
+	}
+	~Wage() {
+		cout << "Wage Destructor"; this->print();
+		delete this->netSalAddr;
+	}
+	float findNetSal() {
+		(*(this->netSalAddr)) = (*this->salAddr) + 2000;
+		return (*this->netSalAddr);
+	}
+};
+
+int main() {
+	int menu;
+	Emp* baseAddr = NULL;
+	cout << "Choice(1-Salaired, 2-Wage):"; cin >> menu;
+	if (1 == menu) {
+		Salaried* salariedAddr = new Salaried(101, 2000);
+		baseAddr = salariedAddr;
+	}
+	else if (2 == menu) {
+		Wage* wageAddr =new Wage(101, 2000);
+		baseAddr = wageAddr;
+	}
+	baseAddr->print();
+	cout << "Net Salary is " << baseAddr->findNetSal() << endl;
+
+	delete baseAddr;
+	return 0;
+}
+----------------------------------------------------------
+	
+	
+
+
+

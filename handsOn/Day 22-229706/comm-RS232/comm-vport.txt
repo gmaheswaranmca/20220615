@@ -1,0 +1,40 @@
+1. Microsoft winbase.h (comm port /RS232 using win32) 
+https://docs.microsoft.com/en-us/windows/win32/api/winbase/
+
+2. Syllabus Tutorial 
+https://www.codeproject.com/Articles/3061/Creating-a-Serial-communication-on-Win#:~:text=The%20serial%20port%20can%20be,Microsoft%20Visual%20C%2B%2B%20Version%206.0.
+
+3. General Topic
+http://www.differencebetween.net/technology/difference-between-parallel-port-and-serial-port/
+
+4. we are using wide strings for comm port names 
+	Reference for wchar_t (C++ keyword type)
+	https://en.cppreference.com/w/cpp/header/cwchar
+
+
+RS232 Serial Port Communication - Tranmitter and Receiver 
+	com0com emulator(virtual ports - pairs - transreceiver) download 
+	Download Page: https://sourceforge.net/projects/com0com/
+		install into the computer 
+		Computer->Manager->Device Manager 
+			com0com - serial port emulators 
+			Ports (COM & LPT)
+				com0com - serial port emulator (COM3)
+				com0com - serial port emulator (COM4)
+				
+				
+		Initialization
+			CreateFile
+			PurgeComm
+			GetCommState
+			SetCommState
+			SetCommTimeouts
+			PurgeComm		
+		
+		Tranmitter
+			WriteFile
+		Receiver 
+			ReadFile
+		
+		Cleanup
+			CloseHandle
