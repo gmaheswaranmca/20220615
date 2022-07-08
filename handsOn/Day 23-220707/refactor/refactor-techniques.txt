@@ -1,0 +1,1155 @@
+https://refactoring.guru/
+
+SOLID Principle in Programming: Understand With Real Life Examples
+Topics:
+	1.	Single Responsibility Principle (SRP)
+	2.	Open/Closed Principle
+	3.	Liskov’s Substitution Principle (LSP)
+	4.	Interface Segregation Principle (ISP)
+	5.	Dependency Inversion Principle (DIP)
+
+Design Patterns: Understand The Importance With Real Life Examples
+Topics:
+	1.	Purpose of Design Patterns
+	2.	Gang of Four (GoF)
+	3.	Types of Design Patterns
+		a.	Creational
+		b.	Structural
+		c. Behavioural Design Patterns
+	4. Factory Method
+	5. Singleton Design Pattern
+-------------------------------------------------------------------------
+7 Code Refactoring Techniques in Software Engineering
+Topics:
+	1.	Introduction to Software Refactoring
+	2.	Most Common Code Refactoring Techniques
+		a.	Red–Green-Refactor "Refactoring Technique"
+		b.	Refactoring by Abstraction
+		c.	Composing Method
+		d.	Simplifying Methods
+		e.	Moving Features Between Objects
+		f.	Preparatory Refactoring
+		g.	User Interface Refactoring
+----------------------------------------------------------------------------------
+Refactoring
+-------------------------------------------------------------------------
+	The main purpose of refactoring is to fight technical debt. 
+	"
+		It transforms a mess(non clean code) into clean code and simple design.
+	"
+	Features of clean code:
+		1. Clean code is obvious for other programmers.
+		2. Clean code doesn’t contain duplication.
+		3. Clean code contains a minimal number of classes and other moving parts.
+		4. Clean code passes all tests.
+		5. Clean code is easier and cheaper to maintain!
+	Refactoring Techniques
+		Red, Green, Refactor
+			The red, green, refactor approach helps developers compartmentalize their focus into three phases:
+			o Red — think about what you want to develop
+			o Green — think about how to make your tests pass
+			o Refactor — think about how to improve your existing implementation
+			
+			
+		1. Composing Methods
+			Much of refactoring is devoted to correctly composing methods.
+			Code inside long methods - (execution logic)
+				o hard to understand
+				o harder to change
+			The refactoring techniques in this group 
+				o streamline methods, 
+				o remove code duplication, and 
+				o gives the way for future improvements
+			i. Extract Method
+			ii. Inline Method
+			iii. Extract Variable
+			iv. Inline Temp
+			v. Replace Temp with Query
+			vi. Split Temporary Variable
+			vii. Remove Assignments to Parameters
+			viii. Replace Method with Method Object
+			ix. Substitute Algorithm
+			
+		2. Moving Features between Objects
+			Even if you have distributed functionality among different classes 
+			in a less-than-perfect way, 
+			there is still hope.
+			
+			o move functionality between classes, 
+			o create new classes, and 
+			o hide implementation details from public access
+			
+			i. Move Method
+			ii. Move Field
+			iii. Extract Class
+			iv.Inline Class
+			v.Hide Delegate
+			vi.Remove Middle Man
+			vii.Introduce Foreign Method
+			viii.Introduce Local Extension
+			
+		3. Organizing Data
+			These refactoring techniques help with data handling, 
+			replacing primitives with rich class functionality. 
+			
+			i.Change Value to Reference
+			ii. Change Reference to Value
+			iii.Duplicate Observed Data
+			iv.Self Encapsulate Field
+			v.Replace Data Value with Object
+			vi.Replace Array with Object
+			vii.Change Unidirectional Association to Bidirectional
+			viii.Change Bidirectional Association to Unidirectional
+			ix.Encapsulate Field
+			x.Encapsulate Collection
+			xi.Replace Magic Number with Symbolic Constant
+			xii.Replace Type Code with Class
+			xiii.Replace Type Code with Subclasses
+			xiv.Replace Type Code with State/Strategy
+			xv.Replace Subclass with Fields
+			
+		4. Simplifying Conditional Expressions
+			Conditionals tend to get more and more complicated in their logic over time, and 
+			there are yet more techniques to combat this as well.
+			
+			i Consolidate Conditional Expression
+			ii. Consolidate Duplicate Conditional Fragments
+			iii. Decompose Conditional
+			iv. Replace Conditional with Polymorphism
+			v. Remove Control Flag
+			vi. Replace Nested Conditional with Guard Clauses
+			vii.Introduce Null Object
+			viii.Introduce Assertion
+			
+		5. Simplifying Method Calls
+			These techniques make method calls simpler and easier to understand. 
+			This, in turn, simplifies the interfaces for interaction between classes.
+			i. Add Parameter
+			ii. Remove Parameter
+			iii. Rename Method
+			iv. Separate Query from Modifier
+			v. Parameterize Method
+			vi. Introduce Parameter Object
+			vii. Preserve Whole Object
+			viii. Remove Setting Method
+			ix.Replace Parameter with Explicit Methods
+			x.Replace Parameter with Method Call
+			xi. Hide Method
+			xii.Replace Constructor with Factory Method
+			xiii.Replace Error Code with Exception
+			xiv.Replace Exception with Test
+			
+		6. Dealing with Generalization
+			Abstraction has its own group of refactoring techniques, 
+			primarily associated with moving functionality along the class inheritance hierarchy, 
+			creating new classes and interfaces, and 
+			replacing inheritance with delegation and vice versa.
+			
+			i.Pull Up Field
+			ii.Pull Up Method
+			iii.Pull Up Constructor Body
+			iv.Push Down Field
+			v.Push Down Method
+			vi.Extract Subclass
+			vii.Extract Superclass
+			viii.Extract Interface
+			ix.Collapse Hierarchy
+			x.Form Template Method
+			xii.Replace Inheritance with Delegation
+			xiii.Replace Delegation with Inheritance
+			
+-------------------------------------------------------------------------			
+			
+			
+			
+=========================================================================			
+-------------------------------------------------------------------------
+Red, Green, Refactor
+	The red, green, refactor approach helps developers compartmentalize their focus into three phases:
+	o Red — think about what you want to develop
+	o Green — think about how to make your tests pass
+	o Refactor — think about how to improve your existing implementation	
+-------------------------------------------------------------------------
+=========================================================================
+
+
+
+
+
+=========================================================================			
+Preparatory refactoring
+-------------------------------------------------------------------------
+	As a developer, there are things you can do to your codebase 
+	to make the building of your next feature a little more painless. 
+	"Martin Fowler" calls this preparatory refactoring.
+	
+	This again can be executed using the red-green technique described above.
+	
+	Preparatory refactoring can also involve paying down technical debt 
+	that was accumulated during the earlier phases of feature development. 
+	Even though the end-users may not see eye to eye with the engineering team on such efforts, 
+	the developers almost always appreciate the value of a good refactoring exercise.
+	
+	They can save their time, money, and other resources 
+	if they just spend some time updating the code earlier. 
+-------------------------------------------------------------------------
+=========================================================================
+	
+=========================================================================			
+User Interface Refactoring
+-------------------------------------------------------------------------
+	A simple change to the UI retains its semantics, 
+	for example: 
+		align entry field, 
+		apply common button size, 
+		apply the font, 
+		indicate format, 
+		reword in active voice and 
+		increase colour contrast, etc.
+-------------------------------------------------------------------------
+=========================================================================
+	
+	
+	
+	
+=========================================================================			
+Composing Methods
+-------------------------------------------------------------------------
+Much of refactoring is devoted to correctly composing methods.
+	Code inside long methods - (execution logic)
+		o hard to understand
+		o harder to change
+	The refactoring techniques in this group 
+		o streamline methods, 
+		o remove code duplication, and 
+		o gives the way for future improvements
+	i. Extract Method
+	ii. Inline Method
+	iii. Extract Variable
+	iv. Inline Temp
+	v. Replace Temp with Query
+	vi. Split Temporary Variable
+	vii. Remove Assignments to Parameters
+	viii. Replace Method with Method Object
+	ix. Substitute Algorithm
+-------------------------------------------------------------------------
+i.Extract Method
+	Problem: 
+		You have a code fragment that can be grouped together.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+void printOwing() {
+  printBanner();
+
+  // Print details.
+  System.out.println("name: " + name);
+  System.out.println("amount: " + getOutstanding());
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	Solution: 
+		Move this code to a separate new method (or function) 
+		and replace the old code with a call to the method.
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+void printOwing() {
+  printBanner();
+  printDetails(getOutstanding());
+}
+
+void printDetails(double outstanding) {
+  System.out.println("name: " + name);
+  System.out.println("amount: " + outstanding);
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+ii.Inline Method
+	Problem: 
+		When a method body is more obvious than the method itself, use this technique.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		
+class PizzaDelivery {
+  // ...
+  int getRating() {
+    return moreThanFiveLateDeliveries() ? 2 : 1;
+  }
+  boolean moreThanFiveLateDeliveries() {
+    return numberOfLateDeliveries > 5;
+  }
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	Solution: 
+		Replace calls to the method with the method’s content and delete the method itself.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+class PizzaDelivery {
+  // ...
+  int getRating() {
+    return numberOfLateDeliveries > 5 ? 2 : 1;
+  }
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^		
+-------------------------------------------------------------------------
+Extract Variable
+	Problem: You have an expression that’s hard to understand.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+void renderBanner() {
+  if ((platform.toUpperCase().indexOf("MAC") > -1) &&
+       (browser.toUpperCase().indexOf("IE") > -1) &&
+        wasInitialized() && resize > 0 )
+  {
+    // do something
+  }
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	Solution: Place the result of the expression or its parts in separate variables that are self-explanatory.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+void renderBanner() {
+  final boolean isMacOs = platform.toUpperCase().indexOf("MAC") > -1;
+  final boolean isIE = browser.toUpperCase().indexOf("IE") > -1;
+  final boolean wasResized = resize > 0;
+
+  if (isMacOs && isIE && wasInitialized() && wasResized) {
+    // do something
+  }
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Inline Temp
+	Problem: You have a temporary variable that’s assigned the result of a simple expression and nothing more.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+boolean hasDiscount(Order order) {
+  double basePrice = order.basePrice();
+  return basePrice > 1000;
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	Solution: Replace the references to the variable with the expression itself.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+boolean hasDiscount(Order order) {
+  return order.basePrice() > 1000;
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^	
+-------------------------------------------------------------------------
+Replace Temp with Query
+	Problem: You place the result of an expression in a local variable for later use in your code.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+double calculateTotal() {
+  double basePrice = quantity * itemPrice;
+  if (basePrice > 1000) {
+    return basePrice * 0.95;
+  }
+  else {
+    return basePrice * 0.98;
+  }
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	Solution: Move the entire expression to a separate method and return the result from it. Query the method instead of using a variable. Incorporate the new method in other methods, if necessary.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+double calculateTotal() {
+  if (basePrice() > 1000) {
+    return basePrice() * 0.95;
+  }
+  else {
+    return basePrice() * 0.98;
+  }
+}
+double basePrice() {
+  return quantity * itemPrice;
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Split Temporary Variable
+	Problem: You have a local variable that’s used to store various intermediate values inside a method (except for cycle variables).
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+double temp = 2 * (height + width);
+System.out.println(temp);
+temp = height * width;
+System.out.println(temp);
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	Solution: Use different variables for different values. Each variable should be responsible for only one particular thing.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+final double perimeter = 2 * (height + width);
+System.out.println(perimeter);
+final double area = height * width;
+System.out.println(area);
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+-------------------------------------------------------------------------
+Remove Assignments to Parameters
+	Problem: Some value is assigned to a parameter inside method’s body.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+int discount(int inputVal, int quantity) {
+  if (quantity > 50) {
+    inputVal -= 2;
+  }
+  // ...
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	Solution: Use a local variable instead of a parameter.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+int discount(int inputVal, int quantity) {
+  int result = inputVal;
+  if (quantity > 50) {
+    result -= 2;
+  }
+  // ...
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Replace Method with Method Object
+	Problem: You have a long method in which the local variables are so intertwined that you can’t apply Extract Method.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+class Order {
+  // ...
+  public double price() {
+    double primaryBasePrice;
+    double secondaryBasePrice;
+    double tertiaryBasePrice;
+    // Perform long computation.
+  }
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	Solution: Transform the method into a separate class so that the local variables become fields of the class. Then you can split the method into several methods within the same class.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+class Order {
+  // ...
+  public double price() {
+    return new PriceCalculator(this).compute();
+  }
+}
+
+class PriceCalculator {
+  private double primaryBasePrice;
+  private double secondaryBasePrice;
+  private double tertiaryBasePrice;
+  
+  public PriceCalculator(Order order) {
+    // Copy relevant information from the
+    // order object.
+  }
+  
+  public double compute() {
+    // Perform long computation.
+  }
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Substitute Algorithm
+	Problem: So you want to replace an existing algorithm with a new one?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+String foundPerson(String[] people){
+  for (int i = 0; i < people.length; i++) {
+    if (people[i].equals("Don")){
+      return "Don";
+    }
+    if (people[i].equals("John")){
+      return "John";
+    }
+    if (people[i].equals("Kent")){
+      return "Kent";
+    }
+  }
+  return "";
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	Solution: Replace the body of the method that implements the algorithm with a new algorithm.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+String foundPerson(String[] people){
+  List candidates =
+    Arrays.asList(new String[] {"Don", "John", "Kent"});
+  for (int i=0; i < people.length; i++) {
+    if (candidates.contains(people[i])) {
+      return people[i];
+    }
+  }
+  return "";
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+=========================================================================
+	
+	
+	
+	
+	
+	
+=========================================================================			
+Moving Features between Objects
+	Even if you have distributed functionality among different classes 
+	in a less-than-perfect way, 
+	there is still hope.
+	
+	o move functionality between classes, 
+	o create new classes, and 
+	o hide implementation details from public access
+	
+	i. Move Method
+	ii. Move Field
+	iii. Extract Class
+	iv.Inline Class
+	v.Hide Delegate
+	vi.Remove Middle Man
+	vii.Introduce Foreign Method
+	viii.Introduce Local Extension
+-------------------------------------------------------------------------
+Move Method
+Problem: A method is used more in another class than in its own class.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Class1
+	-----------
+	-----------
+	aMethod()
+	-----------
+Class2
+	-----------
+	-----------
+	-----------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Create a new method in the class that uses the method the most, then move code from the old method to there. Turn the code of the original method into a reference to the new method in the other class or else remove it entirely.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Class1
+	-----------
+	-----------
+	-----------
+Class2
+	-----------
+	-----------
+	aMethod()
+	-----------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Move Field
+Problem: A field is used more in another class than in its own class.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Class1
+	-----------
+	aField
+	-----------
+	-----------
+Class2
+	-----------
+	-----------
+	-----------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Create a field in a new class and redirect all users of the old field to it.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Class1
+	-----------
+	-----------
+	-----------
+Class2
+	-----------
+	aField
+	-----------
+	-----------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Extract Class
+Problem: When one class does the work of two, awkwardness results.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Person 
+	-----------
+	name
+	officeAreaCode
+	officeNumber
+	-----------
+	getTelephoneNumber()
+	-----------
+	
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Instead, create a new class and place the fields and methods responsible for the relevant functionality in it.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+								1
+Person 	...........................>TelephoneNumber	
+	-----------							-----------
+	name								officeAreaCode
+										officeNumber
+	-----------							-----------
+	getTelephoneNumber()
+	-----------							-----------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Inline Class
+Problem: A class does almost nothing and isn’t responsible for anything, and no additional responsibilities are planned for it.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+								1
+Person 	...........................>TelephoneNumber	
+	-----------							-----------
+	name								officeAreaCode
+										officeNumber
+	-----------							-----------
+	getTelephoneNumber()
+	-----------							-----------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Move all features from the class to another one.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Person 
+	-----------
+	name
+	officeAreaCode
+	officeNumber
+	-----------
+	getTelephoneNumber()
+	-----------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Hide Delegate
+Problem: The client gets object B from a field or method of object А. Then the client calls a method of object B.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+				Client Class 
+		|							|
+		v							v
+Person 		<.................>	Department 
+	------------					------------
+	------------					------------
+	getDepartment()					getManager()
+	------------					------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Create a new method in class A that delegates the call to object B. Now the client doesn’t know about, or depend on, class B.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Client Class 
+	|		
+	v		
+Person 		
+	------------
+	------------
+	getDepartment()					
+	------------					
+	|		
+	v			
+Department 
+	
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Remove Middle Man
+Problem: A class has too many methods that simply delegate to other objects.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Client Class 
+	|		
+	v		
+Person 		
+	------------
+	------------
+	getDepartment()					
+	------------					
+	|		
+	v			
+Department 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Delete these methods and force the client to call the end methods directly.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+				Client Class 
+		|							|
+		v							v
+Person 		<.................>	Department 
+	------------					------------
+	------------					------------
+	getDepartment()					getManager()
+	------------					------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Introduce Foreign Method
+Problem: A utility class doesn’t contain the method that you need and you can’t add the method to the class.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+class Report {
+  // ...
+  void sendReport() {
+    Date nextDay = new Date(previousEnd.getYear(),
+      previousEnd.getMonth(), previousEnd.getDate() + 1);
+    // ...
+  }
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Add the method to a client class and pass an object of the utility class to it as an argument.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+class Report {
+  // ...
+  void sendReport() {
+    Date newStart = nextDay(previousEnd);
+    // ...
+  }
+  private static Date nextDay(Date arg) {
+    return new Date(arg.getYear(), arg.getMonth(), arg.getDate() + 1);
+  }
+}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Introduce Local Extension
+Problem: A utility class doesn’t contain some methods that you need. But you can’t add these methods to the class.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ClientClass
+	----------------------
+	----------------------
+	nextDay(:Date):Date 
+	----------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Create a new class containing the methods and make it either the child or wrapper of the utility class.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Date 
+  ^
+  |
+MfDate
+	------------------
+	------------------
+	nextDay(:Date):Date
+	------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+=========================================================================
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=========================================================================			
+Simplifying Method Calls
+	These techniques make method calls simpler and easier to understand. 
+	This, in turn, simplifies the interfaces for interaction between classes.
+	i. Add Parameter
+	ii. Remove Parameter
+	iii. Rename Method
+	iv. Separate Query from Modifier
+	v. Parameterize Method
+	vi. Introduce Parameter Object
+	vii. Preserve Whole Object
+	viii. Remove Setting Method
+	ix.Replace Parameter with Explicit Methods
+	x.Replace Parameter with Method Call
+	xi. Hide Method
+	xii.Replace Constructor with Factory Method
+	xiii.Replace Error Code with Exception
+	xiv.Replace Exception with Test
+-------------------------------------------------------------------------
+Rename Method
+Problem: The name of a method doesn’t explain what the method does.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Rename the method.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Add Parameter
+Problem: A method doesn’t have enough data to perform certain actions.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Create a new parameter to pass the necessary data.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Remove Parameter
+Problem: A parameter isn’t used in the body of a method.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Remove the unused parameter.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Separate Query from Modifier
+Problem: Do you have a method that returns a value but also changes something inside an object?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Split the method into two separate methods. As you would expect, one of them should return the value and the other one modifies the object.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Parameterize Method
+Problem: Multiple methods perform similar actions that are different only in their internal values, numbers or operations.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Combine these methods by using a parameter that will pass the necessary special value.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Replace Parameter with Explicit Methods
+Problem: A method is split into parts, each of which is run depending on the value of a parameter.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Extract the individual parts of the method into their own methods and call them instead of the original method.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Preserve Whole Object
+Problem: You get several values from an object and then pass them as parameters to a method.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Instead, try passing the whole object.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Replace Parameter with Method Call
+Problem: Calling a query method and passing its results as the parameters of another method, while that method could call the query directly.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Instead of passing the value through a parameter, try placing a query call inside the method body.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Introduce Parameter Object
+Problem: Your methods contain a repeating group of parameters.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Replace these parameters with an object.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Remove Setting Method
+Problem: The value of a field should be set only when it’s created, and not change at any time after that.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: So remove methods that set the field’s value.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Hide Method
+Problem: A method isn’t used by other classes or is used only inside its own class hierarchy.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Make the method private or protected.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Replace Constructor with Factory Method
+Problem: You have a complex constructor that does something more than just setting parameter values in object fields.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Create a factory method and use it to replace constructor calls.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Replace Error Code with Exception
+Problem: A method returns a special value that indicates an error?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Throw an exception instead.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Replace Exception with Test
+Problem: You throw an exception in a place where a simple test would do the job?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Replace the exception with a condition test.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+=========================================================================
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+=========================================================================			
+Dealing with Generalization
+
+-------------------------------------------------------------------------
+Pull Up Field
+Problem: Two classes have the same field.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Remove the field from subclasses and move it to the superclass.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Pull Up Method
+Problem: Your subclasses have methods that perform similar work.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Make the methods identical and then move them to the relevant superclass.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Pull Up Constructor Body
+Problem: Your subclasses have constructors with code that’s mostly identical.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Create a superclass constructor and move the code that’s the same in the subclasses to it. Call the superclass constructor in the subclass constructors.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Push Down Method
+Problem: Is behavior implemented in a superclass used by only one (or a few) subclasses?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Move this behavior to the subclasses.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Push Down Field
+Problem: Is a field used only in a few subclasses?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Move the field to these subclasses.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Extract Subclass
+Problem: A class has features that are used only in certain cases.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Create a subclass and use it in these cases.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Extract Superclass
+Problem: You have two classes with common fields and methods.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Solution: Create a shared superclass for them and move all the identical fields and methods to it.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Extract Interface
+Problem: Multiple clients are using the same part of a class interface. Another case: part of the interface in two classes is the same.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Move this identical portion to its own interface.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Collapse Hierarchy
+Problem: You have a class hierarchy in which a subclass is practically the same as its superclass.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Merge the subclass and superclass.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Form Template Method
+Problem: Your subclasses implement algorithms that contain similar steps in the same order.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Move the algorithm structure and identical steps to a superclass, and leave implementation of the different steps in the subclasses.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Replace Inheritance with Delegation
+Problem: You have a subclass that uses only a portion of the methods of its superclass (or it’s not possible to inherit superclass data).
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Create a field and put a superclass object in it, delegate methods to the superclass object, and get rid of inheritance.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+Replace Delegation with Inheritance
+Problem: A class contains many simple methods that delegate to all methods of another class.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Solution: Make the class a delegate inheritor, which makes the delegating methods unnecessary.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------------------------------------
+=========================================================================
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+=========================================================================			
+Organizing Data
+	These refactoring techniques help with data handling, 
+	replacing primitives with rich class functionality. 
+	
+	i.Change Value to Reference
+	ii. Change Reference to Value
+	iii.Duplicate Observed Data
+	iv.Self Encapsulate Field
+	v.Replace Data Value with Object
+	vi.Replace Array with Object
+	vii.Change Unidirectional Association to Bidirectional
+	viii.Change Bidirectional Association to Unidirectional
+	ix.Encapsulate Field
+	x.Encapsulate Collection
+	xi.Replace Magic Number with Symbolic Constant
+	xii.Replace Type Code with Class
+	xiii.Replace Type Code with Subclasses
+	xiv.Replace Type Code with State/Strategy
+	xv.Replace Subclass with Fields
+-------------------------------------------------------------------------
+Self Encapsulate Field
+Problem: You use direct access to private fields inside a class.
+
+Solution: Create a getter and setter for the field, and use only them for accessing the field.
+-------------------------------------------------------------------------
+Replace Data Value with Object
+Problem: A class (or group of classes) contains a data field. The field has its own behavior and associated data.
+
+Solution: Create a new class, place the old field and its behavior in the class, and store the object of the class in the original class.
+-------------------------------------------------------------------------
+Change Value to Reference
+Problem: So you have many identical instances of a single class that you need to replace with a single object.
+
+Solution: Convert the identical objects to a single reference object.
+-------------------------------------------------------------------------
+Change Reference to Value
+Problem: You have a reference object that’s too small and infrequently changed to justify managing its life cycle.
+
+Solution: Turn it into a value object.
+-------------------------------------------------------------------------
+Replace Array with Object
+Problem: You have an array that contains various types of data.
+
+Solution: Replace the array with an object that will have separate fields for each element.
+-------------------------------------------------------------------------
+Duplicate Observed Data
+Problem: Is domain data stored in classes responsible for the GUI?
+
+Solution: Then it’s a good idea to separate the data into separate classes, ensuring connection and synchronization between the domain class and the GUI.
+-------------------------------------------------------------------------
+Change Unidirectional Association to Bidirectional
+Problem: You have two classes that each need to use the features of the other, but the association between them is only unidirectional.
+
+Solution: Add the missing association to the class that needs it.
+-------------------------------------------------------------------------
+Change Bidirectional Association to Unidirectional
+Problem: You have a bidirectional association between classes, but one of the classes doesn’t use the other’s features.
+
+Solution: Remove the unused association.
+-------------------------------------------------------------------------
+Replace Magic Number with Symbolic Constant
+Problem: Your code uses a number that has a certain meaning to it.
+
+Solution: Replace this number with a constant that has a human-readable name explaining the meaning of the number.
+-------------------------------------------------------------------------
+Encapsulate Field
+Problem: You have a public field.
+
+Solution: Make the field private and create access methods for it.
+-------------------------------------------------------------------------
+Encapsulate Collection
+Problem: A class contains a collection field and a simple getter and setter for working with the collection.
+
+Solution: Make the getter-returned value read-only and create methods for adding/deleting elements of the collection.
+-------------------------------------------------------------------------
+Replace Type Code with Class
+Problem: A class has a field that contains type code. The values of this type aren’t used in operator conditions and don’t affect the behavior of the program.
+
+Solution: Create a new class and use its objects instead of the type code values.
+-------------------------------------------------------------------------
+Replace Type Code with Subclasses
+Problem: You have a coded type that directly affects program behavior (values of this field trigger various code in conditionals).
+
+Solution: Create subclasses for each value of the coded type. Then extract the relevant behaviors from the original class to these subclasses. Replace the control flow code with polymorphism.
+-------------------------------------------------------------------------
+Replace Type Code with State/Strategy
+Problem: You have a coded type that affects behavior but you can’t use subclasses to get rid of it.
+
+Solution: Replace type code with a state object. If it’s necessary to replace a field value with type code, another state object is “plugged in”.
+-------------------------------------------------------------------------
+Replace Subclass with Fields
+Problem: You have subclasses differing only in their (constant-returning) methods.
+
+Solution: Replace the methods with fields in the parent class and delete the subclasses.
+-------------------------------------------------------------------------
+=========================================================================
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+=========================================================================			
+Simplifying Conditional Expressions
+	Conditionals tend to get more and more complicated in their logic over time, and 
+	there are yet more techniques to combat this as well.
+	
+	i Consolidate Conditional Expression
+	ii. Consolidate Duplicate Conditional Fragments
+	iii. Decompose Conditional
+	iv. Replace Conditional with Polymorphism
+	v. Remove Control Flag
+	vi. Replace Nested Conditional with Guard Clauses
+	vii.Introduce Null Object
+	viii.Introduce Assertion
+-------------------------------------------------------------------------
+Decompose Conditional
+Problem: You have a complex conditional (if-then/else or switch).
+
+Solution: Decompose the complicated parts of the conditional into separate methods: the condition, then and else.
+-------------------------------------------------------------------------
+Consolidate Conditional Expression
+Problem: You have multiple conditionals that lead to the same result or action.
+
+Solution: Consolidate all these conditionals in a single expression.
+-------------------------------------------------------------------------
+Consolidate Duplicate Conditional Fragments
+Problem: Identical code can be found in all branches of a conditional.
+
+Solution: Move the code outside of the conditional.
+-------------------------------------------------------------------------
+Remove Control Flag
+Problem: You have a boolean variable that acts as a control flag for multiple boolean expressions.
+
+Solution: Instead of the variable, use break, continue and return.
+-------------------------------------------------------------------------
+Replace Nested Conditional with Guard Clauses
+Problem: You have a group of nested conditionals and it’s hard to determine the normal flow of code execution.
+
+Solution: Isolate all special checks and edge cases into separate clauses and place them before the main checks. Ideally, you should have a “flat” list of conditionals, one after the other.
+-------------------------------------------------------------------------
+Replace Conditional with Polymorphism
+Problem: You have a conditional that performs various actions depending on object type or properties.
+
+Solution: Create subclasses matching the branches of the conditional. In them, create a shared method and move code from the corresponding branch of the conditional to it. Then replace the conditional with the relevant method call. The result is that the proper implementation will be attained via polymorphism depending on the object class.
+-------------------------------------------------------------------------
+Introduce Null Object
+Problem: Since some methods return null instead of real objects, you have many checks for null in your code.
+
+Solution: Instead of null, return a null object that exhibits the default behavior.
+-------------------------------------------------------------------------
+Introduce Assertion
+Problem: For a portion of code to work correctly, certain conditions or values must be true.
+
+Solution: Replace these assumptions with specific assertion checks.
+-------------------------------------------------------------------------
+=========================================================================
+		

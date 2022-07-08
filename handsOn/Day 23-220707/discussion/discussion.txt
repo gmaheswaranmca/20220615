@@ -1,0 +1,172 @@
+======================================================
+Q: 
+	What is inheritance?
+	
+	Arunimas answer:
+		child 				inherits the parent 
+		(derived)						 (base) 
+		
+	why inheritance? 
+		reusablity 
+		
+		parent features is copied by inheritance 
+		to the child 
+		
+		child = parent + extra features 
+		
+	without inheritance?
+		how you will apply the same use case?
+		
+======================================================
+//Dilshamol
+class Parent {
+	public:
+	int asset;
+}	
+
+class Child  {
+	public:
+		int asset;
+		//extra features of Childe 
+};
+
+main 
+	Child child;
+	print child.asset 
+//Sandra 
+class Parent {
+	public:
+	int asset;
+}	
+
+class Child  {
+	public:
+		Parent parent;
+		//extra features of Childe 
+};
+main 
+	Child child;
+	print child.parent.asset 
+	
+======================================================
+	Q: what is interface or "(fully)abstract class"
+======================================================	
+	what is abstract function?
+		no-body function 
+		no-implementation/no-definion function 
+
+	what is abstract class?
+		the class which has abstract(pure virtual) function is called 
+		abstract class 
+	
+	can you create object for the abstract class?
+		we cannot create object for abstract class ie the class with atleast one
+		abstract (pure virtual) function 
+
+	we inherit the abstract class
+	can we create object for derived class?
+		No.
+			if you are not overriding the pure virtual function of the base class 
+			in the derived class.
+		Yes.
+			if you override the pure virtual function of the base class 
+			in the derived class.
+======================================================	
+	what is purpose/advantage of the abstract class?
+	why do we go for abstract class? 
+	
+	parent pointer to child object 
+	will invoke/call child function 
+	if it is declared in the parent class as "virtual" 
+======================================================	
+		class ICar 
+			public:
+				virtual void drive() = 0;						!!! ideas 
+		class Audi:public ICar 
+			public:
+				void drive(){/*define here*/}			!!! events
+		class BMW:public ICar 
+			public:
+				void drive(){/*define here*/}		
+		class Mercedes:public ICar 
+			public:
+				void drive(){/*define here*/}			
+		
+	
+	ICar *carAddr;
+	
+	carAddr = &(Audi()); carAddr->drive(); // drive function Audi // dynamic binding // "virtual table | virtual pointer" 
+	carAddr = &(BMW());  carAddr->drive(); // drive function BMW // dynamic binding //
+	carAddr = &(Mercedes());  carAddr->drive(); // drive function Mercedes // dynamic binding //
+======================================================
+
+======================================================
+Answer for the below code 
+	Wiil the code work?
+		Yes.
+		
+	parent reference to child object 
+	will invoke/call child function 
+	if it is declared in the parent class "virtual" 
+======================================================	
+		class ICar 
+			public:
+				virtual void drive() = 0;						!!! ideas 
+		class Audi:public ICar 
+			public:
+				void drive(){/*define here*/}			!!! events
+		class BMW:public ICar 
+			public:
+				void drive(){/*define here*/}		
+		class Mercedes:public ICar 
+			public:
+				void drive(){/*define here*/}			
+		
+	
+	if(ch == 'A')
+		{ICar& car = (Audi()); car.drive(); // drive function Audi // dynamic binding // "virtual table | virtual pointer" 
+		}
+	else if(ch == 'B'){
+		ICar& car = (BMW());  car.drive(); // drive function BMW // dynamic binding //
+		}
+	else if(ch == 'M'){
+		ICar& car = (Mercedes());  car.drive(); // drive function Mercedes // dynamic binding //
+		}
+======================================================
+	
+======================================================	
+	Answer for the below psedoclass (wrt c++)
+======================================================	
+	
+		class ICar 
+			public:
+				void drive() {/*define here*/}
+		class Audi:public ICar 
+			public:
+				void drive(){/*define here*/}			
+		class BMW:public ICar 
+			public:
+				void drive(){/*define here*/}		
+		class Mercedes:public ICar 
+			public:
+				void drive(){/*define here*/}			
+		
+	
+	ICar *carAddr;
+	
+	carAddr = &(Audi()); carAddr->drive(); // drive function not Audi but ICar 
+	carAddr = &(BMW());  carAddr->drive(); // drive function not BMW but ICar 
+	carAddr = &(Mercedes());  carAddr->drive(); // drive function not Mercedes but ICar 
+======================================================	
+	
+	
+======================================================
+	Question:
+		The application is implemented with OOP 
+		Now, why we used OOP
+		
+		Option A: for end user of application 
+		Option B: of for programmer 				
+		
+		Answer: Only B 
+======================================================	

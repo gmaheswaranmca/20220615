@@ -1,0 +1,585 @@
+Design Patterns: Understand The Importance With Real Life Examples
+Topics:
+	1.	Purpose of Design Patterns
+	2.	Gang of Four (GoF)
+	3.	Types of Design Patterns
+		a.	Creational
+		b.	Structural
+		c. Behavioural Design Patterns
+	4. Factory Method
+	5. Singleton Design Pattern
+-------------------------------------------------------------------------
+DESIGN PATTERNS
+	o Design patterns are typical solutions to commonly occurring problems in software design. 
+	o They are like pre-made blueprints that you can customize 
+		to solve a recurring design problem in your code.		
+		
+	o But you can’t just find a pattern and copy it into your program, 
+		the way you can with off-the-shelf functions or libraries. 
+		
+	o A pattern is not a specific piece of code, 
+		but a general concept for solving a particular problem. 
+-------------------------------------------------------------------------
+What does the pattern consist of?
+	"Intent" of the pattern briefly describes both the problem and the solution.
+	"Motivation" further explains the problem and the solution the pattern makes possible.
+	"Structure of classes" shows each part of the pattern and how they are related.
+	"Code example" in one of the popular programming languages makes it easier to grasp the idea behind the pattern.
+-------------------------------------------------------------------------
+History:
+	Erich Gamma, 
+	John Vlissides, 
+	Ralph Johnson, and 
+	Richard Helm. 
+	
+	In 1994, they published 
+		"Design Patterns: Elements of Reusable Object-Oriented Software"
+		
+	The book featured 23 patterns solving various problems of object-oriented design.
+-------------------------------------------------------------------------		
+all patterns can be categorized by their intent, or purpose. 
+
+three main groups of patterns:
+
+1. Creational patterns provide 
+	"object creation mechanisms that increase flexibility and reuse of existing code."
+	
+	Factory Method
+		Provides an interface for creating objects in a superclass, 
+		but allows subclasses to alter the type of objects that will be created.
+
+	Abstract Factory
+		Lets you produce families of related objects without specifying their concrete classes.
+
+	Builder
+		Lets you construct complex objects step by step. 
+		The pattern allows you to produce different types and
+		representations of an object using the same construction code.
+
+	Prototype
+		Lets you copy existing objects without making your code dependent on their classes.
+
+	Singleton
+		Lets you ensure that a class has only one instance, 
+		while providing a global access point to this instance.
+
+
+2. Structural patterns explain 
+	"how to assemble objects and classes into larger structures, 
+	while keeping these structures flexible and efficient."
+
+	Adapter
+		Allows objects with incompatible interfaces to collaborate.
+
+	Bridge
+		Lets you split a large class or a set of closely related classes 
+		into two separate hierarchies—abstraction and implementation—
+		which can be developed independently of each other.
+
+	Composite
+		Lets you compose objects into tree structures and then work with these structures 
+		as if they were individual objects.
+
+	Decorator
+		Lets you attach new behaviors to objects by placing these objects 
+		inside special wrapper objects that contain the behaviors.
+
+	Facade
+		Provides a simplified interface to a library, a framework, 
+		or any other complex set of classes.
+
+	Flyweight
+		Lets you fit more objects into the available amount of RAM 
+		by sharing common parts of state between multiple objects 
+		instead of keeping all of the data in each object.
+
+	Proxy
+		Lets you provide a substitute or placeholder for another object. 
+		A proxy controls access to the original object, 
+		allowing you to perform something either before or after the request gets 
+		through to the original object.
+
+3. Behavioral patterns take care of 
+	"effective communication and the assignment of responsibilities between objects."
+	
+	Chain of Responsibility
+		Lets you pass requests along a chain of handlers. 
+		Upon receiving a request, each handler decides either 
+		to process the request or to pass it to the next handler in the chain.
+
+	Command
+		Turns a request into a stand-alone object that contains all information about the request. 
+		This transformation lets you pass requests as a method arguments, 
+		delay or queue a request's execution, and support undoable operations.
+
+	Iterator
+		Lets you traverse elements of a collection without exposing its underlying representation 
+		(list, stack, tree, etc.).
+
+	Mediator	
+		Lets you reduce chaotic dependencies between objects. 
+		The pattern restricts direct communications between the objects and forces them 
+		to collaborate only via a mediator object.
+
+	Memento
+		Lets you save and restore the previous state of an object 
+		without revealing the details of its implementation.
+
+	Observer
+		Lets you define a subscription mechanism to notify multiple objects 
+		about any events that happen to the object they're observing.
+
+	State
+		Lets an object alter its behavior when its internal state changes. 
+		It appears as if the object changed its class.
+
+	Strategy
+		Lets you define a family of algorithms, put each of them into a separate class, 
+		and make their objects interchangeable.
+
+	Template Method
+		Defines the skeleton of an algorithm in the superclass but 
+		lets subclasses override specific steps of the algorithm without changing its structure.
+
+	Visitor
+		Lets you separate algorithms from the objects on which they operate.
+-------------------------------------------------------------------------		
+
+
+=========================================================================
+Factory Method
+	Factory Method is a creational design pattern that provides 
+	an interface for creating objects in a superclass, 
+	but allows subclasses to alter the type of objects that will be created.
+	
+	Problem
+		Imagine that you’re creating a logistics management application. 
+		The first version of your app can only handle transportation by trucks, 
+		so the bulk of your code lives inside the Truck class.
+		
+	Solution
+		The Factory Method pattern suggests 
+		that you replace direct object construction calls (using the new operator) 
+		with calls to a special factory method. 
+		Don’t worry: the objects are still created via the new operator, 
+		but it’s being called from within the factory method. 
+		Objects returned by a factory method are often referred to as products.
+-------------------------------------------------------------------------
+Conceptual Example
+-------------------------------------------------------------------------
+#include<iostream>
+#include<string>
+/**
+ * The Product interface declares the operations that all concrete products must
+ * implement.
+ */
+
+class Product {
+ public:
+  virtual ~Product() {}
+  virtual std::string Operation() const = 0;
+};
+
+/**
+ * Concrete Products provide various implementations of the Product interface.
+ */
+class ConcreteProduct1 : public Product {
+ public:
+  std::string Operation() const override {
+    return "{Result of the ConcreteProduct1}";
+  }
+};
+class ConcreteProduct2 : public Product {
+ public:
+  std::string Operation() const override {
+    return "{Result of the ConcreteProduct2}";
+  }
+};
+
+/**
+ * The Creator class declares the factory method that is supposed to return an
+ * object of a Product class. The Creator's subclasses usually provide the
+ * implementation of this method.
+ */
+
+class Creator {
+  /**
+   * Note that the Creator may also provide some default implementation of the
+   * factory method.
+   */
+ public:
+  virtual ~Creator(){};
+  virtual Product* FactoryMethod() const = 0;
+  /**
+   * Also note that, despite its name, the Creator's primary responsibility is
+   * not creating products. Usually, it contains some core business logic that
+   * relies on Product objects, returned by the factory method. Subclasses can
+   * indirectly change that business logic by overriding the factory method and
+   * returning a different type of product from it.
+   */
+
+  std::string SomeOperation() const {
+    // Call the factory method to create a Product object.
+    Product* product = this->FactoryMethod();
+    // Now, use the product.
+    std::string result = "Creator: The same creator's code has just worked with " + product->Operation();
+    delete product;
+    return result;
+  }
+};
+
+/**
+ * Concrete Creators override the factory method in order to change the
+ * resulting product's type.
+ */
+class ConcreteCreator1 : public Creator {
+  /**
+   * Note that the signature of the method still uses the abstract product type,
+   * even though the concrete product is actually returned from the method. This
+   * way the Creator can stay independent of concrete product classes.
+   */
+ public:
+  Product* FactoryMethod() const override {
+    return new ConcreteProduct1();
+  }
+};
+
+class ConcreteCreator2 : public Creator {
+ public:
+  Product* FactoryMethod() const override {
+    return new ConcreteProduct2();
+  }
+};
+
+/**
+ * The client code works with an instance of a concrete creator, albeit through
+ * its base interface. As long as the client keeps working with the creator via
+ * the base interface, you can pass it any creator's subclass.
+ */
+void ClientCode(const Creator& creator) {
+  // ...
+  std::cout << "Client: I'm not aware of the creator's class, but it still works.\n"
+            << creator.SomeOperation() << std::endl;
+  // ...
+}
+
+/**
+ * The Application picks a creator's type depending on the configuration or
+ * environment.
+ */
+
+int main() {
+  std::cout << "App: Launched with the ConcreteCreator1.\n";
+  Creator* creator = new ConcreteCreator1();
+  ClientCode(*creator);
+  std::cout << std::endl;
+  std::cout << "App: Launched with the ConcreteCreator2.\n";
+  Creator* creator2 = new ConcreteCreator2();
+  ClientCode(*creator2);
+
+  delete creator;
+  delete creator2;
+  return 0;
+}
+-------------------------------------------------------------------------
+Output.txt: Execution result
+App: Launched with the ConcreteCreator1.
+Client: I'm not aware of the creator's class, but it still works.
+Creator: The same creator's code has just worked with {Result of the ConcreteProduct1}
+
+App: Launched with the ConcreteCreator2.
+Client: I'm not aware of the creator's class, but it still works.
+Creator: The same creator's code has just worked with {Result of the ConcreteProduct2}
+-------------------------------------------------------------------------
+No Comment Version
+-------------------------------------------------------------------------
+#include<iostream>
+#include<string>
+class Product {
+public:
+	virtual ~Product() {}
+	virtual std::string Operation() const = 0;
+};
+class ConcreteProduct1 : public Product {
+public:
+	std::string Operation() const override {
+		return "{Result of the ConcreteProduct1}";
+	}
+};
+class ConcreteProduct2 : public Product {
+public:
+	std::string Operation() const override {
+		return "{Result of the ConcreteProduct2}";
+	}
+};
+class Creator {
+
+public:
+	virtual ~Creator() {};
+	virtual Product* FactoryMethod() const = 0;
+
+
+	std::string SomeOperation() const {
+		Product* product = this->FactoryMethod();
+
+		std::string result = "Creator: The same creator's code has just worked with " + product->Operation();
+		delete product;
+		return result;
+	}
+};
+
+class ConcreteCreator1 : public Creator {
+public:
+	Product* FactoryMethod() const override {
+		return new ConcreteProduct1();
+	}
+};
+class ConcreteCreator2 : public Creator {
+public:
+	Product* FactoryMethod() const override {
+		return new ConcreteProduct2();
+	}
+};
+
+int main() {
+	int menu;
+	std::cout << "Chioice(1-Product 1, 2-Product 2):"; std::cin >> menu;
+	Creator* creatorAddr = nullptr;
+
+	if (1 == menu) {
+		std::cout << "App: Launched with the ConcreteCreator1.\n";
+		creatorAddr = new ConcreteCreator1();
+	}
+	else {
+		std::cout << "App: Launched with the ConcreteCreator2.\n";
+		creatorAddr = new ConcreteCreator2();
+	}
+
+	std::cout << "Client: I'm not aware of the creator's class, but it still works.\n"
+		<< creatorAddr->SomeOperation() << std::endl;
+	std::cout << std::endl;
+
+
+	delete creatorAddr;
+
+	return 0;
+}
+
+-------------------------------------------------------------------------
+Dialog
+-------------------------------------------------------------------------
+#include<iostream>
+#include<string>
+class Button {
+public:
+	virtual ~Button() {}
+	virtual void render() const = 0;
+	virtual void onClick() const = 0;
+};
+class HtmlButton : public Button {
+public:
+	void render() const override {
+		std::cout << "Html Button is diplayed.\n";
+	}
+	void onClick() const override {
+		std::cout << "Html Button is clicked.\n";
+	}
+};
+class WinButton : public Button {
+public:
+	void render() const override {
+		std::cout << "Windows Button is diplayed.\n";
+	}
+	void onClick() const override {
+		std::cout << "Windows Button is clicked.\n";
+	}
+};
+class MyDialog {
+
+public:
+	virtual ~MyDialog() {};
+	virtual Button* CreateButton() const = 0;
+
+
+	Button* render() const {
+		Button* btn = this->CreateButton();
+
+		btn->render();
+
+		return btn;
+	}
+};
+
+class HtmlDialog : public MyDialog {
+public:
+	Button* CreateButton() const override {
+		return new HtmlButton();
+	}
+};
+class WinDialog : public MyDialog {
+public:
+	Button* CreateButton() const override {
+		return new WinButton();
+	}
+};
+
+int main() {
+	int menu;
+	std::cout << "Chioice(1-HTML, 2-Windows):"; std::cin >> menu;
+	MyDialog* dlgAddr = nullptr;
+
+	if (1 == menu) {
+		std::cout << "Web App: Launched.\n";
+		dlgAddr = new HtmlDialog();
+	}
+	else {
+		std::cout << "Desktop App: Lanuched.\n";
+		dlgAddr = new WinDialog();
+	}
+
+	Button *btnAddr = dlgAddr->render();
+	btnAddr->onClick();
+	
+	std::cout << std::endl;
+
+	delete btnAddr;
+	delete dlgAddr;
+
+	return 0;
+}
+=========================================================================
+
+
+=========================================================================
+	Singleton is a creational design pattern that 
+	"lets you ensure that a class has only one instance, 
+	while providing a global access point to this instance."
+-------------------------------------------------------------------------
+Problem
+	The Singleton pattern solves two problems at the same time, 
+	violating the Single Responsibility Principle:
+	1. Ensure that a class has just a single instance. 
+	2. Provide a global access point to that instance
+Solution
+	All implementations of the Singleton have these two steps in common:
+
+	Make the default constructor private, to prevent other objects 
+	from using the new operator with the Singleton class.
+	
+	Create a static creation method that acts as a constructor. 
+	Under the hood, this method calls the private constructor to create an object and 
+	saves it in a static field. 
+	All following calls to this method return the cached object.
+-------------------------------------------------------------------------	
+ Conceptual example	
+-------------------------------------------------------------------------
+#include<iostream>
+#include<thread>
+#include<chrono>
+#include<string>
+/**
+ * The Singleton class defines the `GetInstance` method that serves as an
+ * alternative to constructor and lets clients access the same instance of this
+ * class over and over.
+ */
+class Singleton
+{
+
+    /**
+     * The Singleton's constructor should always be private to prevent direct
+     * construction calls with the `new` operator.
+     */
+
+protected:
+    Singleton(const std::string value): value_(value)
+    {
+    }
+
+    static Singleton* singleton_;
+
+    std::string value_;
+
+public:
+
+    /**
+     * Singletons should not be cloneable.
+     */
+    Singleton(Singleton &other) = delete;
+    /**
+     * Singletons should not be assignable.
+     */
+    void operator=(const Singleton &) = delete;
+    /**
+     * This is the static method that controls the access to the singleton
+     * instance. On the first run, it creates a singleton object and places it
+     * into the static field. On subsequent runs, it returns the client existing
+     * object stored in the static field.
+     */
+
+    static Singleton *GetInstance(const std::string& value);
+    /**
+     * Finally, any singleton should define some business logic, which can be
+     * executed on its instance.
+     */
+    void SomeBusinessLogic()
+    {
+        // ...
+    }
+
+    std::string value() const{
+        return value_;
+    } 
+};
+
+Singleton* Singleton::singleton_= nullptr;;
+
+/**
+ * Static methods should be defined outside the class.
+ */
+Singleton *Singleton::GetInstance(const std::string& value)
+{
+    /**
+     * This is a safer way to create an instance. instance = new Singleton is
+     * dangeruous in case two instance threads wants to access at the same time
+     */
+    if(singleton_==nullptr){
+        singleton_ = new Singleton(value);
+    }
+    return singleton_;
+}
+
+void ThreadFoo(){
+    // Following code emulates slow initialization.
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    Singleton* singleton = Singleton::GetInstance("FOO");
+    std::cout << singleton->value() << "\n";
+}
+
+void ThreadBar(){
+    // Following code emulates slow initialization.
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    Singleton* singleton = Singleton::GetInstance("BAR");
+    std::cout << singleton->value() << "\n";
+}
+
+
+int main()
+{
+    std::cout <<"If you see the same value, then singleton was reused (yay!\n" <<
+                "If you see different values, then 2 singletons were created (booo!!)\n\n" <<
+                "RESULT:\n";   
+    std::thread t1(ThreadFoo);
+    std::thread t2(ThreadBar);
+    t1.join();
+    t2.join();
+
+    return 0;
+}
+-------------------------------------------------------------------------
+If you see the same value, then singleton was reused (yay!
+If you see different values, then 2 singletons were created (booo!!)
+
+RESULT:
+BAR
+FOO
+=========================================================================

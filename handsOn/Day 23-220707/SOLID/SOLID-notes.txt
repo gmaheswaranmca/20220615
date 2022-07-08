@@ -1,0 +1,921 @@
+SOLID Principle in Programming: Understand With Real Life Examples
+Topics:
+	1.	Single Responsibility Principle (SRP)
+        "There should only be a single reason for making the change to a class."
+	2.	Open/Closed Principle
+        "software application source codes should be open for extension 
+        but should be closed for modification"
+	3.	Liskov’s Substitution Principle (LSP)
+        "the derived classes should be perfectly substitutable for their base classes"
+	4.	Interface Segregation Principle (ISP)
+        "no clients should be forced to implement methods 
+        which it does not use and 
+        the contracts should be broken down to thin ones"
+	5.	Dependency Inversion Principle (DIP)
+        "high-level modules/classes should not depend on low-level modules/classes.
+        Both should depend upon abstractions.
+        Secondly, abstractions should not depend upon details. 
+        Details should depend upon abstractions."
+	
+    SOLID applied for: class, component(library/api), microservice
+	
+=========================================================================	
+-------------------------------------------------------------------------
+Single Responsibility Principle (SRP)
+	"
+	There should only be a single reason for making the change to a class.
+	"
+-------------------------------------------------------------------------
+    class should have only one responsibility
+    ==> class should not have more responsibilities
+    
+    class should have only one responsibility
+        ==> we can have onlhy one reason to do change 
+        
+    case: dependent classes to depend on our class 
+        The change we are going to implement should not affect the dependent classes 
+        ==> if so, our class is single responsibility 
+		
+-------------------------------------------------------------------------		
+		model -> db deletion code from the file 
+		--> Change Log : File -> RDBMS 
+		model -> db deletion code from the rdbms
+		
+		 
+		view/controller ->
+			view -> what you are deleting? using id 
+			model
+			view -> 
+				confirmation to go for delete 
+			 
+			view -> Deleted success message
+-------------------------------------------------------------------------
+    "interface" in C++ is "pure virtual functions class"
+-------------------------------------------------------------------------
+	public class ServiceStation
+	{
+		public void OpenGate()
+		{
+			//Open the gate if the time is later than 9 AM
+		}
+	 
+		public void DoService(Vehicle vehicle)
+		{
+			//Check if service station is opened and then
+			//complete the vehicle service
+		}
+	 
+		public void CloseGate()
+		{
+			//Close the gate if the time has crossed 6PM
+		}
+	}	
+	
+	
+	===>
+	
+	public class ServiceStation
+	{
+		IGateUtility _gateUtility;
+	 
+		public ServiceStation(IGateUtility gateUtility)
+		{
+			this._gateUtility = gateUtility;
+		}
+		public void OpenForService()
+		{
+			_gateUtility.OpenGate();
+		}
+	 
+		public void DoService()
+		{
+			//Check if service station is opened and then
+			//complete the vehicle service
+		}
+	 
+		public void CloseForDay()
+		{
+			_gateUtility.CloseGate();
+		}
+	}
+	 
+	public class ServiceStationUtility : IGateUtility
+	{
+		public void OpenGate()
+		{
+			//Open the shop if the time is later than 9 AM
+		}
+	 
+		public void CloseGate()
+		{
+			//Close the shop if the time has crossed 6PM
+		}
+	}
+	 
+	 
+	public interface IGateUtility
+	{
+		void OpenGate();
+		void CloseGate();
+	}
+
+	
+-------------------------------------------------------------------------
+AccountUI							AccountCreation					AccountDb
+displayCreationForm()				doAccountCreation()					-createAccount()
+										-displayCreationForm
+									    -createAccount 			
+
+UI				->				Controller           -> 
+								GET data from UI 
+								SEND data DB
+-------------------------------------------------------------------------                                
+public class UserService  
+{  
+    DbContext _dbContext;  
+    public UserService(DbContext aDbContext)    {  
+     
+      _dbContext = aDbContext;  
+   } 
+   public void Register(string email, string password)   {  
+      if (!ValidateEmail(email))  
+         throw new ValidationException("Email is not an email");  
+         var user = new User(email, password);  
+         _dbContext.Save(user);
+         SendEmail(new MailMessage("mysite@nowhere.com", email) { Subject="HEllo foo" });  
+   }
+   public virtual bool ValidateEmail(string email)   {  
+     return email.Contains("@");  
+   }  
+   public bool SendEmail(MailMessage message)  
+   {  
+     _smtpClient.Send(message);  
+   }  
+} 
+===>
+public class UserService  
+{  
+   EmailService _emailService;  
+   DbContext _dbContext;  
+   public UserService(EmailService aEmailService, DbContext aDbContext)  
+   {  
+      _emailService = aEmailService;  
+      _dbContext = aDbContext;  
+   }  
+   public void Register(string email, string password)  
+   {  
+      if (!_emailService.ValidateEmail(email))  
+         throw new ValidationException("Email is not an email");  
+         var user = new User(email, password);  
+         _dbContext.Save(user);  
+         emailService.SendEmail(new MailMessage("myname@mydomain.com", email) {Subject="Hi. How are you!"});  
+  
+    }  
+}  
+
+public class EmailService  
+{  
+      SmtpClient _smtpClient;  
+   public EmailService(SmtpClient aSmtpClient)  
+   {  
+      _smtpClient = aSmtpClient;  
+   }  
+   public bool virtual ValidateEmail(string email)  
+   {  
+      return email.Contains("@");  
+   }  
+   public bool SendEmail(MailMessage message)  
+   {  
+      _smtpClient.Send(message);  
+   }  
+}   
+=========================================================================	
+
+
+
+
+=========================================================================
+Open/Closed Principle
+	"
+	class/function should be open for extension 
+	but should be closed for modification.
+	"
+	public class MileageCalculator
+	{
+		IEnumerable<Car> _cars;
+		public MileageCalculator(IEnumerable<Car> cars) { this._cars = cars; }
+	 
+		public void CalculateMileage()
+		{
+			foreach (var car in _cars)
+			{
+				if (car.Name == "Audi")
+					Console.WriteLine("Mileage of the car {0} is {1}", car.Name, "10M");
+				else if (car.Name == "Mercedes")
+					Console.WriteLine("Mileage of the car {0} is {1}", car.Name, "20M");
+			}
+		}
+	}	
+	
+	==>
+public class MileageCalculator
+{
+    IEnumerable<ICar> _cars;
+    public MileageCalculator(IEnumerable<ICar> cars) { this._cars = cars; }
+ 
+    //public void CalculateMileage()
+    public void PrintCarsMileage()
+    {
+        CarController controller = new CarController();
+        foreach (var car in _cars)
+        {
+                //Console.WriteLine("Mileage of the car {0} is {1}", car.Name, controller.GetCarMileage(car.Name));
+                Console.WriteLine("Mileage of the car {0} is {1}", car.Name, car.GetMileage());
+        }
+    }
+}
+ 
+public class CarController
+{
+    List<ICar> cars;
+    public CarController()
+    {
+        cars = new List<ICar>();
+        cars.Add(new Audi());
+        cars.Add(new Mercedes());
+    }
+    /*
+    public string GetCarMileage(string name)
+    {
+        return cars.First(car => car.Name == name).GetMileage();
+    }*/
+}
+ 
+public interface ICar
+{
+    string Name { get; set; }
+    string GetMileage();
+}
+ 
+public class Audi : ICar
+{
+    public string Name { get; set; }
+ 
+    public string GetMileage()
+    {
+        return "10M";
+    }
+}
+ 
+public class Mercedes : ICar
+{
+    public string Name { get; set; }
+ 
+    public string GetMileage()
+    {
+        return "20M";
+    }
+}
+-------------------------------------------------------------------------
+public class Rectangle{  
+   public double Height {get;set;}  
+   public double Wight {get;set; }  
+}  
+
+public class AreaCalculator {  
+   public double TotalArea(Rectangle[] arrRectangles)  
+   {  
+      double area;  
+      foreach(var objRectangle in arrRectangles)  
+      {  
+         area += objRectangle.Height * objRectangle.Width;  
+      }  
+      return area;  
+   }  
+}  
+===>
+public class Rectangle{  
+   public double Height {get;set;}  
+   public double Wight {get;set; }  
+}  
+public class Circle{  
+   public double Radius {get;set;}  
+}  
+public class AreaCalculator  
+{  
+   public double TotalArea(object[] arrObjects)  
+   {  
+      double area = 0;  
+      Rectangle objRectangle;  
+      Circle objCircle;  
+      foreach(var obj in arrObjects)  
+      {  
+         if(obj is Rectangle)  
+         {    
+            area += obj.Height * obj.Width;  
+         }  
+         else  
+         {  
+            objCircle = (Circle)obj;  
+            area += objCircle.Radius * objCircle.Radius * Math.PI;  
+         }  
+      }  
+      return area;  
+   }  
+}  
+===>	
+public abstract class Shape  
+{  
+   public abstract double Area();  
+}  
+public class Rectangle: Shape  
+{  
+   public double Height {get;set;}  
+   public double Width {get;set;}  
+   public override double Area()  
+   {  
+      return Height * Width;  
+   }  
+}  
+public class Circle: Shape  
+{  
+   public double Radius {get;set;}  
+   public override double Area()  
+   {  
+      return Radius * Radus * Math.PI;  
+   }  
+}  
+public class AreaCalculator  
+{  
+   public double TotalArea(Shape[] arrShapes)  
+   {  
+      double area=0;  
+      foreach(var objShape in arrShapes)  
+      {  
+         area += objShape.Area();  
+      }  
+      return area;  
+   }  
+}  
+-------------------------------------------------------------------------	
+=========================================================================
+
+
+
+=========================================================================
+Liskov’s Substitution Principle (LSP)
+	"
+	the derived classes should be perfectly substitutable for their base classes
+	"
+namespace SolidDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Apple apple = new Orange();
+            Console.WriteLine(apple.GetColor());
+        }
+    }
+ 
+    public class Apple
+    {
+        public virtual string GetColor()
+        {
+            return "Red";
+        }
+    }
+ 
+    public class Orange : Apple
+    {
+        public override string GetColor()
+        {
+            return "Orange";
+        }
+    }
+}
+
+==>
+namespace SolidDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Fruit fruit = new Orange();
+            Console.WriteLine(fruit.GetColor());
+            fruit = new Apple();
+            Console.WriteLine(fruit.GetColor());
+        }
+    }
+ 
+    public abstract class Fruit
+    {
+        public abstract string GetColor();
+    }
+ 
+    public class Apple : Fruit
+    {
+        public override string GetColor()
+        {
+            return "Red";
+        }
+    }
+ 
+    public class Orange : Apple
+    {
+        public override string GetColor()
+        {
+            return "Orange";
+        }
+    }
+}
+
+-------------------------------------------------------------------------
+public class SqlFile  
+{  
+   public string FilePath {get;set;}  
+   public string FileText {get;set;}  
+   public string LoadText()     {  
+      /* Code to read text from sql file */  
+   }  
+   public string SaveText()   {  
+      /* Code to save text into sql file */  
+   }  
+}  
+public class SqlFileManager  
+{  
+   public List<SqlFile> lstSqlFiles {get;set}    
+   public string GetTextFromFiles()     {  
+      StringBuilder objStrBuilder = new StringBuilder();  
+      foreach(var objFile in lstSqlFiles)       {  
+         objStrBuilder.Append(objFile.LoadText());  
+      }  
+      return objStrBuilder.ToString();  
+   }  
+   public void SaveTextIntoFiles()     {  
+      foreach(var objFile in lstSqlFiles)  
+      {  
+         objFile.SaveText();  
+      }  
+   }  
+}  
+==>
+public class SqlFile  
+{  
+   public string LoadText()  
+   {  
+   /* Code to read text from sql file */  
+   }  
+   public void SaveText()  
+   {  
+      /* Code to save text into sql file */  
+   }  
+}  
+public class ReadOnlySqlFile: SqlFile  
+{  
+   public string FilePath {get;set;}  
+   public string FileText {get;set;}  
+   public string LoadText()  
+   {  
+      /* Code to read text from sql file */  
+   }  
+   public void SaveText()  
+   {  
+      /* Throw an exception when app flow tries to do save. */  
+      throw new IOException("Can't Save");  
+   }  
+}  
+public class SqlFileManager  
+{  
+   public List<SqlFile? lstSqlFiles {get;set}  
+   public string GetTextFromFiles()  
+   {  
+      StringBuilder objStrBuilder = new StringBuilder();  
+      foreach(var objFile in lstSqlFiles)  
+      {  
+         objStrBuilder.Append(objFile.LoadText());  
+      }  
+      return objStrBuilder.ToString();  
+   }  
+   public void SaveTextIntoFiles()  
+   {  
+      foreach(var objFile in lstSqlFiles)  
+      {  
+         //Check whether the current file object is read-only or not.If yes, skip calling it's  
+         // SaveText() method to skip the exception.  
+  
+         if(! objFile is ReadOnlySqlFile)  
+         objFile.SaveText();  
+      }  
+   }  
+}  
+==>
+public interface IReadableSqlFile  
+{  
+   string LoadText();  
+}  
+public interface IWritableSqlFile  
+{  
+   void SaveText();  
+}  
+
+public class ReadOnlySqlFile: IReadableSqlFile  
+{  
+   public string FilePath {get;set;}  
+   public string FileText {get;set;}  
+   public string LoadText()  
+   {  
+      /* Code to read text from sql file */  
+   }  
+}  
+
+public class SqlFile: IWritableSqlFile,IReadableSqlFile  
+{  
+   public string FilePath {get;set;}  
+   public string FileText {get;set;}  
+   public string LoadText()  
+   {  
+      /* Code to read text from sql file */  
+   }  
+   public void SaveText()  
+   {  
+      /* Code to save text into sql file */  
+   }  
+}  
+
+public class SqlFileManager  
+{  
+   public string GetTextFromFiles(List<IReadableSqlFile> aLstReadableFiles)  
+   {  
+      StringBuilder objStrBuilder = new StringBuilder();  
+      foreach(var objFile in aLstReadableFiles)  
+      {  
+         objStrBuilder.Append(objFile.LoadText());  
+      }  
+      return objStrBuilder.ToString();  
+   }  
+   public void SaveTextIntoFiles(List<IWritableSqlFile> aLstWritableFiles)  
+   {  
+   foreach(var objFile in aLstWritableFiles)  
+   {  
+      objFile.SaveText();  
+   }  
+   }  
+}  
+=========================================================================
+
+
+
+
+=========================================================================
+Interface Segregation Principle (ISP)
+	"
+	no clients should be forced to implement methods 
+	which it does not use and 
+	the contracts should be broken down to thin ones
+	"
+public interface IOrder   {
+        void Purchase();
+        void ProcessCreditCard();
+    }  public class OnlineOrder : IOrder    {
+        public void Purchase()        {
+            //Do purchase
+        } 
+        public void ProcessCreditCard()        {
+            //process through credit card
+        }
+    }  public class InpersonOrder : IOrder    {
+        public void Purchase()        {
+            //Do purchase
+        } 
+        public void ProcessCreditCard()        {
+            //Not required for inperson purchase
+            throw new NotImplementedException();
+        }
+    }
+===>
+public interface IOrder    {
+        void Purchase();
+    } 
+    public interface IOnlineOrder    {
+        void ProcessCreditCard();
+    } 
+    public class OnlineOrder : IOrder, IOnlineOrder
+    {
+        public void Purchase()        {
+            //Do purchase
+        }
+ 
+        public void ProcessCreditCard()        {
+            //process through credit card
+        }
+    } 
+    public class InpersonOrder : IOrder    {
+        public void Purchase()
+        {
+            //Do purchase
+        }
+    }
+-------------------------------------------------------------------------
+public Interface ILead  {  
+   void CreateSubTask();  
+   void AssginTask();  
+   void WorkOnTask();  
+}  public class TeamLead : ILead  {  
+   public void AssignTask()     {  
+      //Code to assign a task.  
+   }  
+   public void CreateSubTask()     {  
+      //Code to create a sub task  
+   }  
+   public void WorkOnTask()     {  
+      //Code to implement perform assigned task.  
+   }  
+}  public class Manager: ILead  {  
+   public void AssignTask()     {  
+      //Code to assign a task.  
+   }     public void CreateSubTask()     {  
+      //Code to create a sub task.  
+   }     public void WorkOnTask()     {  
+      throw new Exception("Manager can't work on Task");  
+   }  
+}  
+
+public class Programmer: IProgrammer {  
+   public void WorkOnTask()  {  
+      //code to implement to work on the Task.  
+   }  
+    public void AssignTask()     {  
+      throw new Exception("AssignTask");  //Code to assign a task.  
+   }     public void CreateSubTask()     {  
+      throw new Exception("CreateSubTask");//Code to create a sub task.  
+   }  
+}  
+==>	
+public interface IProgrammer  {  
+   void WorkOnTask();  
+}  
+public interface ILead  {  
+   void AssignTask();  
+   void CreateSubTask();  
+}  
+public class Programmer: IProgrammer {  
+   public void WorkOnTask()  {  
+      //code to implement to work on the Task.  
+   }  
+}  
+public class Manager: ILead  {  
+   public void AssignTask()     {  
+      //Code to assign a Task  
+   }  
+   public void CreateSubTask()     {  
+   //Code to create a sub taks from a task.  
+   }  
+}  
+public class TeamLead: IProgrammer, ILead  
+{  
+   public void AssignTask()  
+   {  
+      //Code to assign a Task  
+   }  
+   public void CreateSubTask()  
+   {  
+      //Code to create a sub task from a task.  
+   }  
+   public void WorkOnTask()  
+   {  
+      //code to implement to work on the Task.  
+   }  
+}  
+=========================================================================
+
+
+
+	
+=========================================================================	
+-------------------------------------------------------------------------	
+Dependency Inversion Principle (DIP)	
+    "Dependency Injection" Old name was: "Inversion of Control"
+    
+    Java Spring Framework <- "Inversion of Control" -> "Dependency Injection"
+                                classical term              later/now term 
+    
+
+	The Dependency Inversion Principle (DIP) states that 
+	"
+	high-level modules/classes should not depend on low-level modules/classes.
+	"	
+	"
+	Both should depend upon abstractions. 
+	Secondly, abstractions should not depend upon details. 
+	Details should depend upon abstractions.
+	"
+-------------------------------------------------------------------------	
+public class FileLogger  
+{  
+   public void LogMessage(string aStackTrace)  
+   {  
+      //code to log stack trace into a file.  
+   }  
+}  
+public class ExceptionLogger  
+{  
+   public void LogIntoFile(Exception aException)  
+   {  
+      FileLogger objFileLogger = new FileLogger();  
+      objFileLogger.LogMessage(GetUserReadableMessage(aException));  
+   }  
+   private GetUserReadableMessage(Exception ex)  
+   {  
+      string strMessage = string. Empty;  
+      //code to convert Exception's stack trace and message to user readable format.  
+      ....  
+      ....  
+      return strMessage;  
+   }  
+}  
+
+public class DataExporter  
+{  
+   public void ExportDataFromFile()  
+   {  
+   try {  
+      //code to export data from files to database.  
+   }  
+   catch(Exception ex)  
+   {  
+      new ExceptionLogger().LogIntoFile(ex);  
+   }  
+}  
+}  
+==>
+
+public class DbLogger  
+{  
+   public void LogMessage(string aMessage)  
+   {  
+      //Code to write message in database.  
+   }  
+}  
+public class FileLogger  
+{  
+   public void LogMessage(string aStackTrace)  
+   {  
+      //code to log stack trace into a file.  
+   }  
+}  
+public class ExceptionLogger  
+{  
+   public void LogIntoFile(Exception aException)  
+   {  
+      FileLogger objFileLogger = new FileLogger();  
+      objFileLogger.LogMessage(GetUserReadableMessage(aException));  
+   }  
+   public void LogIntoDataBase(Exception aException)  
+   {  
+      DbLogger objDbLogger = new DbLogger();  
+      objDbLogger.LogMessage(GetUserReadableMessage(aException));  
+   }  
+   private string GetUserReadableMessage(Exception ex)  
+   {  
+      string strMessage = string.Empty;  
+      //code to convert Exception's stack trace and message to user readable format.  
+      ....  
+      ....  
+      return strMessage;  
+   }  
+}  
+public class DataExporter  
+{  
+   public void ExportDataFromFile()  
+   {  
+      try {  
+         //code to export data from files to database.  
+      }  
+      catch(IOException ex)  
+      {  
+         new ExceptionLogger().LogIntoDataBase(ex);  
+      }  
+      catch(Exception ex)  
+      {  
+         new ExceptionLogger().LogIntoFile(ex);  
+      }  
+   }  
+}  
+
+===>
+public interface ILogger  
+{  
+   void LogMessage(string aString);  
+} 
+public class DbLogger: ILogger  
+{  
+   public void LogMessage(string aMessage)  
+   {  
+      //Code to write message in database.  
+   }  
+}  
+public class FileLogger: ILogger  
+{  
+   public void LogMessage(string aStackTrace)  
+   {  
+      //code to log stack trace into a file.  
+   }  
+}  
+public class ExceptionLogger  
+{  
+   private ILogger _logger;  
+   public ExceptionLogger(ILogger aLogger)  
+   {  
+      this._logger = aLogger;  
+   }  
+   public void LogException(Exception aException)  
+   {  
+      string strMessage = GetUserReadableMessage(aException);  
+      this._logger.LogMessage(strMessage);  
+   }  
+   private string GetUserReadableMessage(Exception aException)  
+   {  
+      string strMessage = string.Empty;  
+      //code to convert Exception's stack trace and message to user readable format.  
+      ....  
+      ....  
+      return strMessage;  
+   }  
+}  
+public class DataExporter  
+{  
+   public void ExportDataFromFile()  
+   {  
+      ExceptionLogger _exceptionLogger;  
+      try {  
+         //code to export data from files to database.  
+      }  
+      catch(IOException ex)  
+      {  
+         _exceptionLogger = new ExceptionLogger(new DbLogger());  
+         _exceptionLogger.LogException(ex);  
+      }  
+      catch(Exception ex)  
+      {  
+         _exceptionLogger = new ExceptionLogger(new FileLogger());  
+         _exceptionLogger.LogException(ex);  
+      }  
+   }  
+}  
+
+==>
+/* +additions */
+public class EventLogger: ILogger  
+{  
+   public void LogMessage(string aMessage)  
+   {  
+      //Code to write message in system's event viewer.  
+   }  
+}  
+
+public class DataExporter  
+{  
+   public void ExportDataFromFile()  
+   {  
+      ExceptionLogger _exceptionLogger;  
+      try {  
+         //code to export data from files to database.  
+      }  
+      catch(IOException ex)  
+      {  
+         _exceptionLogger = new ExceptionLogger(new DbLogger());  
+         _exceptionLogger.LogException(ex);  
+      }  
+      catch(SqlException ex)  
+      {  
+         _exceptionLogger = new ExceptionLogger(new EventLogger());  
+         _exceptionLogger.LogException(ex);  
+      }  
+      catch(Exception ex)  
+      {  
+         _exceptionLogger = new ExceptionLogger(new FileLogger());  
+         _exceptionLogger.LogException(ex);  
+      }  
+   }  
+}  
+=========================================================================
+Spring Framework
+	Dependency Injection (IoC)
+	
+	DI Container is provided by the framework 
+	
+	"Dependent Object is automatically injected into the used classes."
+=========================================================================
+Angular 
+    included the DI frawork where it followed the DI principle
+=========================================================================
+
+
+=========================================================================
+References:
+1. https://www.c-sharpcorner.com/UploadFile/damubetha/solid-principles-in-C-Sharp/
+2. https://www.codeguru.com/blog/solid-principles-in-c-an-overview/
+3. https://www.baeldung.com/solid-principles
+=========================================================================

@@ -38,3 +38,4 @@ RS232 Serial Port Communication - Tranmitter and Receiver
 		
 		Cleanup
 			CloseHandle
+			
